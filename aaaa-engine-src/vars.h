@@ -1,6 +1,9 @@
 #include "zctables.h"
 #include "ztypes.h"
 
+#include <math.h>
+#include <stdio.h>
+
 extern u8 zcoreenabled;
 
 extern u32 count, levelframes, frametime;
