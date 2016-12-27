@@ -10,7 +10,7 @@ INCLUDEPATH += . aaaa-engine-src/
 DEFINES += PC_GLES SDL2_PORT NO_SDL_MIXER
 
 LIBS += -lSDL2 # -lSDL2_mixer
-LIBS += -lGLESv1_CM -lEGL -lX11
+LIBS += -lGLESv1_CM -lEGL
 
 # Input
 HEADERS += aaaa-engine-src/bullets.h \

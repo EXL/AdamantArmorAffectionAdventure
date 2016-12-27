@@ -24,7 +24,7 @@ SDL_Surface* screen = NULL;
 
 #if defined(GP2X) || defined(PC_GLES)
 #ifdef PC_GLES
-#include <X11/Xlib.h>
+//#include <X11/Xlib.h>
 #include "GLES/gl.h"
 #include "GLES/egl.h"
 #include "GLES/glext.h"
@@ -35,7 +35,7 @@ SDL_Surface* screen = NULL;
 #endif
 #endif
 
-Display *g_x11Display = NULL;
+//Display *g_x11Display = NULL;
 #endif
 #ifdef GP2XCAANOO
 #include "GLES/egl.h"
@@ -196,15 +196,20 @@ void zcore_video_init(void)
     globalWindow = SDL_CreateWindow("AAAA", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                     screenwidth, screenheight,0?(SDL_WINDOW_OPENGL|SDL_WINDOW_FULLSCREEN):SDL_WINDOW_OPENGL);
     //screen=SDL_SetVideoMode(screenwidth,screenheight,screenbpp, SDL_SWSURFACE); // | SDL_FULLSCREEN);
-    g_x11Display = XOpenDisplay(NULL);
-    #define _EGL_DSP (EGLNativeDisplayType)g_x11Display
-    glDisplay=eglGetDisplay(_EGL_DSP);
+    //g_x11Display = XOpenDisplay(NULL);
+
+    glDisplay=eglGetDisplay(EGL_DEFAULT_DISPLAY);
+
+    //#define _EGL_DSP (EGLNativeDisplayType)g_x11Display
+    //glDisplay=eglGetDisplay(_EGL_DSP);
+
     eglInitialize(glDisplay, &majorVersion, &minorVersion );
     eglChooseConfig(glDisplay, egl_config_attr, &glConfig, 1, &numConfigs);
     SDL_SysWMinfo sysInfo;
     SDL_VERSION(&sysInfo.version); //Set SDL version
     SDL_GetWindowWMInfo(globalWindow, &sysInfo);
     glContext = eglCreateContext(glDisplay, glConfig, EGL_NO_CONTEXT, NULL);
+    // Test This 0 on Android??
     glSurface=eglCreateWindowSurface(glDisplay,glConfig,(EGLNativeWindowType)sysInfo.info.x11.window,0);
     eglMakeCurrent(glDisplay, glSurface, glSurface, glContext);
     eglSwapInterval(glDisplay, 1);      // VSYNC
