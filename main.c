@@ -2,16 +2,16 @@
 #include "zcore.h"
 #include "zresm.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-zresminit();
+    zresminit();
 
-zcoreinit();
-zcoreloop();
+    zcoreinit();
+    zcoreloop();
 
-zresmdown();
+    zresmdown();
 
-zcoredown();
+    zcoredown();
 
-return 0;
+    return 0;
 }
