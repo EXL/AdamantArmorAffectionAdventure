@@ -4,6 +4,7 @@
 
 TEMPLATE = app
 TARGET = AAAA-Engine
+CONFIG -= qt
 
 INCLUDEPATH += . AAAA-Engine/
 
