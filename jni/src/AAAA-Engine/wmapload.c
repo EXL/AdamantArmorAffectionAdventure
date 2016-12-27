@@ -301,7 +301,11 @@ void loadmapdisc(unsigned char index)
     FILE* fp;
 
     u8 c;
+#ifndef ANDROID_NDK
     sprintf(spath, "maps/%i%i.aaa", index / 10, index % 10);
+#else
+    sprintf(spath, "/storage/sdcard1/AAAA-Data/maps/%i%i.aaa", index / 10, index % 10);
+#endif
     fp = fopen(spath, "rb");
 
     for (i = 0; i < 64; i++)
@@ -349,8 +353,11 @@ void savemapdisc(unsigned char index)
     u32 i, x, y, z;
     FILE* fp;
     u8 c;
-
+#ifndef ANDROID_NDK
     sprintf(spath, "maps/%i%i.aaa", index / 10, index % 10);
+#else
+    sprintf(spath, "/storage/sdcard1/AAAA-Data/maps/%i%i.aaa", index / 10, index % 10);
+#endif
     fp = fopen(spath, "wb");
 
     for (i = 0; i < 64; i++)

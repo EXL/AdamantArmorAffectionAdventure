@@ -188,7 +188,7 @@ void zcore_video_init(void)
     screenheight = 480;
     SDL_InitSubSystem(SDL_INIT_VIDEO);
     SDL_ShowCursor(0);
-    SDL_ShowCursor(0);
+    //SDL_ShowCursor(0);
 #ifdef PC_GLES
     // const char* output;
     // EGLBoolean result;
@@ -204,17 +204,14 @@ void zcore_video_init(void)
     //screenheight=480;
     EGLint numConfigs,majorVersion,minorVersion;
     int screenbpp=16;
-
     globalWindow = SDL_CreateWindow("AAAA", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                     screenwidth, screenheight,0?(SDL_WINDOW_OPENGL|SDL_WINDOW_FULLSCREEN):SDL_WINDOW_OPENGL);
     //screen=SDL_SetVideoMode(screenwidth,screenheight,screenbpp, SDL_SWSURFACE); // | SDL_FULLSCREEN);
     //g_x11Display = XOpenDisplay(NULL);
-
     glDisplay=eglGetDisplay(EGL_DEFAULT_DISPLAY);
 
     //#define _EGL_DSP (EGLNativeDisplayType)g_x11Display
     //glDisplay=eglGetDisplay(_EGL_DSP);
-
     eglInitialize(glDisplay, &majorVersion, &minorVersion );
     eglChooseConfig(glDisplay, egl_config_attr, &glConfig, 1, &numConfigs);
     SDL_SysWMinfo sysInfo;
@@ -225,7 +222,7 @@ void zcore_video_init(void)
 #ifndef ANDROID_NDK
     glSurface=eglCreateWindowSurface(glDisplay,glConfig,(EGLNativeWindowType)sysInfo.info.x11.window,0);
 #else
-    glSurface=eglCreateWindowSurface(glDisplay,glConfig,0,0);
+    glSurface=eglCreateWindowSurface(glDisplay,glConfig,(EGLNativeWindowType)sysInfo.info.android.window,0);
 #endif
     eglMakeCurrent(glDisplay, glSurface, glSurface, glContext);
     eglSwapInterval(glDisplay, 1);      // VSYNC
@@ -282,7 +279,6 @@ void zcore_video_init(void)
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
     //glLoadIdentity();
     coreupdatetextures();
 }

@@ -21,6 +21,19 @@ extern s32 fps, tickcount;
 extern u8 secretskin;
 #define MESH_CNT 16384
 
+// For replacing main() to SDL_main()
+#ifdef ANDROID_NDK
+#include <SDL.h>
+
+#include <android/log.h>
+
+#define LOG_TAG "KenLab3D"
+#define LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
+#define TO_DEBUG_LOG(...) LOGI(__VA_ARGS__)
+#else
+#define TO_DEBUG_LOG(...) fprintf(stderr, __VA_ARGS__)
+#endif
+
 #ifdef PC32
 #include "GL/gl.h"
 extern GLfloat mesh[MESH_CNT * 3];

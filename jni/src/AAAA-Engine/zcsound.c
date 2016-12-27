@@ -31,7 +31,11 @@ void zcinitsound(void)
     u8 i;
     for (i = 0; i < soundbanks; i++) {
         zc_sdn[i] = NULL;
+#ifndef ANDROID_NDK
         sprintf(spath, "sfx/%i%i.wav", i / 10, i % 10);
+#else
+        sprintf(spath, "/storage/sdcard1/AAAA-Data/sfx/%i%i.wav", i / 10, i % 10);
+#endif
         zc_sdn[i] = Mix_LoadWAV(spath);
     }
 #endif
@@ -62,7 +66,11 @@ void zcsoundstep(void)
     }
     if (bgm != last_bgm)
         if (configdata[9] > 0) {
-            sprintf(spath, "bgm/%i%i.ogg", bgm / 10, bgm % 10);
+#ifndef ANDROID_NDK
+            sprintf(spath, "/storage/sdcard1/AAAA-Data/bgm/%i%i.ogg", bgm / 10, bgm % 10);
+#else
+            sprintf(spath, "/storage/sdcard1/AAAA-Data/bgm/%i%i.ogg", bgm / 10, bgm % 10);
+#endif
             m_music = Mix_LoadMUS(spath);
             if (bgm >= 50)
                 Mix_PlayMusic(m_music, 0);
