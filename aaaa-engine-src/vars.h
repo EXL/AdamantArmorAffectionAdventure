@@ -27,9 +27,9 @@ extern GLfloat mesh[MESH_CNT * 3];
 extern GLfloat mesht[MESH_CNT * 2];
 #endif
 
-#ifdef GP2X
+#if defined(GP2X) || defined(PC_GLES)
 
-#ifdef GP2XCAANOO
+#if defined(GP2XCAANOO) || defined(PC_GLES)
 #include "GLES/gl.h"
 #endif
 #ifdef GP2XWIZ

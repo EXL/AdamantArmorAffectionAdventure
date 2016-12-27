@@ -6,7 +6,7 @@
 #include <GL/gl.h>
 #endif
 
-#ifdef GP2XCAANOO
+#if defined(GP2XCAANOO) || defined(PC_GLES)
 #include "GLES/egl.h"
 #include "GLES/gl.h"
 #include "GLES/glext.h"
@@ -85,7 +85,7 @@ void zlClrDepth(void)
 
 void zlTranslate(signed long x, signed long y, signed long z)
 {
-#ifdef GP2X
+#if defined(GP2X) || defined(PC_GLES)
     glTranslatex(x, y, z);
 #endif
 #ifdef PC32
@@ -94,7 +94,7 @@ void zlTranslate(signed long x, signed long y, signed long z)
 }
 void zlRotatex(signed long x)
 {
-#ifdef GP2X
+#if defined(GP2X) || defined(PC_GLES)
     glRotatex(x * 5760, 65536, 0, 0);
 #endif
 #ifdef PC32
@@ -103,7 +103,7 @@ void zlRotatex(signed long x)
 }
 void zlRotatey(signed long y)
 {
-#ifdef GP2X
+#if defined(GP2X) || defined(PC_GLES)
     glRotatex(y * 5760, 0, 65536, 0);
 #endif
 #ifdef PC32
@@ -112,7 +112,7 @@ void zlRotatey(signed long y)
 }
 void zlRotatez(signed long z)
 {
-#ifdef GP2X
+#if defined(GP2X) || defined(PC_GLES)
     glRotatex(z * 5760, 0, 0, 65536);
 #endif
 #ifdef PC32
@@ -121,7 +121,7 @@ void zlRotatez(signed long z)
 }
 void zlScale(signed long x, signed long y, signed long z)
 {
-#ifdef GP2X
+#if defined(GP2X) || defined(PC_GLES)
     glScalex(x, y, z);
 #endif
 #ifdef PC32
@@ -134,7 +134,7 @@ void zlFogParam(signed long fogstart, signed long fogend)
     glFogf(GL_FOG_START, fogstart / 65536.0f);
     glFogf(GL_FOG_END, fogend / 65536.0f);
 #endif
-#ifdef GP2X
+#if defined(GP2X) || defined(PC_GLES)
     glFogx(GL_FOG_START, fogstart);
     glFogx(GL_FOG_END, fogend);
 #endif
@@ -165,7 +165,7 @@ void zlRender(unsigned long first, unsigned long pcount)
 
 void zlScreen(signed long x, signed long y, signed long zoom)
 {
-#ifdef GP2X
+#if defined(GP2X) || defined(PC_GLES)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glFrustumx(-x, x, -y, y, zoom, fog_end);
@@ -207,7 +207,7 @@ extern void zlBlend(unsigned char value)
     if (value == 1) {
         glEnable(GL_BLEND);
 
-#ifdef GP2X
+#if defined(GP2X) || defined(PC_GLES)
         glAlphaFuncx(GL_GREATER, 65);
 #endif
 #ifdef PC32
@@ -215,7 +215,7 @@ extern void zlBlend(unsigned char value)
 #endif
     } else {
         glDisable(GL_BLEND);
-#ifdef GP2X
+#if defined(GP2X) || defined(PC_GLES)
         glAlphaFuncx(GL_GREATER, 31728);
 #endif
 #ifdef PC32

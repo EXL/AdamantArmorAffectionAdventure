@@ -13,7 +13,16 @@ SDL_Surface* screen = NULL;
 #include "Panel/fake_os.h"
 #endif
 
-#ifdef GP2X
+#if defined(GP2X) || defined(PC_GLES)
+#ifdef PC_GLES
+#include <X11/Xlib.h>
+#include "GLES/gl.h"
+#include "GLES/egl.h"
+#include "GLES/glext.h"
+#include <SDL/SDL_syswm.h>
+
+Display *g_x11Display = NULL;
+#endif
 #ifdef GP2XCAANOO
 #include "GLES/egl.h"
 #include "GLES/gl.h"
@@ -31,8 +40,35 @@ EGLContext glContext;
 EGLSurface glSurface;
 NativeWindowType hNativeWnd = 0;
 const char *gl_vendor, *gl_renderer, *gl_version, *gl_extensions;
+
+#if defined(PC_GLES)
+EGLint attrib_list_fsaa[]= {
+    EGL_RED_SIZE,		5,
+    EGL_GREEN_SIZE,		6,
+    EGL_BLUE_SIZE,		5,
+    EGL_DEPTH_SIZE,		16,
+    EGL_SURFACE_TYPE,	EGL_WINDOW_BIT,
+    EGL_RENDERABLE_TYPE,	EGL_OPENGL_ES_BIT,
+    EGL_SAMPLE_BUFFERS,	1,
+    EGL_SAMPLES,		1,
+    EGL_NONE
+};
+
+EGLint attrib_list[]= {
+    EGL_RED_SIZE,		5,
+    EGL_GREEN_SIZE,		6,
+    EGL_BLUE_SIZE,		5,
+    EGL_DEPTH_SIZE,		16,
+    EGL_SURFACE_TYPE,	EGL_WINDOW_BIT,
+    EGL_RENDERABLE_TYPE,	EGL_OPENGL_ES_BIT,
+    EGL_SAMPLE_BUFFERS,	1,
+    EGL_SAMPLES,		4,
+    EGL_NONE
+};
+#else
 EGLint attrib_list_fsaa[] = { EGL_SURFACE_TYPE, EGL_WINDOW_BIT, EGL_BUFFER_SIZE, 16, EGL_DEPTH_SIZE, 16, EGL_SAMPLE_BUFFERS, 1, EGL_SAMPLES, 4, EGL_NONE };
 EGLint attrib_list[] = { EGL_SURFACE_TYPE, EGL_WINDOW_BIT, EGL_BUFFER_SIZE, 16, EGL_DEPTH_SIZE, 16, EGL_NONE };
+#endif
 
 SDL_Surface* screen = NULL;
 #endif
@@ -123,6 +159,39 @@ void zcore_video_init(void)
     SDL_InitSubSystem(SDL_INIT_VIDEO);
     SDL_ShowCursor(0);
     SDL_ShowCursor(0);
+#ifdef PC_GLES
+    // const char* output;
+    // EGLBoolean result;
+    EGLint egl_config_attr[] = {
+        EGL_BUFFER_SIZE,   16,
+        EGL_DEPTH_SIZE,    16,
+        EGL_STENCIL_SIZE,  0,
+        EGL_SURFACE_TYPE,
+        EGL_WINDOW_BIT,
+        EGL_NONE
+    };
+    //screenwidth=800;
+    //screenheight=480;
+    EGLint numConfigs,majorVersion,minorVersion;
+    int screenbpp=16;
+    screen=SDL_SetVideoMode(screenwidth,screenheight,screenbpp, SDL_SWSURFACE); // | SDL_FULLSCREEN);
+    g_x11Display = XOpenDisplay(NULL);
+    #define _EGL_DSP (EGLNativeDisplayType)g_x11Display
+    glDisplay=eglGetDisplay(_EGL_DSP);
+    eglInitialize(glDisplay, &majorVersion, &minorVersion );
+    eglChooseConfig(glDisplay, egl_config_attr, &glConfig, 1, &numConfigs);
+    SDL_SysWMinfo sysInfo;
+    SDL_VERSION(&sysInfo.version); //Set SDL version
+    SDL_GetWMInfo(&sysInfo);
+    glContext = eglCreateContext(glDisplay, glConfig, EGL_NO_CONTEXT, NULL);
+    glSurface=eglCreateWindowSurface(glDisplay,glConfig,(EGLNativeWindowType)sysInfo.info.x11.window,0);
+    eglMakeCurrent(glDisplay, glSurface, glSurface, glContext);
+    eglSwapInterval(glDisplay, 1);      // VSYNC
+    glVertexPointer(3,GL_FIXED,0,mesh);
+    glTexCoordPointer(2,GL_FIXED,0,mesht);
+    glFogf(GL_FOG_MODE,GL_LINEAR);
+    glAlphaFuncx(GL_GREATER,65536/2);
+#endif
 #ifdef PC32
     //screenwidth=800;
     //screenheight=600;
@@ -192,7 +261,7 @@ glAccum(GL_RETURN,1.0);
         SDL_GL_SwapBuffers();
 #endif
 
-#ifdef GP2X
+#if defined(GP2X) || defined (PC_GLES)
         eglSwapBuffers(glDisplay, glSurface);
 #endif
     }
@@ -201,7 +270,7 @@ glAccum(GL_RETURN,1.0);
 void zcore_video_down(void)
 {
     glDeleteTextures(256, zc_texture);
-#ifdef GP2X
+#if defined(GP2X) || defined (PC_GLES)
     eglDestroySurface(glDisplay, glSurface);
     eglDestroyContext(glDisplay, glContext);
     eglTerminate(glDisplay);
@@ -236,7 +305,7 @@ void zcore_sound_down(void)
 // Sound SubSystem End
 // Input SubSystem Begin
 
-#ifdef PC32
+#if defined(PC32) || defined(PC_GLES)
 int i_keyb[20];
 static const SDLKey code_keyb[20] = {
     SDLK_LCTRL, SDLK_SPACE, SDLK_LALT, SDLK_z, SDLK_LSHIFT, SDLK_x, SDLK_7, SDLK_8,
@@ -325,7 +394,7 @@ void zcore_input_frame(void)
     SDL_Event event;
     while (SDL_PollEvent(&event))
         switch (event.type) {
-#ifdef PC32
+#if defined(PC32) || defined(PC_GLES)
         case SDL_KEYDOWN:
             for (i = 0; i < 20; i++)
                 if (event.key.keysym.sym == code_keyb[i])
@@ -342,7 +411,7 @@ void zcore_input_frame(void)
             break;
         }
 
-#ifdef PC32
+#if defined(PC32) || defined(PC_GLES)
     for (k = 0; k < 16; k++) {
         if (i_keyb[k] > 0)
             s_button[k]++;
