@@ -85,3 +85,8 @@ lint.xml
 
 ### Android Patch ###
 gen-external-apklibs
+
+# Other
+jni/SDL2-2.0.5
+jni/build*
+res/drawable-*
