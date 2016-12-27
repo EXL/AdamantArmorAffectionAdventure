@@ -4,7 +4,11 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_mixer.h"
 #else
-#include "SDL2/SDL.h"
+#ifndef ANDROID_NDK
+#include <SDL2/SDL.h>
+#else
+#include <SDL.h>
+#endif
 #ifndef NO_SDL_MIXER
 #include "SDL2/SDL_mixer.h"
 #endif

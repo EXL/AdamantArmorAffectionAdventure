@@ -7,7 +7,11 @@
 #endif
 
 #if defined(GP2XCAANOO) || defined(PC_GLES)
+#ifndef ANDROID_NDK
 #include "GLES/egl.h"
+#else
+#include <EGL/egl.h>
+#endif
 #include "GLES/gl.h"
 #include "GLES/glext.h"
 #endif

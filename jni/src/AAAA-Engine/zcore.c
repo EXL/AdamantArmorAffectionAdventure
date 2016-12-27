@@ -4,7 +4,11 @@
 #include "SDL/SDL_mixer.h"
 #endif
 #else
+#ifndef ANDROID_NDK
 #include <SDL2/SDL.h>
+#else
+#include <SDL.h>
+#endif
 #ifndef NO_SDL_MIXER
 #include <SDL2/SDL_mixer.h>
 #endif
@@ -26,12 +30,20 @@ SDL_Surface* screen = NULL;
 #ifdef PC_GLES
 //#include <X11/Xlib.h>
 #include "GLES/gl.h"
+#ifndef ANDROID_NDK
 #include "GLES/egl.h"
+#else
+#include <EGL/egl.h>
+#endif
 #include "GLES/glext.h"
 #ifndef SDL2_PORT
 #include <SDL/SDL_syswm.h>
 #else
+#ifndef ANDROID_NDK
 #include <SDL2/SDL_syswm.h>
+#else
+#include <SDL_syswm.h>
+#endif
 #endif
 #endif
 
@@ -210,7 +222,11 @@ void zcore_video_init(void)
     SDL_GetWindowWMInfo(globalWindow, &sysInfo);
     glContext = eglCreateContext(glDisplay, glConfig, EGL_NO_CONTEXT, NULL);
     // Test This 0 on Android??
+#ifndef ANDROID_NDK
     glSurface=eglCreateWindowSurface(glDisplay,glConfig,(EGLNativeWindowType)sysInfo.info.x11.window,0);
+#else
+    glSurface=eglCreateWindowSurface(glDisplay,glConfig,0,0);
+#endif
     eglMakeCurrent(glDisplay, glSurface, glSurface, glContext);
     eglSwapInterval(glDisplay, 1);      // VSYNC
     glVertexPointer(3,GL_FIXED,0,mesh);

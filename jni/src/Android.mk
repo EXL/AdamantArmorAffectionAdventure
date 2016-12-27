@@ -2,15 +2,17 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := AAAA-engine
+LOCAL_MODULE := AAAA-Engine
 
-SDL_PATH := ../SDL-2.0.5
+SDL_PATH := ../SDL2-2.0.5
 
 AAAA_PATH := AAAA-Engine
 
 DEFINES := -DPC_GLES -DSDL2_PORT -DNO_SDL_MIXER -DANDROID_NDK
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include $(LOCAL_PATH)/$(AAAA_PATH) $(DEFINES)
+LOCAL_CFLAGS += -O3 -ffast-math -fomit-frame-pointer $(DEFINES)
+
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include $(LOCAL_PATH)/$(AAAA_PATH)
 
 # Add your application source files here...
 LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
@@ -46,6 +48,6 @@ LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
 
 LOCAL_SHARED_LIBRARIES := SDL2
 
-LOCAL_LDLIBS := -lGLESv1_CM -lGLESv2 -llog
+LOCAL_LDLIBS := -lEGL -lGLESv1_CM -lGLESv2 -llog
 
 include $(BUILD_SHARED_LIBRARY)
