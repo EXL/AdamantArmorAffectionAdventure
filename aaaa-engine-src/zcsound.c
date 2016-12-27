@@ -1,10 +1,19 @@
 #include "vars.h"
 
+#ifndef SDL2_PORT
 #include "SDL/SDL.h"
 #include "SDL/SDL_mixer.h"
+#else
+#include "SDL2/SDL.h"
+#ifndef NO_SDL_MIXER
+#include "SDL2/SDL_mixer.h"
+#endif
+#endif
 
+#ifndef NO_SDL_MIXER
 Mix_Chunk* zc_sdn[64];
 Mix_Music* m_music = NULL;
+#endif
 
 u8 last_bgm = 255, bgm_vol = 0;
 
@@ -14,17 +23,19 @@ u8 idchannel = 0;
 
 void zcinitsound(void)
 {
+#ifndef NO_SDL_MIXER
     u8 i;
-
     for (i = 0; i < soundbanks; i++) {
         zc_sdn[i] = NULL;
         sprintf(spath, "sfx/%i%i.wav", i / 10, i % 10);
         zc_sdn[i] = Mix_LoadWAV(spath);
     }
+#endif
 }
 
 void zcplaysound(unsigned char index)
 {
+#ifndef NO_SDL_MIXER
     s32 r, l;
     if (configdata[8] > 0)
         if (index > 0)
@@ -35,10 +46,12 @@ void zcplaysound(unsigned char index)
                 Mix_PlayChannel(idchannel, zc_sdn[index], 0);
                 idchannel = ((idchannel + 1) & 3);
             }
+#endif
 }
 
 void zcsoundstep(void)
 {
+#ifndef NO_SDL_MIXER
     if (bgm_vol != configdata[9]) {
         bgm_vol = configdata[9];
         Mix_VolumeMusic(bgm_vol);
@@ -54,11 +67,13 @@ void zcsoundstep(void)
             //Mix_SetMusicPosition(10.0);//Waiting new firmware
             last_bgm = bgm;
         }
+#endif
 }
 #define FPML(x, y) ((((x) >> 7) * ((y) >> 7)) >> 2)
 
 void zcplaysound3d(unsigned char index, unsigned char ssize, signed long xx, signed long yy, signed long zz)
 {
+#ifndef NO_SDL_MIXER
     s32 vx, vy, vz, ss, r, l, v, v1, range;
     float f_range;
 
@@ -120,4 +135,5 @@ void zcplaysound3d(unsigned char index, unsigned char ssize, signed long xx, sig
                     }
                 }
             }
+#endif
 }

@@ -7,9 +7,10 @@ TARGET = aaaa-engine
 
 INCLUDEPATH += . aaaa-engine-src/
 
-DEFINES += PC_GLES
+DEFINES += PC_GLES SDL2_PORT NO_SDL_MIXER
 
-LIBS += -lSDL -lSDL_mixer -lGLESv1_CM -lEGL -lX11
+LIBS += -lSDL2 # -lSDL2_mixer
+LIBS += -lGLESv1_CM -lEGL -lX11
 
 # Input
 HEADERS += aaaa-engine-src/bullets.h \

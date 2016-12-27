@@ -1,5 +1,14 @@
+#ifndef SDL2_PORT
 #include "SDL/SDL.h"
+#ifndef NO_SDL_MIXER
 #include "SDL/SDL_mixer.h"
+#endif
+#else
+#include <SDL2/SDL.h>
+#ifndef NO_SDL_MIXER
+#include <SDL2/SDL_mixer.h>
+#endif
+#endif
 
 #ifdef PC32
 
@@ -19,7 +28,12 @@ SDL_Surface* screen = NULL;
 #include "GLES/gl.h"
 #include "GLES/egl.h"
 #include "GLES/glext.h"
+#ifndef SDL2_PORT
 #include <SDL/SDL_syswm.h>
+#else
+#include <SDL2/SDL_syswm.h>
+#endif
+#endif
 
 Display *g_x11Display = NULL;
 #endif
@@ -70,7 +84,11 @@ EGLint attrib_list_fsaa[] = { EGL_SURFACE_TYPE, EGL_WINDOW_BIT, EGL_BUFFER_SIZE,
 EGLint attrib_list[] = { EGL_SURFACE_TYPE, EGL_WINDOW_BIT, EGL_BUFFER_SIZE, 16, EGL_DEPTH_SIZE, 16, EGL_NONE };
 #endif
 
+#ifndef SDL2_PORT
 SDL_Surface* screen = NULL;
+#else
+SDL_Window *globalWindow;
+// SDL_GLContext *glContext_SDL;
 #endif
 
 SDL_Joystick* gamepad = NULL;
@@ -174,7 +192,10 @@ void zcore_video_init(void)
     //screenheight=480;
     EGLint numConfigs,majorVersion,minorVersion;
     int screenbpp=16;
-    screen=SDL_SetVideoMode(screenwidth,screenheight,screenbpp, SDL_SWSURFACE); // | SDL_FULLSCREEN);
+
+    globalWindow = SDL_CreateWindow("AAAA", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+                                    screenwidth, screenheight,0?(SDL_WINDOW_OPENGL|SDL_WINDOW_FULLSCREEN):SDL_WINDOW_OPENGL);
+    //screen=SDL_SetVideoMode(screenwidth,screenheight,screenbpp, SDL_SWSURFACE); // | SDL_FULLSCREEN);
     g_x11Display = XOpenDisplay(NULL);
     #define _EGL_DSP (EGLNativeDisplayType)g_x11Display
     glDisplay=eglGetDisplay(_EGL_DSP);
@@ -182,7 +203,7 @@ void zcore_video_init(void)
     eglChooseConfig(glDisplay, egl_config_attr, &glConfig, 1, &numConfigs);
     SDL_SysWMinfo sysInfo;
     SDL_VERSION(&sysInfo.version); //Set SDL version
-    SDL_GetWMInfo(&sysInfo);
+    SDL_GetWindowWMInfo(globalWindow, &sysInfo);
     glContext = eglCreateContext(glDisplay, glConfig, EGL_NO_CONTEXT, NULL);
     glSurface=eglCreateWindowSurface(glDisplay,glConfig,(EGLNativeWindowType)sysInfo.info.x11.window,0);
     eglMakeCurrent(glDisplay, glSurface, glSurface, glContext);
@@ -285,8 +306,10 @@ void zcore_sound_init(void)
 {
     SDL_InitSubSystem(SDL_INIT_AUDIO);
 
+#ifndef NO_SDL_MIXER
     Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers);
     Mix_QuerySpec(&audio_rate, &audio_format, &audio_channels);
+#endif
 
     zcinitsound();
 }
@@ -298,8 +321,9 @@ void zcore_sound_frame(void)
 
 void zcore_sound_down(void)
 {
-
+#ifndef NO_SDL_MIXER
     Mix_CloseAudio();
+#endif
 }
 
 // Sound SubSystem End
@@ -307,7 +331,7 @@ void zcore_sound_down(void)
 
 #if defined(PC32) || defined(PC_GLES)
 int i_keyb[20];
-static const SDLKey code_keyb[20] = {
+static const SDL_Keycode code_keyb[20] = {
     SDLK_LCTRL, SDLK_SPACE, SDLK_LALT, SDLK_z, SDLK_LSHIFT, SDLK_x, SDLK_7, SDLK_8,
     SDLK_ESCAPE, SDLK_c, SDLK_q, SDLK_w, SDLK_e, SDLK_r, SDLK_t, SDLK_BACKSPACE,
     SDLK_UP, SDLK_RIGHT, SDLK_DOWN, SDLK_LEFT
