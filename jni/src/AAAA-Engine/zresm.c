@@ -562,7 +562,7 @@ void applycheats(void)
     }
 
     // 2. Open all levels
-    for (i = 16; i <= 32; ++i) {
+    for (i = 16; i < 32; ++i) {
         configdata[i] = 99;
     }
 
