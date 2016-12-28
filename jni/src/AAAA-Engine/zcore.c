@@ -201,6 +201,21 @@ void zcore_video_init(void)
 
 #ifdef ANDROID_NDK
     // EXL: Android OpenGLES 1.1 via SDL2 initialization
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,8);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,8);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,24);
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE,0);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE,0);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_GREEN_SIZE,0);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE,0);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE,0);
+
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1); // TODO: Check this.
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+
     globalWindow = SDL_CreateWindow("AAAA", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                     screenwidth, screenheight, SDL_WINDOW_OPENGL);
 
@@ -210,16 +225,6 @@ void zcore_video_init(void)
     // Update Size
     SDL_GetWindowSize(globalWindow, &screenwidth, &screenheight);
     TO_DEBUG_LOG("Resize SDL window: %dx%d\n", screenwidth, screenheight);
-
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,8);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,8);
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,24);
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1); // TODO: Check this.
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
 
     glContext_SDL = SDL_GL_CreateContext(globalWindow);
 
