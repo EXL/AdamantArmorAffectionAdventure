@@ -190,8 +190,8 @@ void coreupdatetextures(void)
 
 void zcore_video_init(void)
 {
-    screenwidth = 888;
-    screenheight = 540;
+    screenwidth = 800;
+    screenheight = 480;
     SDL_InitSubSystem(SDL_INIT_VIDEO);
     SDL_ShowCursor(0);
 
@@ -200,12 +200,24 @@ void zcore_video_init(void)
     globalWindow = SDL_CreateWindow("AAAA", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                     screenwidth, screenheight, SDL_WINDOW_OPENGL);
 
+    TO_DEBUG_LOG("Init SDL window: %dx%d\n", screenwidth, screenheight);
     SDL_SetWindowFullscreen(globalWindow, SDL_TRUE);
 
+    // Update Size
+    SDL_GetWindowSize(globalWindow, &screenwidth, &screenheight);
+    TO_DEBUG_LOG("Resize SDL window: %dx%d\n", screenwidth, screenheight);
+
+#if 1
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+#else
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,8);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,8);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,24);
+#endif
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
