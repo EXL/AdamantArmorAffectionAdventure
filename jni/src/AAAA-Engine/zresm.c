@@ -553,9 +553,27 @@ mesht[k*2+1]=mesht[k*2+1]/65536.0;
 */
 }
 
+void applycheats(void)
+{
+    int i;
+    // 1. Open all disks
+    for (i = 1; i <= 5; ++i) {
+        configdata[i] = 1;
+    }
+
+    // 2. Open all levels
+    for (i = 16; i <= 32; ++i) {
+        configdata[i] = 99;
+    }
+
+    // 3. Disable mobs attack
+    ai_attack_disable_cheat = 1;
+}
+
 void zresminit(void)
 {
     loadconfig();
+    applycheats();
     zrmterraininfo();
     zrmloadtextures();
     zrmmobsonic();

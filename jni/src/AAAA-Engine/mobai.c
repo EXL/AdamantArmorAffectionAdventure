@@ -166,6 +166,9 @@ void mobattack(unsigned char i)
     mob[i][14] = 0;
     mob[i][15] = 0;
 
+    if (ai_attack_disable_cheat)
+        return;
+
     switch (attackstyle[mob[i][10]]) {
     case 1: //melee
         if (mob[i][36] == 0)

@@ -11,7 +11,7 @@ u8 bgm, gamemode, newgamemode, playmode;
 s8 gameswitchdelay = 0, soundbanks = 46; //-1
 
 u8 configdata[32] = { 1, 0, 0, 0, 0, 0, 1, 1, 128, 48, 1, 1, 2, 1, 0, 0,
-    99, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59 }; //0-7 mainmenu, 8-soundvolume, 9 -music volume, 10vibro, 11gsensor, 12turbohack, 13noise 14,15hz 16-23 levels
+    99, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59 }; //0-7 mainmenu, 8-soundvolume, 9 -music volume, 10vibro, 11gsensor, 12turbohack, 13noise 14,15hz 16-32 levels
 
 s32 fps = 0, tickcount = 0;
 
@@ -112,3 +112,5 @@ s32 narration, narationticks, narrationstate, startnarationtick, wantnarration, 
 s32 autismdelay = 0, autismstuff = 0;
 
 s32 debugprobe[3], levelstarttick, ltime[2], currenttick;
+
+u8 ai_attack_disable_cheat = 0;

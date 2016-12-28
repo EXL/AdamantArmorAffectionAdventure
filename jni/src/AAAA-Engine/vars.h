@@ -125,3 +125,5 @@ extern s32 narration, narationticks, narrationstate, startnarationtick, wantnarr
 extern s32 autismdelay, autismstuff;
 
 extern s32 debugprobe[3], levelstarttick, ltime[2], currenttick;
+
+extern u8 ai_attack_disable_cheat;
