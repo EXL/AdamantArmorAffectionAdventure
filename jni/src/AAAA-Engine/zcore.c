@@ -211,17 +211,10 @@ void zcore_video_init(void)
     SDL_GetWindowSize(globalWindow, &screenwidth, &screenheight);
     TO_DEBUG_LOG("Resize SDL window: %dx%d\n", screenwidth, screenheight);
 
-#if 1
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
-#else
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,8);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,8);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,24);
-#endif
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
