@@ -100,7 +100,7 @@ EGLint attrib_list[] = { EGL_SURFACE_TYPE, EGL_WINDOW_BIT, EGL_BUFFER_SIZE, 16, 
 SDL_Surface* screen = NULL;
 #else
 SDL_Window *globalWindow;
-// SDL_GLContext *glContext_SDL;
+SDL_GLContext *glContext_SDL;
 #endif
 
 SDL_Joystick* gamepad = NULL;
@@ -184,12 +184,35 @@ void coreupdatetextures(void)
 
 void zcore_video_init(void)
 {
-    screenwidth = 800;
-    screenheight = 480;
+    screenwidth = 888;
+    screenheight = 540;
     SDL_InitSubSystem(SDL_INIT_VIDEO);
     SDL_ShowCursor(0);
     //SDL_ShowCursor(0);
+
 #ifdef PC_GLES
+    globalWindow = SDL_CreateWindow("AAAA", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+                                    screenwidth, screenheight, SDL_WINDOW_OPENGL);
+
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1); // TODO: Check this.
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+
+    glContext_SDL = SDL_GL_CreateContext(globalWindow);
+
+    glVertexPointer(3,GL_FIXED,0,mesh);
+    glTexCoordPointer(2,GL_FIXED,0,mesht);
+    glFogf(GL_FOG_MODE,GL_LINEAR);
+    glAlphaFuncx(GL_GREATER,65536/2);
+#endif
+
+#if 0
     // const char* output;
     // EGLBoolean result;
     EGLint egl_config_attr[] = {
@@ -280,7 +303,7 @@ void zcore_video_init(void)
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    //glLoadIdentity();
+    glLoadIdentity();
     coreupdatetextures();
 }
 
@@ -301,7 +324,8 @@ glAccum(GL_RETURN,1.0);
 #endif
 
 #if defined(GP2X) || defined (PC_GLES)
-        eglSwapBuffers(glDisplay, glSurface);
+        //eglSwapBuffers(glDisplay, glSurface);
+        SDL_GL_SwapWindow(globalWindow);
 #endif
     }
 }

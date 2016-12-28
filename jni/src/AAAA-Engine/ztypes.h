@@ -1,10 +1,10 @@
 typedef unsigned char u8;
 typedef unsigned int u16;
-typedef unsigned long long u32; // 8 ?
+typedef unsigned long u32; // 8 ?
 
 typedef signed char s8;
 typedef signed int s16;
-typedef signed long long s32;
+typedef signed long s32;
 
 enum ZLGAME_MODES {
     ZGM_NONE,
