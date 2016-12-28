@@ -8,9 +8,9 @@ CONFIG -= qt
 
 INCLUDEPATH += . AAAA-Engine/
 
-DEFINES += PC_GLES SDL2_PORT NO_SDL_MIXER
+DEFINES += PC_GLES SDL2_PORT
 
-LIBS += -lSDL2 # -lSDL2_mixer
+LIBS += -lSDL2 -lSDL2_mixer
 LIBS += -lGLESv1_CM -lEGL
 
 # Input

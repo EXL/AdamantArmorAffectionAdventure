@@ -10,7 +10,7 @@
 #include <SDL.h>
 #endif
 #ifndef NO_SDL_MIXER
-#include "SDL2/SDL_mixer.h"
+#include <SDL2/SDL_mixer.h>
 #endif
 #endif
 
@@ -67,7 +67,7 @@ void zcsoundstep(void)
     if (bgm != last_bgm)
         if (configdata[9] > 0) {
 #ifndef ANDROID_NDK
-            sprintf(spath, "/storage/sdcard1/AAAA-Data/bgm/%i%i.ogg", bgm / 10, bgm % 10);
+            sprintf(spath, "bgm/%i%i.ogg", bgm / 10, bgm % 10);
 #else
             sprintf(spath, "/storage/sdcard1/AAAA-Data/bgm/%i%i.ogg", bgm / 10, bgm % 10);
 #endif
