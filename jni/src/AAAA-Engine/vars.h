@@ -21,13 +21,13 @@ extern s32 fps, tickcount;
 extern u8 secretskin;
 #define MESH_CNT 16384
 
-// For replacing main() to SDL_main()
 #ifdef ANDROID_NDK
-#include <SDL.h>
+// EXL: For replacing main() to SDL_main() need include SDL.h in main.c
 
+#include <SDL.h>
 #include <android/log.h>
 
-#define LOG_TAG "KenLab3D"
+#define LOG_TAG "AAAA"
 #define LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define TO_DEBUG_LOG(...) LOGI(__VA_ARGS__)
 #else
@@ -40,9 +40,8 @@ extern GLfloat mesh[MESH_CNT * 3];
 extern GLfloat mesht[MESH_CNT * 2];
 #endif
 
-#if defined(GP2X) || defined(PC_GLES)
-
-#if defined(GP2XCAANOO) || defined(PC_GLES)
+#if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
+#if defined(GP2XCAANOO) || defined(PC_GLES) || defined(ANDROID_NDK)
 #include "GLES/gl.h"
 #endif
 #ifdef GP2XWIZ

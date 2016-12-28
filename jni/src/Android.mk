@@ -8,7 +8,7 @@ SDL_PATH := ../SDL2-2.0.5
 
 AAAA_PATH := AAAA-Engine
 
-DEFINES := -DPC_GLES -DSDL2_PORT -DNO_SDL_MIXER -DANDROID_NDK
+DEFINES := -DSDL2_PORT -DNO_SDL_MIXER -DANDROID_NDK
 
 LOCAL_CFLAGS += -O3 -ffast-math -fomit-frame-pointer $(DEFINES)
 
@@ -48,6 +48,6 @@ LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
 
 LOCAL_SHARED_LIBRARIES := SDL2
 
-LOCAL_LDLIBS := -lEGL -lGLESv1_CM -lGLESv2 -llog
+LOCAL_LDLIBS := -lGLESv1_CM -lGLESv2 -llog
 
 include $(BUILD_SHARED_LIBRARY)

@@ -25,8 +25,8 @@ GLfloat mesh[MESH_CNT * 3];
 GLfloat mesht[MESH_CNT * 2];
 #endif
 
-#if defined(GP2X) || defined(PC_GLES)
-#if defined(GP2XCAANOO) || defined(PC_GLES)
+#if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
+#if defined(GP2XCAANOO) || defined(PC_GLES) || defined(ANDROID_NDK)
 #include "GLES/gl.h"
 #endif
 #ifdef GP2XWIZ

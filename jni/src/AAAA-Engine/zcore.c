@@ -26,23 +26,26 @@ SDL_Surface* screen = NULL;
 #include "Panel/fake_os.h"
 #endif
 
-#if defined(GP2X) || defined(PC_GLES)
-#ifdef PC_GLES
+#if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
+#if defined(PC_GLES) || defined(ANDROID_NDK)
+// EXL: Drop X11
 //#include <X11/Xlib.h>
 #include "GLES/gl.h"
+#include "GLES/glext.h"
 #ifndef ANDROID_NDK
 #include "GLES/egl.h"
-#else
-#include <EGL/egl.h>
+// EXL: Drop EGL in Android
+//#else
+//#include <EGL/egl.h>
 #endif
-#include "GLES/glext.h"
 #ifndef SDL2_PORT
 #include <SDL/SDL_syswm.h>
 #else
 #ifndef ANDROID_NDK
 #include <SDL2/SDL_syswm.h>
-#else
-#include <SDL_syswm.h>
+// EXL: Drop SDL2 => EGL bindings...
+//#else
+//#include <SDL_syswm.h>
 #endif
 #endif
 #endif
@@ -60,6 +63,8 @@ SDL_Surface* screen = NULL;
 #include "OpenGLES/glext.h"
 #endif
 
+#ifndef ANDROID_NDK
+// EXL: Drop EGL
 EGLDisplay glDisplay;
 EGLConfig glConfig;
 EGLContext glContext;
@@ -95,12 +100,13 @@ EGLint attrib_list[]= {
 EGLint attrib_list_fsaa[] = { EGL_SURFACE_TYPE, EGL_WINDOW_BIT, EGL_BUFFER_SIZE, 16, EGL_DEPTH_SIZE, 16, EGL_SAMPLE_BUFFERS, 1, EGL_SAMPLES, 4, EGL_NONE };
 EGLint attrib_list[] = { EGL_SURFACE_TYPE, EGL_WINDOW_BIT, EGL_BUFFER_SIZE, 16, EGL_DEPTH_SIZE, 16, EGL_NONE };
 #endif
+#endif
 
 #ifndef SDL2_PORT
 SDL_Surface* screen = NULL;
 #else
-SDL_Window *globalWindow;
-SDL_GLContext *glContext_SDL;
+SDL_Window *globalWindow = NULL;
+SDL_GLContext *glContext_SDL = NULL;
 #endif
 
 SDL_Joystick* gamepad = NULL;
@@ -188,11 +194,13 @@ void zcore_video_init(void)
     screenheight = 540;
     SDL_InitSubSystem(SDL_INIT_VIDEO);
     SDL_ShowCursor(0);
-    //SDL_ShowCursor(0);
 
-#ifdef PC_GLES
+#ifdef ANDROID_NDK
+    // EXL: Android OpenGLES 1.1 via SDL2 initialization
     globalWindow = SDL_CreateWindow("AAAA", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                     screenwidth, screenheight, SDL_WINDOW_OPENGL);
+
+    SDL_SetWindowFullscreen(globalWindow, SDL_TRUE);
 
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
@@ -212,7 +220,7 @@ void zcore_video_init(void)
     glAlphaFuncx(GL_GREATER,65536/2);
 #endif
 
-#if 0
+#ifdef PC_GLES
     // const char* output;
     // EGLBoolean result;
     EGLint egl_config_attr[] = {
@@ -242,19 +250,15 @@ void zcore_video_init(void)
     SDL_GetWindowWMInfo(globalWindow, &sysInfo);
     glContext = eglCreateContext(glDisplay, glConfig, EGL_NO_CONTEXT, NULL);
     // Test This 0 on Android??
-#ifndef ANDROID_NDK
     glSurface=eglCreateWindowSurface(glDisplay,glConfig,(EGLNativeWindowType)sysInfo.info.x11.window,0);
-#else
-    glSurface=sysInfo.info.android.surface;
-    SDL_SetWindowFullscreen(globalWindow, SDL_TRUE);
-#endif
     eglMakeCurrent(glDisplay, glSurface, glSurface, glContext);
     eglSwapInterval(glDisplay, 1);      // VSYNC
     glVertexPointer(3,GL_FIXED,0,mesh);
     glTexCoordPointer(2,GL_FIXED,0,mesht);
-    //glFogf(GL_FOG_MODE,GL_LINEAR);
+    glFogf(GL_FOG_MODE,GL_LINEAR);
     glAlphaFuncx(GL_GREATER,65536/2);
 #endif
+
 #ifdef PC32
     //screenwidth=800;
     //screenheight=600;
@@ -277,6 +281,7 @@ void zcore_video_init(void)
     glClear(GL_ACCUM_BUFFER_BIT);
 //glHint (GL_FOG_HINT, GL_NICEST);
 #endif
+
 #ifdef GP2X
     screen = SDL_SetVideoMode(320, 240, 16, SDL_OPENGL);
     EGLint numConfigs, majorVersion, minorVersion;
@@ -303,7 +308,7 @@ void zcore_video_init(void)
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glLoadIdentity();
+    //glLoadIdentity();
     coreupdatetextures();
 }
 
@@ -313,19 +318,21 @@ void zcore_video_frame(void)
         coreupdatetextures();
         corerenderrender();
 
-#ifdef PC32
+#if defined(PC32) || defined(ANDROID_NDK)
         /*
 glAccum(GL_MULT,0.5);
 glAccum(GL_ACCUM,0.5);
 glAccum(GL_RETURN,1.0);
 */
-
+#ifndef SDL2_PORT
         SDL_GL_SwapBuffers();
+#else
+        SDL_GL_SwapWindow(globalWindow);
+#endif
 #endif
 
 #if defined(GP2X) || defined (PC_GLES)
-        //eglSwapBuffers(glDisplay, glSurface);
-        SDL_GL_SwapWindow(globalWindow);
+        eglSwapBuffers(glDisplay, glSurface);
 #endif
     }
 }
@@ -333,11 +340,17 @@ glAccum(GL_RETURN,1.0);
 void zcore_video_down(void)
 {
     glDeleteTextures(256, zc_texture);
-#if defined(GP2X) || defined (PC_GLES)
+#if defined(GP2X) || defined(PC_GLES)
     eglDestroySurface(glDisplay, glSurface);
     eglDestroyContext(glDisplay, glContext);
     eglTerminate(glDisplay);
     free(hNativeWnd);
+#endif
+#ifdef SDL2_PORT
+    SDL_GL_DeleteContext(glContext_SDL);
+    glContext_SDL = NULL;
+    SDL_DestroyWindow(globalWindow);
+    globalWindow = NULL;
 #endif
 }
 
@@ -370,6 +383,16 @@ void zcore_sound_down(void)
 
 // Sound SubSystem End
 // Input SubSystem Begin
+
+#ifdef ANDROID_NDK
+int i_keyb[20];
+static const SDL_Keycode code_keyb[20] = {
+    SDLK_LCTRL, SDLK_SPACE, SDLK_LALT, SDLK_z, SDLK_LSHIFT, SDLK_x, SDLK_7, SDLK_8,
+    SDLK_ESCAPE, SDLK_c, SDLK_q, SDLK_w, SDLK_e, SDLK_r, SDLK_t, SDLK_BACKSPACE,
+    SDLK_UP, SDLK_RIGHT, SDLK_DOWN, SDLK_LEFT
+};
+s8 jkey_map[16] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1, -1, -1, -1 };
+#endif
 
 #if defined(PC32) || defined(PC_GLES)
 int i_keyb[20];
@@ -460,7 +483,7 @@ void zcore_input_frame(void)
     SDL_Event event;
     while (SDL_PollEvent(&event))
         switch (event.type) {
-#if defined(PC32) || defined(PC_GLES)
+#if defined(PC32) || defined(PC_GLES) || defined(ANDROID_NDK)
         case SDL_KEYDOWN:
             for (i = 0; i < 20; i++)
                 if (event.key.keysym.sym == code_keyb[i])
@@ -477,7 +500,7 @@ void zcore_input_frame(void)
             break;
         }
 
-#if defined(PC32) || defined(PC_GLES)
+#if defined(PC32) || defined(PC_GLES) || defined(ANDROID_NDK)
     for (k = 0; k < 16; k++) {
         if (i_keyb[k] > 0)
             s_button[k]++;
