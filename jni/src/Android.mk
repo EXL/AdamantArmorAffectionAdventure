@@ -5,14 +5,15 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := AAAA-Engine
 
 SDL_PATH := ../SDL2-2.0.5
+SDL_MIXER_PATH := ../SDL2_mixer-2.0.1
 
 AAAA_PATH := AAAA-Engine
 
-DEFINES := -DSDL2_PORT -DNO_SDL_MIXER -DANDROID_NDK
+DEFINES := -DSDL2_PORT -DANDROID_NDK
 
 LOCAL_CFLAGS += -O3 -ffast-math -fomit-frame-pointer $(DEFINES)
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include $(LOCAL_PATH)/$(AAAA_PATH)
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include $(LOCAL_PATH)/$(SDL_MIXER_PATH) $(LOCAL_PATH)/$(AAAA_PATH)
 
 # Add your application source files here...
 LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
@@ -46,7 +47,7 @@ LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
 	$(AAAA_PATH)/zresm.c
 
 
-LOCAL_SHARED_LIBRARIES := SDL2
+LOCAL_SHARED_LIBRARIES := SDL2 SDL2_mixer
 
 LOCAL_LDLIBS := -lGLESv1_CM -lGLESv2 -llog
 

@@ -10,7 +10,11 @@
 #include <SDL.h>
 #endif
 #ifndef NO_SDL_MIXER
+#ifndef ANDROID_NDK
 #include <SDL2/SDL_mixer.h>
+#else
+#include <SDL_mixer.h>
+#endif
 #endif
 #endif
 
