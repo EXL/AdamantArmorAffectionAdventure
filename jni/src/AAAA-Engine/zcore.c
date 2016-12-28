@@ -387,9 +387,10 @@ void zcore_sound_down(void)
 #ifdef ANDROID_NDK
 int i_keyb[20];
 static const SDL_Keycode code_keyb[20] = {
-    SDLK_LCTRL, SDLK_SPACE, SDLK_LALT, SDLK_z, SDLK_LSHIFT, SDLK_x, SDLK_7, SDLK_8,
-    SDLK_ESCAPE, SDLK_c, SDLK_q, SDLK_w, SDLK_e, SDLK_r, SDLK_t, SDLK_BACKSPACE,
-    SDLK_UP, SDLK_RIGHT, SDLK_DOWN, SDLK_LEFT
+    // EXL: Motorola Photon Q and Motorola Droid 4 hardware keyboard mapping
+    SDLK_BACKSPACE, SDLK_SPACE, SDLK_RETURN, SDLK_z, SDLK_LSHIFT, SDLK_x, SDLK_b, SDLK_n,
+    SDLK_AC_BACK, SDLK_c, SDLK_f, SDLK_g, SDLK_h, SDLK_j, SDLK_k, SDLK_1,
+    SDLK_w, SDLK_d, SDLK_s, SDLK_a
 };
 s8 jkey_map[16] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1, -1, -1, -1 };
 #endif
@@ -426,6 +427,11 @@ void zcore_input_init(void)
     if (SDL_NumJoysticks() > 0) {
         gamepad = SDL_JoystickOpen(0);
     }
+#ifdef ANDROID_NDK
+    for (i = 0; i < SDL_NumJoysticks(); ++i) {
+        TO_DEBUG_LOG("SDL Joystick %d: %s\n", i, SDL_JoystickNameForIndex(i));
+    }
+#endif
 }
 
 u16 s_button[16];
@@ -440,8 +446,10 @@ void zcore_input_frame(void)
         SDL_JoystickUpdate();
         for (k = 0; k < 16; k++)
             if (jkey_map[k] >= 0) {
-                if (SDL_JoystickGetButton(gamepad, jkey_map[k]) > 0)
+                if (SDL_JoystickGetButton(gamepad, jkey_map[k]) > 0) {
+//                    TO_DEBUG_LOG("JP %d, k: %d", jkey_map[k], k);
                     s_button[k]++;
+                }
                 else
                     s_button[k] = 0;
             }
@@ -474,6 +482,22 @@ void zcore_input_frame(void)
         } else if (SDL_JoystickGetButton(gamepad, 7) > 0) {
             axis[1] = -128;
             axis[0] = 128;
+        }
+#elif ANDROID_NDK
+        // EXL: Since SDL2 2.0.5 DPAD connected as Joystick
+        if (SDL_JoystickGetButton(gamepad, 11) > 0) // DPAD UP
+            axis[1] = -128;
+        else if (SDL_JoystickGetButton(gamepad, 13) > 0) { // DPAD LEFT
+            axis[1] = 0;
+            axis[0] = -128;
+        } else if (SDL_JoystickGetButton(gamepad, 12) > 0) { // DPAD DOWN
+            axis[1] = 128;
+            axis[0] = 0;
+        } else if (SDL_JoystickGetButton(gamepad, 14) > 0) { // DPAD RIGHT
+            axis[1] = 0;
+            axis[0] = 128;
+        } else if (SDL_JoystickGetButton(gamepad, 19) > 0) { // DPAD OK
+            s_button[0]++; // 0 - is index for firekey
         }
 #endif
     } else
