@@ -62,7 +62,7 @@ extern u8 meshtid[MESH_CNT];
 
 extern u8 textureheader[256][4], texturereload[256];
 extern u16 texturedata[1048576 * 5 / 2];
-extern u32 texturepointer[128];
+extern u32 texturepointer[256];
 
 extern u16 meshcount;
 
