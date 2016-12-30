@@ -559,6 +559,7 @@ void zcore_input_frame(void)
         else
             button[i] = 0;
 
+#ifndef ANDROID_NDK
     //TouchMouse
     if (SDL_GetMouseState(&mouseaxis[0], &mouseaxis[1]))
         s_mbutton++;
@@ -580,7 +581,7 @@ void zcore_input_frame(void)
         mousetapfade = 32;
     else if (mousetapfade > 0)
         mousetapfade--;
-
+#endif
 #ifdef GP2XWIZ
     if (button[6]) {
         if (configdata[8] > 0)
