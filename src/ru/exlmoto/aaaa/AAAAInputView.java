@@ -64,6 +64,8 @@ public class AAAAInputView extends View {
 
 		paint.setFilterBitmap(true);
 		paint.setAntiAlias(true);
+
+		// Joystick
 		if (p0id >= 0) {
 			paint.setARGB(16, 255, 255, 255);
 			canvas.drawCircle(p0x, p0y, radius << 1, paint);
@@ -216,7 +218,7 @@ public class AAAAInputView extends View {
 	}
 
 	public void pressKey(int keyCode) {
-		AAAAActivity.toDebugLog(keyCode + " pushed!");
+		// AAAAActivity.toDebugLog(keyCode + " pushed!");
 		switch (keyCode) {
 		case KC_GAME_A:
 			SDLActivity.onNativeKeyDown(KC_SDL_A);
@@ -258,7 +260,7 @@ public class AAAAInputView extends View {
 	}
 
 	public void releaseKey(int keyCode) {
-		AAAAActivity.toDebugLog(keyCode + " released!");
+		// AAAAActivity.toDebugLog(keyCode + " released!");
 		switch (keyCode) {
 		case KC_GAME_A:
 			SDLActivity.onNativeKeyUp(KC_SDL_A);
