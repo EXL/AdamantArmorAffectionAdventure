@@ -403,7 +403,7 @@ int i_keyb[20];
 static const SDL_Keycode code_keyb[20] = {
     // EXL: Motorola Photon Q and Motorola Droid 4 hardware keyboard mapping
     SDLK_BACKSPACE, SDLK_SPACE, SDLK_RETURN, SDLK_z, SDLK_LSHIFT, SDLK_x, SDLK_b, SDLK_n,
-    SDLK_AC_BACK, SDLK_c, SDLK_f, SDLK_g, SDLK_h, SDLK_j, SDLK_k, SDLK_1,
+    SDLK_AC_BACK, SDLK_c, SDLK_f, SDLK_g, SDLK_h, SDLK_j, SDLK_k, SDLK_0,
     SDLK_w, SDLK_d, SDLK_s, SDLK_a
 };
 s8 jkey_map[16] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1, -1, -1, -1 };
