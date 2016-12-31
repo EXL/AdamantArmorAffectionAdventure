@@ -577,21 +577,21 @@ void zresminit(void)
     zrmterraininfo();
     zrmloadtextures();
     zrmmobsonic();
-    //gamemode=ZGM_GAMEPLAY;
-    //newgamemode=ZGM_GAMEPLAY;
+    gamemode=ZGM_GAMEPLAY;
+    newgamemode=ZGM_GAMEPLAY;
     //playmode=ZPM_EDIT;
     //level=255;
     //premeshccc();
-    //level=2;
+    level=2;
     //newgamemode=ZGM_SELECTOR;
     //level=0;
 
     //playmode=ZPM_AUTISM;
     //level=11;
 
-    gamemode = ZGM_LOGO;
-    newgamemode = ZGM_LOGO;
-    level = 0;
+//    gamemode = ZGM_LOGO;
+//    newgamemode = ZGM_LOGO;
+//    level = 0;
 }
 
 void zresmstep(void)
