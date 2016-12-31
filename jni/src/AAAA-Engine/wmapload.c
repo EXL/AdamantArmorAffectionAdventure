@@ -372,7 +372,7 @@ void loadmapdisc(unsigned char index)
 #ifndef ANDROID_NDK
     sprintf(spath, "maps/%i%i.aaa", index / 10, index % 10);
 #else
-    sprintf(spath, "/storage/sdcard1/AAAA-Data/maps/%i%i.aaa", index / 10, index % 10);
+    sprintf(spath, "/mnt/sdcard/AAAA-Data/maps/%i%i.aaa", index / 10, index % 10);
 #endif
     fp = fopen(spath, "rb");
 
@@ -436,7 +436,7 @@ void savemapdisc(unsigned char index)
 #ifndef ANDROID_NDK
     sprintf(spath, "maps/%i%i.aaa", index / 10, index % 10);
 #else
-    sprintf(spath, "/storage/sdcard1/AAAA-Data/maps/%i%i.aaa", index / 10, index % 10);
+    sprintf(spath, "/mnt/sdcard/AAAA-Data/maps/%i%i.aaa", index / 10, index % 10);
 #endif
     fp = fopen(spath, "wb");
 

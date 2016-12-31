@@ -13,7 +13,7 @@ void zrmloadtextures(void)
 #ifndef ANDROID_NDK
     fp = fopen("textures.gfx", "rb");
 #else
-    fp = fopen("/storage/sdcard1/AAAA-Data/textures.gfx", "rb");
+    fp = fopen("/mnt/sdcard/AAAA-Data/textures.gfx", "rb");
 #endif
 
     ii = 0;
@@ -49,7 +49,7 @@ void loadconfig(void)
 #ifndef ANDROID_NDK
     fp = fopen("donothexedit.me", "rb");
 #else
-    fp = fopen("/storage/sdcard1/AAAA-Data/donothexedit.me", "rb");
+    fp = fopen("/mnt/sdcard/AAAA-Data/donothexedit.me", "rb");
 #endif
 
     for (i = 0; i < 32; i++) {
@@ -66,7 +66,7 @@ void saveconfig(void)
 #ifndef ANDROID_NDK
     fp = fopen("donothexedit.me", "rb");
 #else
-    fp = fopen("/storage/sdcard1/AAAA-Data/donothexedit.me", "wb");
+    fp = fopen("/mnt/sdcard/AAAA-Data/donothexedit.me", "wb");
 #endif
 
     for (i = 0; i < 32; i++) {

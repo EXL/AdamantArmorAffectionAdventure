@@ -39,7 +39,7 @@ void zcinitsound(void)
 #ifndef ANDROID_NDK
         sprintf(spath, "sfx/%i%i.wav", i / 10, i % 10);
 #else
-        sprintf(spath, "/storage/sdcard1/AAAA-Data/sfx/%i%i.wav", i / 10, i % 10);
+        sprintf(spath, "/mnt/sdcard/AAAA-Data/sfx/%i%i.wav", i / 10, i % 10);
 #endif
         zc_sdn[i] = Mix_LoadWAV(spath);
     }
@@ -81,7 +81,7 @@ void zcsoundstep(void)
 #ifndef ANDROID_NDK
             sprintf(spath, "bgm/%i%i.ogg", bgm / 10, bgm % 10);
 #else
-            sprintf(spath, "/storage/sdcard1/AAAA-Data/bgm/%i%i.ogg", bgm / 10, bgm % 10);
+            sprintf(spath, "/mnt/sdcard/AAAA-Data/bgm/%i%i.ogg", bgm / 10, bgm % 10);
 #endif
             m_music = Mix_LoadMUS(spath);
 
