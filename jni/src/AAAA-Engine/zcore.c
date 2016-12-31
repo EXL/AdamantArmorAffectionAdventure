@@ -472,6 +472,7 @@ void zcore_input_frame(void)
 
         axis[0] = axis[0] / 256;
         axis[1] = axis[1] / 256;
+
 #ifdef GP2XWIZ
         if (SDL_JoystickGetButton(gamepad, 0) > 0)
             axis[1] = -128;
@@ -499,18 +500,37 @@ void zcore_input_frame(void)
         }
 #elif ANDROID_NDK
         // EXL: Since SDL2 2.0.5 DPAD connected as Joystick
-        if (SDL_JoystickGetButton(gamepad, 11) > 0) // DPAD UP
+        // Checking diagonales first
+        // Support for Touch Joystick
+        // test_jkeys();
+        if (SDL_JoystickGetButton(gamepad, 11)
+                && SDL_JoystickGetButton(gamepad, 14)) { // DPAD UPRIGHT
             axis[1] = -128;
-        else if (SDL_JoystickGetButton(gamepad, 13) > 0) { // DPAD LEFT
+            axis[0] = 128;
+        } else if (SDL_JoystickGetButton(gamepad, 11)
+                && SDL_JoystickGetButton(gamepad, 13)) { // DPAD UPLEFT
+            axis[1] = -128;
+            axis[0] = -128;
+        } else if (SDL_JoystickGetButton(gamepad, 12)
+                && SDL_JoystickGetButton(gamepad, 14)) { // DPAD DOWNRIGHT
+            axis[1] = 128;
+            axis[0] = -128;
+        } else if (SDL_JoystickGetButton(gamepad, 12)
+                && SDL_JoystickGetButton(gamepad, 13)) { // DPAD DOWNLEFT
+            axis[1] = 128;
+            axis[0] = 128;
+        } else if (SDL_JoystickGetButton(gamepad, 11)) { // DPAD UP
+            axis[1] = -128;
+        } else if (SDL_JoystickGetButton(gamepad, 13)) { // DPAD LEFT
             axis[1] = 0;
             axis[0] = -128;
-        } else if (SDL_JoystickGetButton(gamepad, 12) > 0) { // DPAD DOWN
+        } else if (SDL_JoystickGetButton(gamepad, 12)) { // DPAD DOWN
             axis[1] = 128;
             axis[0] = 0;
-        } else if (SDL_JoystickGetButton(gamepad, 14) > 0) { // DPAD RIGHT
+        } else if (SDL_JoystickGetButton(gamepad, 14)) { // DPAD RIGHT
             axis[1] = 0;
             axis[0] = 128;
-        } else if (SDL_JoystickGetButton(gamepad, 19) > 0) { // DPAD OK
+        } else if (SDL_JoystickGetButton(gamepad, 19)) { // DPAD OK
             s_button[0]++; // 0 - is index for firekey
         }
 #endif
@@ -598,6 +618,18 @@ void zcore_input_frame(void)
 
 #endif
 }
+
+#ifdef ANDROID_NDK
+void test_jkeys(void)
+{
+    int i, c = SDL_JoystickNumButtons(gamepad);
+    char string[100] = { 0 };
+    for (i = 0; i < c; ++i) {
+        sprintf(string + strlen(string), "%d ", SDL_JoystickGetButton(gamepad, i));
+    }
+    TO_DEBUG_LOG("JButtons count: %d; Keys: %s\n", c, string);
+}
+#endif
 
 void zcore_input_down(void)
 {

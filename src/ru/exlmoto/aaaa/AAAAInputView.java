@@ -22,8 +22,34 @@ public class AAAAInputView extends View {
 	private int radius = 0;
 	private static int[] pid = new int[10];
 
-	private static final int KEYCODE_A = 8;
-	private static final int KEYCODE_B = 9;
+	// --- Game Keycodes Table
+	// Joystick
+	private static final int KC_GAME_UP = 2;
+	private static final int KC_GAME_DOWN = 6;
+	private static final int KC_GAME_RIGHT = 0;
+	private static final int KC_GAME_LEFT = 4;
+	private static final int KC_GAME_UPRIGHT = 3;
+	private static final int KC_GAME_UPLEFT = 1;
+	private static final int KC_GAME_DOWNLEFT = 5;
+	private static final int KC_GAME_DOWNRIGHT = 7;
+	// Buttons
+	private static final int KC_GAME_A = 8;
+	private static final int KC_GAME_B = 9;
+
+	// --- SDL Keycodes Table
+	//private static final int SDL_DPAD_ID = 0; // I'm not sure for this...
+	private static final int KC_SDL_UP = 51;
+	private static final int KC_SDL_DOWN = 47;
+	private static final int KC_SDL_RIGHT = 32;
+	private static final int KC_SDL_LEFT = 29;
+	// private static final int KC_SDL_UPRIGHT = 24;
+	// private static final int KC_SDL_UPLEFT = 25;
+	// private static final int KC_SDL_DOWNLEFT = 26;
+	// private static final int KC_SDL_DOWNRIGHT = 27;
+
+	private static final int KC_SDL_A = 67; // BackSpace
+	private static final int KC_SDL_B = 66; // Enter (Return)
+
 
 	public AAAAInputView(Context context) {
 
@@ -53,9 +79,9 @@ public class AAAAInputView extends View {
 		}
 
 		// buttons
-		paint.setARGB(pid[KEYCODE_A] < 0 ? 64 : 128, 255, 255, 255);
+		paint.setARGB(pid[KC_GAME_A] < 0 ? 64 : 128, 255, 255, 255);
 		canvas.drawCircle(width - radius - radius / 3, height - radius - radius / 3, radius, paint);
-		paint.setARGB(pid[KEYCODE_B] < 0 ? 64 : 128, 255, 255, 255);
+		paint.setARGB(pid[KC_GAME_B] < 0 ? 64 : 128, 255, 255, 255);
 		canvas.drawCircle(width - radius - radius / 3, radius + radius / 3, radius, paint);
 
 		invalidate();
@@ -189,28 +215,84 @@ public class AAAAInputView extends View {
 		}
 	}
 
-	public void releaseKey(int keyCode) {
-		AAAAActivity.toDebugLog(keyCode + " released!");
+	public void pressKey(int keyCode) {
+		AAAAActivity.toDebugLog(keyCode + " pushed!");
 		switch (keyCode) {
-		case KEYCODE_A:
-			SDLActivity.onNativeKeyUp(66);
+		case KC_GAME_A:
+			SDLActivity.onNativeKeyDown(KC_SDL_A);
 			break;
-		case KEYCODE_B:
-			SDLActivity.onNativeKeyUp(67);
+		case KC_GAME_B:
+			SDLActivity.onNativeKeyDown(KC_SDL_B);
+			break;
+		case KC_GAME_UP:
+			SDLActivity.onNativeKeyDown(KC_SDL_UP);
+			break;
+		case KC_GAME_DOWN:
+			SDLActivity.onNativeKeyDown(KC_SDL_DOWN);
+			break;
+		case KC_GAME_RIGHT:
+			SDLActivity.onNativeKeyDown(KC_SDL_RIGHT);
+			break;
+		case KC_GAME_LEFT:
+			SDLActivity.onNativeKeyDown(KC_SDL_LEFT);
+			break;
+		case KC_GAME_UPRIGHT:
+			SDLActivity.onNativeKeyDown(KC_SDL_UP);
+			SDLActivity.onNativeKeyDown(KC_SDL_LEFT);
+			break;
+		case KC_GAME_UPLEFT:
+			SDLActivity.onNativeKeyDown(KC_SDL_UP);
+			SDLActivity.onNativeKeyDown(KC_SDL_RIGHT);
+			break;
+		case KC_GAME_DOWNRIGHT:
+			SDLActivity.onNativeKeyDown(KC_SDL_DOWN);
+			SDLActivity.onNativeKeyDown(KC_SDL_LEFT);
+			break;
+		case KC_GAME_DOWNLEFT:
+			SDLActivity.onNativeKeyDown(KC_SDL_DOWN);
+			SDLActivity.onNativeKeyDown(KC_SDL_RIGHT);
 			break;
 		default:
 			break;
 		}
 	}
 
-	public void pressKey(int keyCode) {
-		AAAAActivity.toDebugLog(keyCode + " pushed!");
+	public void releaseKey(int keyCode) {
+		AAAAActivity.toDebugLog(keyCode + " released!");
 		switch (keyCode) {
-		case KEYCODE_A:
-			SDLActivity.onNativeKeyDown(66);
+		case KC_GAME_A:
+			SDLActivity.onNativeKeyUp(KC_SDL_A);
 			break;
-		case KEYCODE_B:
-			SDLActivity.onNativeKeyDown(67);
+		case KC_GAME_B:
+			SDLActivity.onNativeKeyUp(KC_SDL_B);
+			break;
+		case KC_GAME_UP:
+			SDLActivity.onNativeKeyUp(KC_SDL_UP);
+			break;
+		case KC_GAME_DOWN:
+			SDLActivity.onNativeKeyUp(KC_SDL_DOWN);
+			break;
+		case KC_GAME_RIGHT:
+			SDLActivity.onNativeKeyUp(KC_SDL_RIGHT);
+			break;
+		case KC_GAME_LEFT:
+			SDLActivity.onNativeKeyUp(KC_SDL_LEFT);
+			break;
+		case KC_GAME_UPRIGHT:
+			SDLActivity.onNativeKeyUp(KC_SDL_UP);
+			SDLActivity.onNativeKeyUp(KC_SDL_LEFT);
+			break;
+		case KC_GAME_UPLEFT:
+			SDLActivity.onNativeKeyUp(KC_SDL_UP);
+			SDLActivity.onNativeKeyUp(KC_SDL_RIGHT);
+			break;
+		case KC_GAME_DOWNRIGHT:
+			SDLActivity.onNativeKeyUp(KC_SDL_DOWN);
+			SDLActivity.onNativeKeyUp(KC_SDL_LEFT);
+			break;
+		case KC_GAME_DOWNLEFT:
+			SDLActivity.onNativeKeyUp(KC_SDL_DOWN);
+			SDLActivity.onNativeKeyUp(KC_SDL_RIGHT);
 			break;
 		default:
 			break;
@@ -256,9 +338,9 @@ public class AAAAInputView extends View {
 		int b = -1;
 		if (x > (2 * width / 3)) {
 			if (y > (height >> 1)) {
-				b = KEYCODE_A;
+				b = KC_GAME_A;
 			} else {
-				b = KEYCODE_B;
+				b = KC_GAME_B;
 			}
 		}
 		return b;
