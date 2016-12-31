@@ -506,30 +506,30 @@ void zcore_input_frame(void)
         if (SDL_JoystickGetButton(gamepad, 11)
                 && SDL_JoystickGetButton(gamepad, 14)) { // DPAD UPRIGHT
             axis[1] = -128;
-            axis[0] = 128;
+            axis[0] = 128 / 3;
         } else if (SDL_JoystickGetButton(gamepad, 11)
                 && SDL_JoystickGetButton(gamepad, 13)) { // DPAD UPLEFT
             axis[1] = -128;
-            axis[0] = -128;
+            axis[0] = -128 / 3;
         } else if (SDL_JoystickGetButton(gamepad, 12)
                 && SDL_JoystickGetButton(gamepad, 14)) { // DPAD DOWNRIGHT
             axis[1] = 128;
-            axis[0] = -128;
+            axis[0] = -128 / 3;
         } else if (SDL_JoystickGetButton(gamepad, 12)
                 && SDL_JoystickGetButton(gamepad, 13)) { // DPAD DOWNLEFT
             axis[1] = 128;
-            axis[0] = 128;
+            axis[0] = 128 / 3;
         } else if (SDL_JoystickGetButton(gamepad, 11)) { // DPAD UP
             axis[1] = -128;
         } else if (SDL_JoystickGetButton(gamepad, 13)) { // DPAD LEFT
             axis[1] = 0;
-            axis[0] = -128;
+            axis[0] = -128 / 2;
         } else if (SDL_JoystickGetButton(gamepad, 12)) { // DPAD DOWN
             axis[1] = 128;
             axis[0] = 0;
         } else if (SDL_JoystickGetButton(gamepad, 14)) { // DPAD RIGHT
             axis[1] = 0;
-            axis[0] = 128;
+            axis[0] = 128 / 2;
         } else if (SDL_JoystickGetButton(gamepad, 19)) { // DPAD OK
             s_button[0]++; // 0 - is index for firekey
         }

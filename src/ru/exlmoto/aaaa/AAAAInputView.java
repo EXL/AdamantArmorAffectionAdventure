@@ -37,18 +37,18 @@ public class AAAAInputView extends View {
 	private static final int KC_GAME_B = 9;
 
 	// --- SDL Keycodes Table
-	//private static final int SDL_DPAD_ID = 0; // I'm not sure for this...
-	private static final int KC_SDL_UP = 51;
-	private static final int KC_SDL_DOWN = 47;
-	private static final int KC_SDL_RIGHT = 32;
-	private static final int KC_SDL_LEFT = 29;
+	private static final int SDL_DPAD_ID = 0; // I'm not sure for this...
+	private static final int KC_SDL_UP = 19;
+	private static final int KC_SDL_DOWN = 20;
+	private static final int KC_SDL_RIGHT = 22;
+	private static final int KC_SDL_LEFT = 21;
 	// private static final int KC_SDL_UPRIGHT = 24;
 	// private static final int KC_SDL_UPLEFT = 25;
 	// private static final int KC_SDL_DOWNLEFT = 26;
 	// private static final int KC_SDL_DOWNRIGHT = 27;
 
-	private static final int KC_SDL_A = 67; // BackSpace
-	private static final int KC_SDL_B = 66; // Enter (Return)
+	private static final int KC_SDL_A = 62; // Space
+	private static final int KC_SDL_B = 67; // Backspace
 
 
 	public AAAAInputView(Context context) {
@@ -225,32 +225,32 @@ public class AAAAInputView extends View {
 			SDLActivity.onNativeKeyDown(KC_SDL_B);
 			break;
 		case KC_GAME_UP:
-			SDLActivity.onNativeKeyDown(KC_SDL_UP);
+			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_UP);
 			break;
 		case KC_GAME_DOWN:
-			SDLActivity.onNativeKeyDown(KC_SDL_DOWN);
+			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_DOWN);
 			break;
 		case KC_GAME_RIGHT:
-			SDLActivity.onNativeKeyDown(KC_SDL_RIGHT);
+			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_RIGHT);
 			break;
 		case KC_GAME_LEFT:
-			SDLActivity.onNativeKeyDown(KC_SDL_LEFT);
+			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_LEFT);
 			break;
 		case KC_GAME_UPRIGHT:
-			SDLActivity.onNativeKeyDown(KC_SDL_UP);
-			SDLActivity.onNativeKeyDown(KC_SDL_LEFT);
+			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_UP);
+			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_LEFT);
 			break;
 		case KC_GAME_UPLEFT:
-			SDLActivity.onNativeKeyDown(KC_SDL_UP);
-			SDLActivity.onNativeKeyDown(KC_SDL_RIGHT);
+			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_UP);
+			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_RIGHT);
 			break;
 		case KC_GAME_DOWNRIGHT:
-			SDLActivity.onNativeKeyDown(KC_SDL_DOWN);
-			SDLActivity.onNativeKeyDown(KC_SDL_LEFT);
+			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_DOWN);
+			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_LEFT);
 			break;
 		case KC_GAME_DOWNLEFT:
-			SDLActivity.onNativeKeyDown(KC_SDL_DOWN);
-			SDLActivity.onNativeKeyDown(KC_SDL_RIGHT);
+			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_DOWN);
+			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_RIGHT);
 			break;
 		default:
 			break;
@@ -267,32 +267,32 @@ public class AAAAInputView extends View {
 			SDLActivity.onNativeKeyUp(KC_SDL_B);
 			break;
 		case KC_GAME_UP:
-			SDLActivity.onNativeKeyUp(KC_SDL_UP);
+			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_UP);
 			break;
 		case KC_GAME_DOWN:
-			SDLActivity.onNativeKeyUp(KC_SDL_DOWN);
+			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_DOWN);
 			break;
 		case KC_GAME_RIGHT:
-			SDLActivity.onNativeKeyUp(KC_SDL_RIGHT);
+			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_RIGHT);
 			break;
 		case KC_GAME_LEFT:
-			SDLActivity.onNativeKeyUp(KC_SDL_LEFT);
+			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_LEFT);
 			break;
 		case KC_GAME_UPRIGHT:
-			SDLActivity.onNativeKeyUp(KC_SDL_UP);
-			SDLActivity.onNativeKeyUp(KC_SDL_LEFT);
+			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_UP);
+			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_LEFT);
 			break;
 		case KC_GAME_UPLEFT:
-			SDLActivity.onNativeKeyUp(KC_SDL_UP);
-			SDLActivity.onNativeKeyUp(KC_SDL_RIGHT);
+			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_UP);
+			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_RIGHT);
 			break;
 		case KC_GAME_DOWNRIGHT:
-			SDLActivity.onNativeKeyUp(KC_SDL_DOWN);
-			SDLActivity.onNativeKeyUp(KC_SDL_LEFT);
+			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_DOWN);
+			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_LEFT);
 			break;
 		case KC_GAME_DOWNLEFT:
-			SDLActivity.onNativeKeyUp(KC_SDL_DOWN);
-			SDLActivity.onNativeKeyUp(KC_SDL_RIGHT);
+			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_DOWN);
+			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_RIGHT);
 			break;
 		default:
 			break;
