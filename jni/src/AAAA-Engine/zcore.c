@@ -750,7 +750,8 @@ void zcorestep(void)
     if (thisframenice) {
         calcfps();
     }
-
+    // EXL: Disable FPS Limiter on ANDROID
+#if !defined(ANDROID_NDK) && !defined(PC_GLES)
     if ((gamemode != ZGM_MENU) & (gamemode != ZGM_CONFIG) & (gamemode != ZGM_SELECTOR)) {
         if (thisframenice) {
             while (fstick1 - fstick0 < 20) {
@@ -759,6 +760,7 @@ void zcorestep(void)
             }
         }
     }
+#endif
 }
 
 void zcoreloop(void)
