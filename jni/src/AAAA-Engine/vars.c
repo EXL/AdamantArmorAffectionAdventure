@@ -8,10 +8,12 @@ s16 axis[4], mouseaxis[2], holdmouseaxis[2];
 u16 button[16], mousebutton[4], buttonstate, mousetap;
 
 u8 bgm, gamemode, newgamemode, playmode;
-s8 gameswitchdelay = 0, soundbanks = 46; //-1
+s8 gameswitchdelay = 0, soundbanks = 46; // -1
 
-u8 configdata[32] = { 1, 0, 0, 0, 0, 0, 1, 1, 128, 48, 1, 1, 2, 1, 0, 0,
-    99, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59 }; //0-7 mainmenu, 8-soundvolume, 9 -music volume, 10vibro, 11gsensor, 12turbohack, 13noise 14,15hz 16-32 levels
+u8 configdata[32] = {
+    1,  0,  0,   0,  0,   0,  1,   1,  128, 48, 1,   1,  2,   1,  0,   0,
+    99, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59
+}; // 0-7 mainmenu, 8-soundvolume, 9 -music volume, 10vibro, 11gsensor, 12turbohack, 13noise 14,15hz 16-32 levels
 
 s32 fps = 0, tickcount = 0;
 
@@ -20,20 +22,20 @@ u8 secretskin = 0;
 #define MESH_CNT 16384
 
 #ifdef PC32
-#include "GL/gl.h"
-GLfloat mesh[MESH_CNT * 3];
-GLfloat mesht[MESH_CNT * 2];
+    #include "GL/gl.h"
+    GLfloat mesh[MESH_CNT * 3];
+    GLfloat mesht[MESH_CNT * 2];
 #endif
 
 #if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
-#if defined(GP2XCAANOO) || defined(PC_GLES) || defined(ANDROID_NDK)
-#include "GLES/gl.h"
-#endif
-#ifdef GP2XWIZ
-#include "OpenGLES/gl.h"
-#endif
-GLfixed mesh[MESH_CNT * 3];
-GLfixed mesht[MESH_CNT * 2];
+    #if defined(GP2XCAANOO) || defined(PC_GLES) || defined(ANDROID_NDK)
+        #include "GLES/gl.h"
+    #endif
+    #ifdef GP2XWIZ
+        #include "OpenGLES/gl.h"
+    #endif
+    GLfixed mesh[MESH_CNT * 3];
+    GLfixed mesht[MESH_CNT * 2];
 #endif
 
 GLubyte meshc[MESH_CNT * 4];
@@ -58,7 +60,7 @@ u16 screenwidth, screenheight;
 
 u8 level = 128, lastlevel = 254;
 
-s32 rmapmaxh = (MAPSIZEH)*65536, rmapmaxy = (MAPSIZEY)*65536;
+s32 rmapmaxh = (MAPSIZEH) * 65536, rmapmaxy = (MAPSIZEY) * 65536;
 u16 mapmaxh = MAPSIZEH, mapmaxy = MAPSIZEY;
 s32 truemaxmaph, truemaxmapx;
 
@@ -107,7 +109,8 @@ s8 firstperson;
 
 s32 consoleturn[2];
 
-s32 narration, narationticks, narrationstate, startnarationtick, wantnarration, levelnarration[2], checkpointnotify, loserwantexit, endlevel, narrationlength, firstnightrule;
+s32 narration, narationticks, narrationstate, startnarationtick, wantnarration, levelnarration[2], checkpointnotify,
+    loserwantexit, endlevel, narrationlength, firstnightrule;
 
 s32 autismdelay = 0, autismstuff = 0;
 

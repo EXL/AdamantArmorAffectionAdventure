@@ -1,27 +1,24 @@
-//system
+// system
 
 #ifdef PC32
-#include "SDL/SDL.h"
-#include "SDL/SDL_opengl.h"
-#include <GL/gl.h>
+    #include "SDL/SDL.h"
+    #include "SDL/SDL_opengl.h"
+    #include <GL/gl.h>
 #endif
 
 #if defined(GP2XCAANOO) || defined(PC_GLES) || defined(ANDROID_NDK)
-#ifndef ANDROID_NDK
-#include "GLES/egl.h"
-//#else
-//#include <EGL/egl.h>
-#endif
-#include "GLES/gl.h"
-#include "GLES/glext.h"
+    #ifndef ANDROID_NDK
+        #include "GLES/egl.h"
+    #endif
+    #include "GLES/gl.h"
+    #include "GLES/glext.h"
 #endif
 #ifdef GP2XWIZ
-#include "OpenGLES/egl.h"
-#include "OpenGLES/gl.h"
-#include "OpenGLES/glext.h"
+    #include "OpenGLES/egl.h"
+    #include "OpenGLES/gl.h"
+    #include "OpenGLES/glext.h"
 #endif
 
-//
 #include "vars.h"
 
 u8 lasttexture;
@@ -49,12 +46,15 @@ void RenderMeshii(u32 istart, u32 icount)
         kt = 1;
         mytexture = meshtid[poly];
 
-        while ((kt < polyneed) & (meshtid[poly + kt] == mytexture))
+        while ((kt < polyneed) & (meshtid[poly + kt] == mytexture)) {
             kt++;
+        }
+
         if (lasttexture != mytexture) {
             glBindTexture(GL_TEXTURE_2D, zc_texture[mytexture]);
             lasttexture = mytexture;
         }
+
         glDrawArrays(GL_TRIANGLES, poly * 3, kt * 3);
         polyneed -= kt;
         poly += kt;
@@ -63,14 +63,13 @@ void RenderMeshii(u32 istart, u32 icount)
 
 void corerenderrender(void)
 {
-
-//corerenderprocess();
+    // corerenderprocess();
 #ifdef PC32
-/*
-glAccum(GL_MULT,0.5);
-glAccum(GL_ACCUM,0.5);
-glAccum(GL_RETURN,1.0);
-*/
+    /*
+        glAccum(GL_MULT,0.5);
+        glAccum(GL_ACCUM,0.5);
+        glAccum(GL_RETURN,1.0);
+    */
 #endif
 }
 
@@ -96,6 +95,7 @@ void zlTranslate(signed long x, signed long y, signed long z)
     glTranslatef(x / 65536.0, y / 65536.0, z / 65536.0);
 #endif
 }
+
 void zlRotatex(signed long x)
 {
 #if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
@@ -105,6 +105,7 @@ void zlRotatex(signed long x)
     glRotatef(x / 11.37778, 1.0, 0.0, 0.0);
 #endif
 }
+
 void zlRotatey(signed long y)
 {
 #if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
@@ -114,6 +115,7 @@ void zlRotatey(signed long y)
     glRotatef(y / 11.37778, 0.0, 1.0, 0.0);
 #endif
 }
+
 void zlRotatez(signed long z)
 {
 #if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
@@ -123,6 +125,7 @@ void zlRotatez(signed long z)
     glRotatef(z / 11.37778, 0.0, 0.0, 1.0);
 #endif
 }
+
 void zlScale(signed long x, signed long y, signed long z)
 {
 #if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
@@ -132,6 +135,7 @@ void zlScale(signed long x, signed long y, signed long z)
     glScalef(x / 65536.0, y / 65536.0, z / 65536.0);
 #endif
 }
+
 void zlFogParam(signed long fogstart, signed long fogend)
 {
 #ifdef PC32
@@ -144,6 +148,7 @@ void zlFogParam(signed long fogstart, signed long fogend)
 #endif
     fog_end = fogend;
 }
+
 void zlFogColor(unsigned char r, unsigned char g, unsigned char b)
 {
     fog_color[0] = r / 255.0;
@@ -152,16 +157,22 @@ void zlFogColor(unsigned char r, unsigned char g, unsigned char b)
     fog_color[3] = 1.0;
     glFogfv(GL_FOG_COLOR, fog_color);
 }
+
 void zlRender(unsigned long first, unsigned long pcount)
 {
-//TO DO OPTIMIZE
+    // TO DO OPTIMIZE
 
 #ifdef PC32
     u32 i;
-    for (i = 0; i < pcount * 3; i++)
+
+    for (i = 0; i < pcount * 3; i++) {
         mesh[first * 3 + i] = mesh[first * 3 + i] / 65536.0;
-    for (i = 0; i < pcount * 2; i++)
+    }
+
+    for (i = 0; i < pcount * 2; i++) {
         mesht[first * 2 + i] = mesht[first * 2 + i] / 65536.0;
+    }
+
 #endif
 
     RenderMeshii(first, pcount);
@@ -182,6 +193,7 @@ void zlScreen(signed long x, signed long y, signed long zoom)
     glMatrixMode(GL_MODELVIEW);
 #endif
 }
+
 extern void zlPush(void)
 {
     glPushMatrix();
@@ -194,18 +206,22 @@ extern void zlPop(void)
 
 extern void zlFog(unsigned char value)
 {
-    if (value == 1)
+    if (value == 1) {
         glEnable(GL_FOG);
-    else
+    } else {
         glDisable(GL_FOG);
+    }
 }
+
 extern void zlDepthTest(unsigned char value)
 {
-    if (value == 1)
+    if (value == 1) {
         glEnable(GL_DEPTH_TEST);
-    else
+    } else {
         glDisable(GL_DEPTH_TEST);
+    }
 }
+
 extern void zlBlend(unsigned char value)
 {
     if (value == 1) {
@@ -240,6 +256,7 @@ void zlBeginQuads(void)
     zlr_ti = meshcount * 2;
     zlr_tid = meshcount / 3;
 }
+
 void zlBindTexture(unsigned char i)
 {
     zlr_texture = i;
@@ -257,11 +274,13 @@ void zlColor4x(unsigned char r, unsigned char g, unsigned char b, unsigned char 
     zlr_b = b;
     zlr_a = a;
 }
+
 void zlTexCoord2x(signed long x, signed long y)
 {
     zlr_tx = x;
     zlr_ty = y;
 }
+
 void zlVertex3x(signed long x, signed long y, signed long z)
 {
     mesh[zlr_mi++] = x;
@@ -324,6 +343,7 @@ void zlVertex3x(signed long x, signed long y, signed long z)
 
     zlr_count++;
 }
+
 void zlEndQuads(void)
 {
     zlRender(meshcount, (zlr_count / 4) * 6);
@@ -331,6 +351,7 @@ void zlEndQuads(void)
 }
 
 s32 if_tx = 65536 / 16, if_ty = -65536 / 4;
+
 void zlRenderText(void)
 {
     u8 i, c;
@@ -338,8 +359,10 @@ void zlRenderText(void)
     zlBindTexture(8);
     zlBeginQuads();
     xx = 0;
+
     for (i = 0; i < l_text; i++) {
         c = s_text[i];
+
         if (c > 33) {
             c = c - 32;
             ttx = (c % 16) * 65536 / 16;
@@ -354,10 +377,12 @@ void zlRenderText(void)
             zlTexCoord2x(ttx, tty + if_ty);
             zlVertex3x(xx, 65536, 0);
         }
+
         xx += 65536;
 
-        //zlTranslate(65536,0,0);
+        // zlTranslate(65536,0,0);
     }
+
     zlEndQuads();
 }
 
@@ -367,22 +392,24 @@ void zlRenderScreen(unsigned char index)
 
     wwx = 65536 * 320 / 384;
     wwy = 65536 * 256 / 240;
-    for (x = 0; x < 3; x++)
+
+    for (x = 0; x < 3; x++) {
         for (y = 0; y < 2; y++) {
             zlBindTexture(index + x + y * 3);
             zlBeginQuads();
             zlTexCoord2x(0, 0);
-            zlVertex3x(-65536 + (x)*wwx, 65536 - (y)*wwy, 0);
+            zlVertex3x(-65536 + (x) *wwx, 65536 - (y) *wwy, 0);
             zlTexCoord2x(65535, 0);
-            zlVertex3x(-65536 + (x + 1) * wwx, 65536 - (y)*wwy, 0);
+            zlVertex3x(-65536 + (x + 1) * wwx, 65536 - (y) *wwy, 0);
 
             zlTexCoord2x(65535, 65535);
             zlVertex3x(-65536 + (x + 1) * wwx, 65536 - (y + 1) * wwy, 0);
             zlTexCoord2x(0, 65535);
-            zlVertex3x(-65536 + (x)*wwx, 65536 - (y + 1) * wwy, 0);
+            zlVertex3x(-65536 + (x) *wwx, 65536 - (y + 1) * wwy, 0);
 
             zlEndQuads();
         }
+    }
 }
 
 void zlRenderQuad(void)
@@ -400,6 +427,7 @@ void zlRenderQuad(void)
 }
 
 s32 rr = 0, gg = 0, bb = 0;
+
 void zlDrawTransmask(unsigned char r, unsigned char g, unsigned char b)
 {
     s32 a;
@@ -408,14 +436,18 @@ void zlDrawTransmask(unsigned char r, unsigned char g, unsigned char b)
     gg = g + (gg - g) * 15 / 16;
     bb = b + (bb - b) * 15 / 16;
     a = gameswitchdelay;
-    if (a < 0)
+
+    if (a < 0) {
         a = 100 + a;
+    }
+
     a = a * 42 / 20;
-    if (a > 255)
+
+    if (a > 255) {
         a = 255;
+    }
 
     ty = ((count / 6) & 255) * 256 * 16;
-    ;
     tx = (count & 255) * 256 * 16;
 
     zlBlend(1);

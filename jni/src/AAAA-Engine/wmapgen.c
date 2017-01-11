@@ -3,7 +3,7 @@
 
 void generateautismmap(void)
 {
-    //I'm not so retard
+    // I'm not so retard
 }
 
 void generatemap(void)

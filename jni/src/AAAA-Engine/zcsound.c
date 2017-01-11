@@ -1,26 +1,26 @@
 #include "vars.h"
 
 #ifndef SDL2_PORT
-#include "SDL/SDL.h"
-#include "SDL/SDL_mixer.h"
+    #include "SDL/SDL.h"
+    #include "SDL/SDL_mixer.h"
 #else
-#ifndef ANDROID_NDK
-#include <SDL2/SDL.h>
-#else
-#include <SDL.h>
-#endif
-#ifndef NO_SDL_MIXER
-#ifndef ANDROID_NDK
-#include <SDL2/SDL_mixer.h>
-#else
-#include <SDL_mixer.h>
-#endif
-#endif
+    #ifndef ANDROID_NDK
+        #include <SDL2/SDL.h>
+    #else
+        #include <SDL.h>
+    #endif
+    #ifndef NO_SDL_MIXER
+        #ifndef ANDROID_NDK
+            #include <SDL2/SDL_mixer.h>
+        #else
+            #include <SDL_mixer.h>
+        #endif
+    #endif
 #endif
 
 #ifndef NO_SDL_MIXER
-Mix_Chunk* zc_sdn[64];
-Mix_Music* m_music = NULL;
+    Mix_Chunk *zc_sdn[64];
+    Mix_Music *m_music = NULL;
 #endif
 
 u8 last_bgm = 255, bgm_vol = 0;
@@ -33,6 +33,7 @@ void zcinitsound(void)
 {
 #ifndef NO_SDL_MIXER
     u8 i;
+
     for (i = 0; i < soundbanks; i++) {
         zc_sdn[i] = NULL;
 #ifndef ANDROID_NDK
@@ -42,6 +43,7 @@ void zcinitsound(void)
 #endif
         zc_sdn[i] = Mix_LoadWAV(spath);
     }
+
 #endif
 }
 
@@ -49,8 +51,9 @@ void zcplaysound(unsigned char index)
 {
 #ifndef NO_SDL_MIXER
     s32 r, l;
-    if (configdata[8] > 0)
-        if (index > 0)
+
+    if (configdata[8] > 0) {
+        if (index > 0) {
             if (index < soundbanks) {
                 r = configdata[8];
                 l = configdata[8];
@@ -58,17 +61,22 @@ void zcplaysound(unsigned char index)
                 Mix_PlayChannel(idchannel, zc_sdn[index], 0);
                 idchannel = ((idchannel + 1) & 3);
             }
+        }
+    }
+
 #endif
 }
 
 void zcsoundstep(void)
 {
 #ifndef NO_SDL_MIXER
+
     if (bgm_vol != configdata[9]) {
         bgm_vol = configdata[9];
         Mix_VolumeMusic(bgm_vol);
     }
-    if (bgm != last_bgm)
+
+    if (bgm != last_bgm) {
         if (configdata[9] > 0) {
 #ifndef ANDROID_NDK
             sprintf(spath, "bgm/%i%i.ogg", bgm / 10, bgm % 10);
@@ -76,13 +84,18 @@ void zcsoundstep(void)
             sprintf(spath, "/storage/sdcard1/AAAA-Data/bgm/%i%i.ogg", bgm / 10, bgm % 10);
 #endif
             m_music = Mix_LoadMUS(spath);
-            if (bgm >= 50)
+
+            if (bgm >= 50) {
                 Mix_PlayMusic(m_music, 0);
-            else
+            } else {
                 Mix_PlayMusic(m_music, -1);
-            //Mix_SetMusicPosition(10.0);//Waiting new firmware
+            }
+
+            // Mix_SetMusicPosition(10.0);//Waiting new firmware
             last_bgm = bgm;
         }
+    }
+
 #endif
 }
 #define FPML(x, y) ((((x) >> 7) * ((y) >> 7)) >> 2)
@@ -93,35 +106,41 @@ void zcplaysound3d(unsigned char index, unsigned char ssize, signed long xx, sig
     s32 vx, vy, vz, ss, r, l, v, v1, range;
     float f_range;
 
-    if (configdata[8])
-        if (index > 0)
+    if (configdata[8]) {
+        if (index > 0) {
             if (index < soundbanks) {
                 ss = ssize * 65536;
                 v = 127;
                 r = 127;
                 l = 127;
-                vz = 10000 + (FPML(xx - camera[0], vcamera[2][0]) + FPML(zz - camera[1], vcamera[2][1]) + FPML(yy - camera[2], vcamera[2][2]));
-                vy = (FPML(xx - camera[0], vcamera[1][0]) + FPML(zz - camera[1], vcamera[1][1]) + FPML(yy - camera[2], vcamera[1][2]));
-                vx = (FPML(xx - camera[0], vcamera[0][0]) + FPML(zz - camera[1], vcamera[0][1]) + FPML(yy - camera[2], vcamera[0][2]));
+                vz = 10000 + (FPML(xx - camera[0], vcamera[2][0]) + FPML(zz - camera[1], vcamera[2][1])
+                              + FPML(yy - camera[2], vcamera[2][2]));
+                vy = (FPML(xx - camera[0], vcamera[1][0]) + FPML(zz - camera[1], vcamera[1][1])
+                      + FPML(yy - camera[2], vcamera[1][2]));
+                vx = (FPML(xx - camera[0], vcamera[0][0]) + FPML(zz - camera[1], vcamera[0][1])
+                      + FPML(yy - camera[2], vcamera[0][2]));
 
-                if (vx > ss)
+                if (vx > ss) {
                     v = 0;
-                else if (vx < -ss)
+                } else if (vx < -ss) {
                     v = 0;
-                else if (vy > ss)
+                } else if (vy > ss) {
                     v = 0;
-                else if (vy < -ss)
+                } else if (vy < -ss) {
                     v = 0;
-                else if (vz > ss)
+                } else if (vz > ss) {
                     v = 0;
-                else if (vz < -ss)
+                } else if (vz < -ss) {
                     v = 0;
+                }
 
                 if (v > 0) {
-                    if (vx > 0)
+                    if (vx > 0) {
                         l = 127 - (127 * vx) / ss;
-                    else
+                    } else {
                         r = 127 - (127 * (-vx)) / ss;
+                    }
+
                     range = FPML(vx, vx) + FPML(vy, vy) + FPML(vz, vz);
 
                     f_range = range / 65536.0;
@@ -130,26 +149,33 @@ void zcplaysound3d(unsigned char index, unsigned char ssize, signed long xx, sig
                     v = 128 - (128 * range) / ss;
 
                     if (v > 0) {
-
                         r = (r * v) * configdata[8];
                         l = (l * v) * configdata[8];
                         r = ((r) >> 14);
                         l = ((l) >> 14);
-                        if (r > 127)
-                            r = 127;
-                        if (l > 127)
-                            l = 127;
 
-                        //Mix_PlayChannel(idchannel,zc_sdn[index],0);
+                        if (r > 127) {
+                            r = 127;
+                        }
+
+                        if (l > 127) {
+                            l = 127;
+                        }
+
+                        // Mix_PlayChannel(idchannel,zc_sdn[index],0);
                         idchannel = Mix_PlayChannel(-1, zc_sdn[index], 0);
                         Mix_Volume(idchannel, 127);
                         Mix_SetPanning(idchannel, l, r);
 
-                        //printf("channel %i sound id:%i v:%i l:%i r:%i range:%i pos: x%i y%i z%i\n",idchannel,index,v,l,r,range,vx,vy,vz);
+                        // printf("channel %i sound id:%i v:%i l:%i r:%i range:%i pos: x%i y%i
+                        // z%i\n",idchannel,index,v,l,r,range,vx,vy,vz);
 
-                        //idchannel=((idchannel+1)&3);
+                        // idchannel=((idchannel+1)&3);
                     }
                 }
             }
+        }
+    }
+
 #endif
 }

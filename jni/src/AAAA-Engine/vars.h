@@ -22,33 +22,33 @@ extern u8 secretskin;
 #define MESH_CNT 16384
 
 #ifdef ANDROID_NDK
-// EXL: For replacing main() to SDL_main() need include SDL.h in main.c
+    // EXL: For replacing main() to SDL_main() need include SDL.h in main.c
 
-#include <SDL.h>
-#include <android/log.h>
+    #include <SDL.h>
+    #include <android/log.h>
 
-#define LOG_TAG "AAAA"
-#define LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
-#define TO_DEBUG_LOG(...) LOGI(__VA_ARGS__)
+    #define LOG_TAG "AAAA"
+    #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+    #define TO_DEBUG_LOG(...) LOGI(__VA_ARGS__)
 #else
-#define TO_DEBUG_LOG(...) fprintf(stderr, __VA_ARGS__)
+    #define TO_DEBUG_LOG(...) fprintf(stderr, __VA_ARGS__)
 #endif
 
 #ifdef PC32
-#include "GL/gl.h"
-extern GLfloat mesh[MESH_CNT * 3];
-extern GLfloat mesht[MESH_CNT * 2];
+    #include "GL/gl.h"
+    extern GLfloat mesh[MESH_CNT * 3];
+    extern GLfloat mesht[MESH_CNT * 2];
 #endif
 
 #if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
-#if defined(GP2XCAANOO) || defined(PC_GLES) || defined(ANDROID_NDK)
-#include "GLES/gl.h"
-#endif
-#ifdef GP2XWIZ
-#include "OpenGLES/gl.h"
-#endif
-extern GLfixed mesh[MESH_CNT * 3];
-extern GLfixed mesht[MESH_CNT * 2];
+    #if defined(GP2XCAANOO) || defined(PC_GLES) || defined(ANDROID_NDK)
+        #include "GLES/gl.h"
+    #endif
+    #ifdef GP2XWIZ
+        #include "OpenGLES/gl.h"
+    #endif
+    extern GLfixed mesh[MESH_CNT * 3];
+    extern GLfixed mesht[MESH_CNT * 2];
 #endif
 extern GLubyte meshc[MESH_CNT * 4];
 
@@ -120,7 +120,8 @@ extern s8 firstperson;
 
 extern s32 consoleturn[2];
 
-extern s32 narration, narationticks, narrationstate, startnarationtick, wantnarration, levelnarration[2], checkpointnotify, loserwantexit, endlevel, narrationlength, firstnightrule;
+extern s32 narration, narationticks, narrationstate, startnarationtick, wantnarration, levelnarration[2],
+       checkpointnotify, loserwantexit, endlevel, narrationlength, firstnightrule;
 
 extern s32 autismdelay, autismstuff;
 

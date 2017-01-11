@@ -142,24 +142,32 @@ void gamemenufront(void)
             zlScale(20000 - mmseldelay * 1550, 20000 - mmseldelay * 1550, 20000);
         } else {
             delta = mmpos - (i * 128 - 32);
-            if (delta < 0)
+
+            if (delta < 0) {
                 delta = -delta;
+            }
+
             zlTranslate(-40000 + f_sin[delta] / 2, +mmpos * 260 - i * 30000, 0);
             zlScale(10000, 10000, 10000);
         }
+
         zlScale(49152, 65536, 65536);
-        if (i == 6)
+
+        if (i == 6) {
             zlRotatez(count * 15);
+        }
 
         zlBindTexture(16 + i);
 
         zlRotatez(menutilt);
 
         zlBeginQuads();
-        if (configdata[i])
+
+        if (configdata[i]) {
             zlColor4x(255, 255, 255, 255);
-        else
+        } else {
             zlColor4x(0, 0, 0, 255);
+        }
 
         zlTexCoord2x(0, 0);
         zlVertex3x(-65536, 65536, 0);
@@ -174,6 +182,7 @@ void gamemenufront(void)
 
         zlPop();
     }
+
     zlPush();
     zlBindTexture(16 + mmsel);
 
@@ -182,10 +191,12 @@ void gamemenufront(void)
     zlScale(49152, 65536, 65536);
     zlRotatez(f_sin[count * 10 % 4096] / 1000 + menutilt);
     zlBlend(1);
-    if (configdata[mmsel])
+
+    if (configdata[mmsel]) {
         zlColor4x(255, 255, 255, 255 - mmseldelay * 16);
-    else
+    } else {
         zlColor4x(0, 0, 0, 255 - mmseldelay * 16);
+    }
 
     zlBeginQuads();
     zlTexCoord2x(100, 100);
@@ -225,6 +236,7 @@ void gamemenufront(void)
         zlVertex3x(65536, 65536, 0);
         zlEndQuads();
     }
+
     zlBlend(0);
     zlPop();
 
@@ -283,10 +295,11 @@ void gamemenufront(void)
 
     zlBlend(0);
 
-    if (configdata[mmsel])
+    if (configdata[mmsel]) {
         l_text = sprintf(s_text, "%s", menutext1[mmsel]);
-    else
+    } else {
         l_text = sprintf(s_text, "%s", menutext1[8]);
+    }
 
     zlPush();
     zlTranslate(-62000 - mmseldelay * 1000, -55768, 0);
@@ -294,10 +307,13 @@ void gamemenufront(void)
     zlColor4x(255, 255, 255, 255);
     zlRenderText();
     zlPop();
-    if (configdata[mmsel])
+
+    if (configdata[mmsel]) {
         l_text = sprintf(s_text, "%s", menutext2[mmsel]);
-    else
+    } else {
         l_text = sprintf(s_text, "%s", menutext2[8]);
+    }
+
     zlPush();
     zlTranslate(-62000 + mmseldelay * 2000, -63768, 0);
     zlScale(5000, 12000, 10000);
@@ -307,45 +323,56 @@ void gamemenufront(void)
 }
 
 u8 cheatcodes[4][8] = {
-    { 2, 2, 1, 2, 4, 4, 1, 1 }, //unlock all XXAXYYAA
-    { 2, 1, 2, 1, 2, 1, 1, 4 }, //nekoskin XAXAXAAY
-    { 4, 4, 4, 1, 1, 1, 2, 4 }, //researcherskin YYYAAAXY
-    { 1, 4, 1, 2, 4, 4, 2, 4 } //dev mode AYAXYYXY
+    { 2, 2, 1, 2, 4, 4, 1, 1 }, // unlock all XXAXYYAA
+    { 2, 1, 2, 1, 2, 1, 1, 4 }, // nekoskin XAXAXAAY
+    { 4, 4, 4, 1, 1, 1, 2, 4 }, // researcherskin YYYAAAXY
+    { 1, 4, 1, 2, 4, 4, 2, 4 }  // dev mode AYAXYYXY
 };
 u8 cheatinput[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 void trycheat(void)
 {
     s8 i, k, l, cheat[4], ii;
+
     if (button[0] == 1 | button[1] == 1 | button[3] == 1) {
-        for (i = 0; i < 7; i++)
+        for (i = 0; i < 7; i++) {
             cheatinput[i] = cheatinput[i + 1];
-        if (button[0] == 1)
+        }
+
+        if (button[0] == 1) {
             cheatinput[7] = 1;
-        else if (button[1] == 1)
+        } else if (button[1] == 1) {
             cheatinput[7] = 2;
-        else if (button[3] == 1)
+        } else if (button[3] == 1) {
             cheatinput[7] = 4;
-        //digestion
-        for (i = 0; i < 4; i++)
+        }
+
+        // digestion
+        for (i = 0; i < 4; i++) {
             cheat[i] = 1;
+        }
 
         for (i = 0; i < 8; i++) {
-
-            for (l = 0; l < 4; l++)
-                if (cheatinput[i] != cheatcodes[l][i])
+            for (l = 0; l < 4; l++) {
+                if (cheatinput[i] != cheatcodes[l][i]) {
                     cheat[l] = 0;
+                }
+            }
         }
+
         if (cheat[0] != 0 | cheat[1] != 0 | cheat[2] != 0 | cheat[3] != 0) {
-            for (i = 0; i < 8; i++)
+            for (i = 0; i < 8; i++) {
                 cheatinput[i] = 0;
+            }
         }
+
         if (cheat[0]) {
             configdata[1] = 1;
             configdata[2] = 1;
-            //configdata[3]=0;
-            //configdata[4]=0;
-            //configdata[5]=0;
+            // configdata[3]=0;
+            // configdata[4]=0;
+            // configdata[5]=0;
+
             for (ii = 0; ii < 8; ii++) {
                 configdata[16 + ii * 2] = 99;
                 configdata[17 + ii * 2] = 59;
@@ -353,21 +380,25 @@ void trycheat(void)
 
             zcplaysound(36);
         }
+
         if (cheat[1]) {
             zcplaysound(21);
             secretskin = 1;
         }
+
         if (cheat[2]) {
             zcplaysound(30);
             secretskin = 6;
         }
-        if (cheat[3])
+
+        if (cheat[3]) {
             if (gameswitchdelay == 0) {
                 zcplaysound(38);
                 newgamemode = ZGM_GAMEPLAY;
                 playmode = ZPM_EDIT;
                 LoadNewMap(255);
             }
+        }
     }
 }
 
@@ -375,83 +406,96 @@ void gamemenukey(void)
 {
     trycheat();
 
-    if (button[2] == 1 || mousetap)
-        if (configdata[mmsel] == 0)
+    if (button[2] == 1 || mousetap) {
+        if (configdata[mmsel] == 0) {
             zcplaysound(2);
 
-        else
+        } else {
             switch (mmsel) {
-            case 0:
-                zcplaysound(1);
-                newgamemode = ZGM_GAMEPLAY;
-                playmode = ZPM_AAA;
-                LoadNewMap(1);
-                break; //Training
-            case 1:
-                zcplaysound(12);
-                newgamemode = ZGM_SELECTOR;
-                break; //Campaing
+                case 0:
+                    zcplaysound(1);
+                    newgamemode = ZGM_GAMEPLAY;
+                    playmode = ZPM_AAA;
+                    LoadNewMap(1);
+                    break; // Training
 
-            case 2:
-                zcplaysound(12);
-                newgamemode = ZGM_GAMEPLAY;
-                playmode = ZPM_AUTISM;
-                LoadNewMap(20);
-                break; //Autism
-            case 3:
-                zcplaysound(12);
-                newgamemode = ZGM_GAMEPLAY;
-                playmode = ZPM_AAA;
-                LoadNewMap(23);
-                break; //extreme
-            case 4:
-                zcplaysound(12);
-                newgamemode = ZGM_GAMEPLAY;
-                playmode = ZPM_AAA;
-                LoadNewMap(24);
-                break; //zombie
+                case 1:
+                    zcplaysound(12);
+                    newgamemode = ZGM_SELECTOR;
+                    break; // Campaing
 
-            case 5:
-                zcplaysound(1);
-                newgamemode = ZGM_GAMEPLAY;
-                playmode = ZPM_ZVERYLE;
-                LoadNewMap(25);
-                break; //zveryle
+                case 2:
+                    zcplaysound(12);
+                    newgamemode = ZGM_GAMEPLAY;
+                    playmode = ZPM_AUTISM;
+                    LoadNewMap(20);
+                    break; // Autism
 
-            case 6:
-                zcplaysound(1);
-                newgamemode = ZGM_CONFIG;
-                break;
+                case 3:
+                    zcplaysound(12);
+                    newgamemode = ZGM_GAMEPLAY;
+                    playmode = ZPM_AAA;
+                    LoadNewMap(23);
+                    break; // extreme
 
-            case 7:
-                zcplaysound(23);
-                newgamemode = ZGM_GAMEPLAY;
-                LoadNewMap(10);
-                break;
+                case 4:
+                    zcplaysound(12);
+                    newgamemode = ZGM_GAMEPLAY;
+                    playmode = ZPM_AAA;
+                    LoadNewMap(24);
+                    break; // zombie
+
+                case 5:
+                    zcplaysound(1);
+                    newgamemode = ZGM_GAMEPLAY;
+                    playmode = ZPM_ZVERYLE;
+                    LoadNewMap(25);
+                    break; // zveryle
+
+                case 6:
+                    zcplaysound(1);
+                    newgamemode = ZGM_CONFIG;
+                    break;
+
+                case 7:
+                    zcplaysound(23);
+                    newgamemode = ZGM_GAMEPLAY;
+                    LoadNewMap(10);
+                    break;
             }
+        }
+    }
 
     u32 w;
-    if (mousebutton[0] > 1)
+
+    if (mousebutton[0] > 1) {
         mmpos += (mouseaxis[1] - holdmouseaxis[1]) / 7;
+    }
 
     if ((axis[1] < -10) | (axis[1] > 10)) {
         mmpos += axis[1] / 30;
     } else {
         w = ((mmpos) % 128) - 64;
-        if (w > 0)
+
+        if (w > 0) {
             mmpos--;
-        else if (w < 0)
+        } else if (w < 0) {
             mmpos++;
+        }
     }
 
-    if (mmpos < 0)
+    if (mmpos < 0) {
         mmpos = 0;
-    else if (mmpos > 128 * 7)
+    } else if (mmpos > 128 * 7) {
         mmpos = 128 * 7;
+    }
+
     mmlastsel = mmsel;
     mmsel = (mmpos + 64) / 128;
-    if (mmseldelay)
+
+    if (mmseldelay) {
         mmseldelay--;
+    }
 
     if (mmlastsel != mmsel) {
         mmseldelay = 16;
@@ -464,12 +508,16 @@ void gamemenu(void)
     s32 delta;
     bgm = 1;
     zlPush();
-    if (gameswitchdelay == 0)
+
+    if (gameswitchdelay == 0) {
         gamemenukey();
-    else {
+    } else {
         delta = gameswitchdelay;
-        if (delta < 0)
+
+        if (delta < 0) {
             delta = 100 + delta;
+        }
+
         delta = 1000 * (delta);
         zlScale(65536 + delta * 3, 65536 + delta, 10000);
         zlRotatez(delta / 100);
@@ -479,11 +527,17 @@ void gamemenu(void)
     gamemenufront();
 
     zlPop();
-    if (gameswitchdelay != 0)
-        zlDrawTransmask(0, 0, 255);
-}
-char fstxt[3][8] = { "NONE", "LOW", "HIGH" };
 
+    if (gameswitchdelay != 0) {
+        zlDrawTransmask(0, 0, 255);
+    }
+}
+
+char fstxt[3][8] = {
+    "NONE",
+    "LOW",
+    "HIGH"
+};
 char conftxt[8][32] = {
     "[BACK TO MENU]",
     "SOUND VOLUME 000",
@@ -499,101 +553,136 @@ s8 confsel = 0, axisact = 0, newaxisact;
 void menuconfigcontrol(void)
 {
     u8 ii;
+
     if ((button[9] == 1) | (button[8] == 1)) {
         zcplaysound(1);
         newgamemode = ZGM_MENU;
     }
+
     newaxisact = 0;
-    if (axis[1] > 60)
+
+    if (axis[1] > 60) {
         newaxisact = 2;
-    else if (axis[1] < -60)
+    } else if (axis[1] < -60) {
         newaxisact = 1;
+    }
 
     if (newaxisact != axisact) {
         axisact = newaxisact;
-        if (axisact == 1)
+
+        if (axisact == 1) {
             if (confsel > 0) {
                 zcplaysound(3);
                 confsel--;
             }
-        if (axisact == 2)
+        }
+
+        if (axisact == 2) {
             if (confsel < 7) {
                 zcplaysound(3);
                 confsel++;
             }
-    }
-    if (confsel == 1) {
-        if (axis[0] > 10)
-            if (configdata[8] < 128)
-                configdata[8]++;
-        if (axis[0] < -10)
-            if (configdata[8] > 0)
-                configdata[8]--;
-    }
-    if (confsel == 2) {
-        if (axis[0] > 10)
-            if (configdata[9] < 128)
-                configdata[9]++;
-        if (axis[0] < -10)
-            if (configdata[9] > 0)
-                configdata[9]--;
-    }
-
-    if (button[2] == 1)
-        switch (confsel) {
-        case 0:
-            zcplaysound(1);
-            newgamemode = ZGM_MENU;
-            break;
-        case 3:
-            zcplaysound(1);
-            configdata[10] = (configdata[10] + 1) & 1;
-            break;
-        case 4:
-            zcplaysound(1);
-            configdata[11] = (configdata[11] + 1) & 1;
-            break;
-        case 5:
-            zcplaysound(1);
-            configdata[12] = (configdata[12] + 1) % 3;
-            break;
-        case 6:
-            zcplaysound(1);
-            configdata[13] = (configdata[13] + 1) & 1;
-            break;
-
-        case 7:
-            zcplaysound(1);
-            newgamemode = ZGM_GAMEPLAY;
-            LoadNewMap(0);
-            secretskin = 0;
-            configdata[1] = 0;
-            configdata[2] = 0;
-            configdata[3] = 0;
-            configdata[4] = 0;
-            configdata[5] = 0;
-            for (ii = 0; ii < 8; ii++) {
-                configdata[16 + ii * 2] = 199;
-                configdata[17 + ii * 2] = 59;
-            }
-            configdata[16] = 99;
-            break;
         }
+    }
+
+    if (confsel == 1) {
+        if (axis[0] > 10) {
+            if (configdata[8] < 128) {
+                configdata[8]++;
+            }
+        }
+
+        if (axis[0] < -10) {
+            if (configdata[8] > 0) {
+                configdata[8]--;
+            }
+        }
+    }
+
+    if (confsel == 2) {
+        if (axis[0] > 10) {
+            if (configdata[9] < 128) {
+                configdata[9]++;
+            }
+        }
+
+        if (axis[0] < -10) {
+            if (configdata[9] > 0) {
+                configdata[9]--;
+            }
+        }
+    }
+
+    if (button[2] == 1) {
+        switch (confsel) {
+            case 0:
+                zcplaysound(1);
+                newgamemode = ZGM_MENU;
+                break;
+
+            case 3:
+                zcplaysound(1);
+                configdata[10] = (configdata[10] + 1) & 1;
+                break;
+
+            case 4:
+                zcplaysound(1);
+                configdata[11] = (configdata[11] + 1) & 1;
+                break;
+
+            case 5:
+                zcplaysound(1);
+                configdata[12] = (configdata[12] + 1) % 3;
+                break;
+
+            case 6:
+                zcplaysound(1);
+                configdata[13] = (configdata[13] + 1) & 1;
+                break;
+
+            case 7:
+                zcplaysound(1);
+                newgamemode = ZGM_GAMEPLAY;
+                LoadNewMap(0);
+                secretskin = 0;
+                configdata[1] = 0;
+                configdata[2] = 0;
+                configdata[3] = 0;
+                configdata[4] = 0;
+                configdata[5] = 0;
+
+                for (ii = 0; ii < 8; ii++) {
+                    configdata[16 + ii * 2] = 199;
+                    configdata[17 + ii * 2] = 59;
+                }
+
+                configdata[16] = 99;
+                break;
+        }
+    }
+
     sprintf(conftxt[1], "SOUND VOLUME %i%i%i", configdata[8] / 100, configdata[8] / 10 % 10, configdata[8] % 10);
     sprintf(conftxt[2], "MUSIC VOLUME %i%i%i", configdata[9] / 100, configdata[9] / 10 % 10, configdata[9] % 10);
-    if (configdata[10])
+
+    if (configdata[10]) {
         sprintf(conftxt[3], "VIBRATION  <ON>");
-    else
+    } else {
         sprintf(conftxt[3], "VIBRATION  <OFF>");
-    if (configdata[11])
+    }
+
+    if (configdata[11]) {
         sprintf(conftxt[4], "G-SENSE    <ON>");
-    else
+    } else {
         sprintf(conftxt[4], "G-SENSE    <OFF>");
+    }
+
     sprintf(conftxt[5], "TURBO MODE <%s>", fstxt[configdata[12]]);
-    if (configdata[13])
+
+    if (configdata[13]) {
         sprintf(conftxt[6], "FILM GRAIN <ON>");
-    else
+    } else {
         sprintf(conftxt[6], "FILM GRAIN <OFF>");
+    }
 }
 
 void gameconfig(void)
@@ -605,12 +694,15 @@ void gameconfig(void)
     zlClrScr();
     zlPush();
 
-    if (gameswitchdelay == 0)
+    if (gameswitchdelay == 0) {
         menuconfigcontrol();
-    else {
+    } else {
         delta = gameswitchdelay;
-        if (delta < 0)
+
+        if (delta < 0) {
             delta = 100 + delta;
+        }
+
         delta = 1000 * (delta);
         zlScale(65536 + delta * 4, 65536 + delta, 10000);
         zlRotatez(-delta / 80);
@@ -681,17 +773,22 @@ void gameconfig(void)
         zlTranslate(-62000, 45768 - 15000 * i, 0);
         zlScale(7000, 14000, 10000);
         tx = 200 + f_sin[(count * 60) & 4095] / 1400;
-        if (i == confsel)
+
+        if (i == confsel) {
             zlColor4x(tx, tx, tx, 255);
-        else
+        } else {
             zlColor4x(64, 64, 64, 255);
+        }
+
         zlRenderText();
         zlPop();
     }
 
     zlPop();
-    if (gameswitchdelay != 0)
+
+    if (gameswitchdelay != 0) {
         zlDrawTransmask(0, 255, 0);
+    }
 }
 
 s32 selectordata = 0, selectordata0 = 0, selsd = 0, oldselsd = 0;
@@ -715,10 +812,14 @@ void gameselector(void)
 
     bgm = 11;
     zlPush();
+
     if (gameswitchdelay != 0) {
         sc = gameswitchdelay;
-        if (sc < 0)
+
+        if (sc < 0) {
             sc = 100 + sc;
+        }
+
         sc = sc * 256 * 3;
         zlScale(65536 + sc * 4, 65536 + sc, 1 << 16);
         zlRotatez(-sc / 80);
@@ -743,29 +844,36 @@ void gameselector(void)
 
     selectordata0 += (selectordata - selectordata0) >> 3;
     selsd = (selectordata0 + 128) / 378;
-    if (selsd < 0)
+
+    if (selsd < 0) {
         selsd = 0;
-    else if (selsd > 7)
+    } else if (selsd > 7) {
         selsd = 7;
+    }
+
     if (selsd != oldselsd) {
         zcplaysound(3);
         oldselsd = selsd;
     }
 
-    if (selectordata < -256)
+    if (selectordata < -256) {
         selectordata = -256;
-    else if (selectordata > 3000)
+    } else if (selectordata > 3000) {
         selectordata = 3000;
+    }
 
     for (i = 0; i < 8; i++) {
         zlPush();
         zlTranslate(i * 90000 - 10000 - selectordata0 * 235, 5000, 0);
         zlScale(49152, 65536, 65536);
         zlRotatez(consoleturn[1]);
-        if (i == selsd)
+
+        if (i == selsd) {
             sc = 50000;
-        else
+        } else {
             sc = 40000;
+        }
+
         sc += f_sin[(800 * i + count * 6) & 4095] / 20;
         zlScale(sc, sc, sc);
         zlColor4x(255, 255, 255, 255);
@@ -792,6 +900,7 @@ void gameselector(void)
 
         zlPop();
     }
+
     zlBlend(1);
     zlPush();
     zlColor4x(0, 0, 0, 128);
@@ -803,10 +912,14 @@ void gameselector(void)
     zlPop();
 
     zlColor4x(255, 255, 0, 255);
+
     if (configdata[16 + selsd * 2] / 100 == 0) {
-        l_text = sprintf(s_text, "TIME %i%i%i:%i%i", configdata[16 + selsd * 2] / 100, configdata[16 + selsd * 2] / 10 % 10, configdata[16 + selsd * 2] % 10, configdata[16 + selsd * 2 + 1] / 10, configdata[16 + selsd * 2 + 1] % 10);
-    } else
+        l_text = sprintf(s_text, "TIME %i%i%i:%i%i", configdata[16 + selsd * 2] / 100,
+                         configdata[16 + selsd * 2] / 10 % 10, configdata[16 + selsd * 2] % 10,
+                         configdata[16 + selsd * 2 + 1] / 10, configdata[16 + selsd * 2 + 1] % 10);
+    } else {
         l_text = sprintf(s_text, "[DO NOT WANT]");
+    }
 
     zlPush();
     zlTranslate(-52000, 45768, 0);
@@ -832,12 +945,13 @@ void gameselector(void)
     zlPop();
 
     if (gameswitchdelay == 0) {
-        if ((axis[0] < -32) | (axis[0] > 32))
+        if ((axis[0] < -32) | (axis[0] > 32)) {
             selectordata += axis[0] / 8;
-        else
+        } else {
             selectordata += ((selsd * 378) - selectordata) >> 3;
+        }
 
-        if (button[2] == 1 | (button[0] == 1))
+        if (button[2] == 1 | (button[0] == 1)) {
             if (configdata[16 + selsd * 2] / 100 == 0) {
                 zcplaysound(1);
                 newgamemode = ZGM_GAMEPLAY;
@@ -846,13 +960,17 @@ void gameselector(void)
             } else {
                 zcplaysound(2);
             }
+        }
+
         if (button[1] == 1 | button[1] == 3 | button[8] == 1 | button[9] == 1) {
             zcplaysound(2);
             newgamemode = ZGM_MENU;
         }
     }
-    if (gameswitchdelay != 0)
+
+    if (gameswitchdelay != 0) {
         zlDrawTransmask(255, 0, 0);
+    }
 }
 
 s32 ccticks, ccstate = 0, zerotick = 0;
@@ -862,22 +980,27 @@ void gamelogo(void)
 {
     s32 r, g, b, a, i, sc, k, l;
     bgm = 58;
+
     if (ccstate == 0 & count > 1) {
         zerotick = tickcount;
         ccstate = 1;
     } else {
         ccticks = tickcount - zerotick;
+
         if (ccticks > 9000) {
             newgamemode = ZGM_GAMEPLAY;
             level = 0;
             playmode = ZPM_AAA;
         }
-        TIMETRAP(0, 8192)
-        {
+
+        TIMETRAP(0, 8192) {
             zlPush();
-            TIMETRAP(0, 4096)
-            i = 146;
-            else i = 140;
+
+            TIMETRAP(0, 4096) {
+                i = 146;
+            } else {
+                i = 140;
+            }
 
             k = f_cos[ccticks & 4095] >> 5;
             l = f_sin[ccticks & 4095] >> 5;
@@ -888,14 +1011,21 @@ void gamelogo(void)
 
             a = f_sin[(ccticks / 3) & 2047] >> 8;
 
-            if (r > 255)
+            if (r > 255) {
                 r = 255;
-            if (g > 255)
+            }
+
+            if (g > 255) {
                 g = 255;
-            if (b > 255)
+            }
+
+            if (b > 255) {
                 b = 255;
-            if (a > 255)
+            }
+
+            if (a > 255) {
                 a = 255;
+            }
 
             zlColor4x(r, g, b, 255);
             zlRenderScreen(i);
@@ -912,9 +1042,7 @@ void gamelogo(void)
             zlBlend(0);
 
             zlPop();
-        }
-        else TIMETRAP(8192, 10216)
-        {
+        } else TIMETRAP(8192, 10216) {
             zlColor4x(0, 0, 0, 255 - (ccticks - 8192) / 8);
             zlBlend(1);
             zlRenderScreen(140);

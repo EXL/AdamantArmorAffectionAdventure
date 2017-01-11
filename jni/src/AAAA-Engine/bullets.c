@@ -14,7 +14,8 @@ void procbullets(void)
 {
     u8 i, k, blocked;
     s32 t, x, y, z, bx, by, bz, ix, iy, iz, nya;
-    for (i = 0; i < 32; i++)
+
+    for (i = 0; i < 32; i++) {
         if (bullet[i][0] > 0) {
             bullet[i][1] += bullet[i][4];
             bullet[i][2] += bullet[i][5];
@@ -60,29 +61,32 @@ void procbullets(void)
                 zlEndQuads();
                 zlPop();
             }
+
             blocked = 0;
             bullet[i][0]--;
             x = bullet[i][1];
             y = bullet[i][2];
             z = bullet[i][3];
 
-            //ld=(255)+(255<<8)+(255<<16)+(2<<24);
+            // ld=(255)+(255<<8)+(255<<16)+(2<<24);
             newlight(x, y, z, (255) + (168 << 8) + (0 << 16) + (2 << 24));
 
-            if (x < 0)
+            if (x < 0) {
                 blocked = 2;
-            else if (y < 0)
+            } else if (y < 0) {
                 blocked = 2;
-            else if (z < 0)
+            } else if (z < 0) {
                 blocked = 2;
-            else if (x >= truemaxmapx)
+            } else if (x >= truemaxmapx) {
                 blocked = 2;
-            else if (y >= truemaxmapx)
+            } else if (y >= truemaxmapx) {
                 blocked = 2;
-            else if (z >= truemaxmaph)
+            } else if (z >= truemaxmaph) {
                 blocked = 2;
-            else if (mpb[((x) >> 16)][((y) >> 16)][((z) >> 16)])
+            } else if (mpb[((x) >> 16)][((y) >> 16)][((z) >> 16)]) {
                 blocked = 1;
+            }
+
             if (blocked) {
                 bullet[i][0] = 0;
                 zcplaysound3d(13, 4, x, y, z);
@@ -107,7 +111,8 @@ void procbullets(void)
                         pr[128][15] = 0;
                         newparticle();
                     }
-                    //bullethole
+
+                    // bullethole
                     nya = 0;
                     ix = bullet[i][4];
                     iy = bullet[i][5];
@@ -123,25 +128,32 @@ void procbullets(void)
                     if (mp[(bx + ix) >> 16][(by) >> 16][(bz) >> 16][0] > 0) {
                         sprite[32][1] = 3;
                         nya = 1;
-                        if (ix < 0)
+
+                        if (ix < 0) {
                             sprite[32][2] = ((bx >> 16) << 16) + 1000;
-                        else
+                        } else {
                             sprite[32][2] = ((bx >> 16) << 16) + 64000;
+                        }
                     } else if (mp[(bx) >> 16][(by + iy) >> 16][(bz) >> 16][0] > 0) {
                         sprite[32][1] = 4;
                         nya = 1;
-                        if (iy < 0)
+
+                        if (iy < 0) {
                             sprite[32][3] = ((by >> 16) << 16) + 1000;
-                        else
+                        } else {
                             sprite[32][3] = ((by >> 16) << 16) + 64000;
+                        }
                     } else if (mp[(bx) >> 16][(by) >> 16][(bz + iz) >> 16][0] > 0) {
                         sprite[32][1] = 5;
                         nya = 1;
-                        if (iz < 0)
+
+                        if (iz < 0) {
                             sprite[32][4] = ((bz >> 16) << 16) + 1000;
-                        else
+                        } else {
                             sprite[32][4] = ((bz >> 16) << 16) + 64000;
+                        }
                     }
+
                     if (nya) {
                         sprite[32][0] = 64;
                         sprite[32][5] = 0;
@@ -149,30 +161,46 @@ void procbullets(void)
                         sprite[32][7] = 0;
                         spawnnewsprite();
                     }
-                    //bullethole end
+
+                    // bullethole end
                 }
-            } else
-                for (k = 0; k < 64; k++)
-                    if (mob[k][0] > 0)
-                        if (x - mob[k][1] < mobhitx)
-                            if (x - mob[k][1] > -mobhitx)
-                                if (y - mob[k][2] < mobhitx)
-                                    if (y - mob[k][2] > -mobhitx)
-                                        if (z - mob[k][3] < mobhitz)
+            } else {
+                for (k = 0; k < 64; k++) {
+                    if (mob[k][0] > 0) {
+                        if (x - mob[k][1] < mobhitx) {
+                            if (x - mob[k][1] > -mobhitx) {
+                                if (y - mob[k][2] < mobhitx) {
+                                    if (y - mob[k][2] > -mobhitx) {
+                                        if (z - mob[k][3] < mobhitz) {
                                             if (z - mob[k][3] > 0) {
                                                 hurtmob(k);
                                                 bullet[i][0] = 0;
                                             }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
+    }
 }
 
 void newbullet(void)
 {
     u8 i = 0, k;
-    while ((bullet[i][0] > 0) & (i < 32))
+
+    while ((bullet[i][0] > 0) & (i < 32)) {
         i++;
-    if (i == 32)
+    }
+
+    if (i == 32) {
         i = ((zlrand()) >> 3);
-    for (k = 0; k < 16; k++)
+    }
+
+    for (k = 0; k < 16; k++) {
         bullet[i][k] = bullet[32][k];
+    }
 }
