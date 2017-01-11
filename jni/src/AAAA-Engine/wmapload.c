@@ -1,11 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "vars.h"
 #include "wlight.h"
 #include "wmapgen.h"
 
 #include "mobs.h"
+
+#include <stdio.h>
+#include <stdlib.h>
 
 #define FPML(x, y) ((((x) >> 7) * ((y) >> 7)) >> 2)
 

@@ -249,13 +249,14 @@ void camerastep(void)
 }
 
 /*
-    tpscam
-    0 - angle x
-    1 - angle y
-    2 - angle z
-    6, 7 - first bone
-    10, 11 - second
-*/
+ * tpscam
+ *
+ * 0      - angle x
+ * 1      - angle y
+ * 2      - angle z
+ * 6, 7   - first bone
+ * 10, 11 - second
+ */
 
 s32 inertion[3] = { 0, 0, 0 };
 

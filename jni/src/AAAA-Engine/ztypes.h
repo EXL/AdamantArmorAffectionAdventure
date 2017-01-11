@@ -1,3 +1,6 @@
+#ifndef ZTYPES_H
+#define ZTYPES_H
+
 typedef unsigned char u8;
 typedef unsigned int u16;
 typedef unsigned long u32; // 8 ?
@@ -34,3 +37,5 @@ enum ZLAI_STATE {
     AI_PEACE,
     AI_ATTACK
 };
+
+#endif // ZTYPES_H

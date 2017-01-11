@@ -1,3 +1,6 @@
+#ifndef VARS_H
+#define VARS_H
+
 #include "zctables.h"
 #include "ztypes.h"
 
@@ -23,7 +26,6 @@ extern u8 secretskin;
 
 #ifdef ANDROID_NDK
     // EXL: For replacing main() to SDL_main() need include SDL.h in main.c
-
     #include <SDL.h>
     #include <android/log.h>
 
@@ -35,17 +37,17 @@ extern u8 secretskin;
 #endif
 
 #ifdef PC32
-    #include "GL/gl.h"
+    #include <GL/gl.h>
     extern GLfloat mesh[MESH_CNT * 3];
     extern GLfloat mesht[MESH_CNT * 2];
 #endif
 
 #if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
     #if defined(GP2XCAANOO) || defined(PC_GLES) || defined(ANDROID_NDK)
-        #include "GLES/gl.h"
+        #include <GLES/gl.h>
     #endif
     #ifdef GP2XWIZ
-        #include "OpenGLES/gl.h"
+        #include <OpenGLES/gl.h>
     #endif
     extern GLfixed mesh[MESH_CNT * 3];
     extern GLfixed mesht[MESH_CNT * 2];
@@ -128,3 +130,5 @@ extern s32 autismdelay, autismstuff;
 extern s32 debugprobe[3], levelstarttick, ltime[2], currenttick;
 
 extern u8 ai_attack_disable_cheat;
+
+#endif // VARS_H

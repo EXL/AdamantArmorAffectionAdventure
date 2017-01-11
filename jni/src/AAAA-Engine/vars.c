@@ -22,17 +22,17 @@ u8 secretskin = 0;
 #define MESH_CNT 16384
 
 #ifdef PC32
-    #include "GL/gl.h"
+    #include <GL/gl.h>
     GLfloat mesh[MESH_CNT * 3];
     GLfloat mesht[MESH_CNT * 2];
 #endif
 
 #if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
     #if defined(GP2XCAANOO) || defined(PC_GLES) || defined(ANDROID_NDK)
-        #include "GLES/gl.h"
+        #include <GLES/gl.h>
     #endif
     #ifdef GP2XWIZ
-        #include "OpenGLES/gl.h"
+        #include <OpenGLES/gl.h>
     #endif
     GLfixed mesh[MESH_CNT * 3];
     GLfixed mesht[MESH_CNT * 2];

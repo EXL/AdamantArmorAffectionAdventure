@@ -1,25 +1,25 @@
-// system
+#include "vars.h"
+
+// System
 
 #ifdef PC32
-    #include "SDL/SDL.h"
-    #include "SDL/SDL_opengl.h"
+    #include <SDL/SDL.h>
+    #include <SDL/SDL_opengl.h>
     #include <GL/gl.h>
 #endif
 
 #if defined(GP2XCAANOO) || defined(PC_GLES) || defined(ANDROID_NDK)
     #ifndef ANDROID_NDK
-        #include "GLES/egl.h"
+        #include <GLES/egl.h>
     #endif
-    #include "GLES/gl.h"
-    #include "GLES/glext.h"
+    #include <GLES/gl.h>
+    #include <GLES/glext.h>
 #endif
 #ifdef GP2XWIZ
-    #include "OpenGLES/egl.h"
-    #include "OpenGLES/gl.h"
-    #include "OpenGLES/glext.h"
+    #include <OpenGLES/egl.h>
+    #include <OpenGLES/gl.h>
+    #include <OpenGLES/glext.h>
 #endif
-
-#include "vars.h"
 
 u8 lasttexture;
 

@@ -1,7 +1,14 @@
+#include "render.h"
+#include "vars.h"
+#include "zcsound.h"
+#include "zresm.h"
+
+// System
+
 #ifndef SDL2_PORT
-    #include "SDL/SDL.h"
+    #include <SDL/SDL.h>
     #ifndef NO_SDL_MIXER
-        #include "SDL/SDL_mixer.h"
+        #include <SDL/SDL_mixer.h>
     #endif
 #else
     #ifndef ANDROID_NDK
@@ -26,17 +33,17 @@
 #endif
 
 #ifdef GP2XWIZ
-    #include "Panel/fake_os.h"
+    #include <Panel/fake_os.h>
 #endif
 
 #if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
     #if defined(PC_GLES) || defined(ANDROID_NDK)
         // EXL: Drop X11
         //#include <X11/Xlib.h>
-        #include "GLES/gl.h"
-        #include "GLES/glext.h"
+        #include <GLES/gl.h>
+        #include <GLES/glext.h>
         #ifndef ANDROID_NDK
-            #include "GLES/egl.h"
+            #include <GLES/egl.h>
             // EXL: Drop EGL in Android
             //#else
             //#include <EGL/egl.h>
@@ -55,20 +62,15 @@
     // Display *g_x11Display = NULL;
 #endif
 #ifdef GP2XCAANOO
-    #include "GLES/egl.h"
-    #include "GLES/gl.h"
-    #include "GLES/glext.h"
+    #include <GLES/egl.h>
+    #include <GLES/gl.h>
+    #include <GLES/glext.h>
 #endif
 #ifdef GP2XWIZ
-    #include "OpenGLES/egl.h"
-    #include "OpenGLES/gl.h"
-    #include "OpenGLES/glext.h"
+    #include <OpenGLES/egl.h>
+    #include <OpenGLES/gl.h>
+    #include <OpenGLES/glext.h>
 #endif
-
-#include "render.h"
-#include "vars.h"
-#include "zcsound.h"
-#include "zresm.h"
 
 // EXL: Drop EGL
 #ifndef ANDROID_NDK

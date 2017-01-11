@@ -4,14 +4,14 @@
 
 // Vibration
 
+#include "zlext/simple_isa1200if.h"
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <sys/ioctl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
-
-#include "zlext/simple_isa1200if.h"
 
 #define DEVICE_FILENAME "/dev/isa1200"
 
@@ -47,6 +47,7 @@ void zlShutDownVibe(void)
 #include "zlext/te9_tf9_hybrid_driver.h"
 // #include "zlext/te9_tf9_main.h"
 #include "zlext/te9_tf9_regs.h"
+
 #include <sys/ipc.h>
 #include <sys/sem.h>
 #include <sys/types.h>

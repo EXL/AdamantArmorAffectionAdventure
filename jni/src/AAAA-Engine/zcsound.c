@@ -1,8 +1,8 @@
 #include "vars.h"
 
 #ifndef SDL2_PORT
-    #include "SDL/SDL.h"
-    #include "SDL/SDL_mixer.h"
+    #include <SDL/SDL.h>
+    #include <SDL/SDL_mixer.h>
 #else
     #ifndef ANDROID_NDK
         #include <SDL2/SDL.h>

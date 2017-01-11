@@ -1,3 +1,6 @@
+#ifndef RENDER_H
+#define RENDER_H
+
 extern void corerenderreset(void);
 extern void corerenderrender(void);
 
@@ -33,3 +36,5 @@ extern void zlRenderText(void);
 extern void zlRenderScreen(unsigned char index);
 extern void zlRenderQuad(void);
 extern void zlDrawTransmask(unsigned char r, unsigned char g, unsigned char b);
+
+#endif // RENDER_H

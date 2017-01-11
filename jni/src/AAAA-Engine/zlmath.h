@@ -1,3 +1,6 @@
+#ifndef ZLMATH_H
+#define ZLMATH_H
+
 extern unsigned char zlrand(void);
 extern signed long viszscreen(signed long x, signed long y, signed long z);
 extern signed long visxscreen(signed long x, signed long y, signed long z);
@@ -11,3 +14,5 @@ signed long srange(signed long argx, signed long argy);
 signed long zabs(signed long argx);
 
 unsigned char i_probe_act(void);
+
+#endif // ZLMATH_H
