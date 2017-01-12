@@ -474,7 +474,7 @@ void gamemenukey(void)
     }
 
     if ((axis[1] < -10) | (axis[1] > 10)) {
-        mmpos += axis[1] / 30;
+        mmpos += axis[1] / 10;
     } else {
         w = ((mmpos) % 128) - 64;
 
