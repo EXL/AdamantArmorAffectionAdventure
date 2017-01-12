@@ -953,7 +953,7 @@ void gameselector(void)
 
     if (gameswitchdelay == 0) {
         if ((axis[0] < -32) | (axis[0] > 32)) {
-            selectordata += axis[0] / 8;
+            selectordata += axis[0] / 2;
         } else {
             selectordata += ((selsd * 378) - selectordata) >> 3;
         }
