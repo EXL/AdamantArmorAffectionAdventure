@@ -234,7 +234,8 @@ void zcore_video_init(void)
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1); // TODO: Check this.
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
 
-    globalWindow = SDL_CreateWindow("AAAA", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenwidth, screenheight,
+    globalWindow = SDL_CreateWindow("Adamant Armor Affection Adventure",
+                                    SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenwidth, screenheight,
                                     SDL_WINDOW_OPENGL);
 
     TO_DEBUG_LOG("Init SDL window: %dx%d\n", screenwidth, screenheight);
@@ -263,7 +264,7 @@ void zcore_video_init(void)
         EGL_NONE
     };
     EGLint numConfigs, majorVersion, minorVersion;
-    globalWindow = SDL_CreateWindow("AAAA", 0, 0, screenwidth, screenheight,
+    globalWindow = SDL_CreateWindow("Adamant Armor Affection Adventure", 0, 0, screenwidth, screenheight,
                                     (0) ? (SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN) : SDL_WINDOW_OPENGL);
     // screen=SDL_SetVideoMode(screenwidth,screenheight,screenbpp, SDL_SWSURFACE); // | SDL_FULLSCREEN);
     // g_x11Display = XOpenDisplay(NULL);
@@ -301,7 +302,8 @@ void zcore_video_init(void)
     SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE, 0);
     SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE, 0);
 
-    globalWindow = SDL_CreateWindow("AAAA", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenwidth, screenheight,
+    globalWindow = SDL_CreateWindow("Adamant Armor Affection Adventure",
+                                    SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenwidth, screenheight,
                                     SDL_WINDOW_OPENGL);
 
     TO_DEBUG_LOG("Init SDL window: %dx%d\n", screenwidth, screenheight);
