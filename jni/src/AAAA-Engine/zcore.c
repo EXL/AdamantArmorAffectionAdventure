@@ -502,7 +502,7 @@ void zcore_input_frame(void)
     for (i = 0; i < 2; i++) {
         axis[i] = 0;
     }
-//#ifndef ANDROID_NDK
+#ifndef ANDROID_NDK
     if (SDL_NumJoysticks() > 0) {
         SDL_JoystickUpdate();
 
@@ -586,9 +586,17 @@ void zcore_input_frame(void)
             s_button[i] = 0;
         }
     }
-//#endif
+#endif
 
 #ifdef ANDROID_NDK
+    // EXL: First, clean all buttons
+    for (k = 0; k < 16; k++) {
+        if (jkey_map[k] >= 0) {
+            s_button[k] = 0;
+        }
+    }
+
+    // EXL: Second check tjoy_b array
     if (tjoy_b[TJ_UP]) {
         axis[1] = -128;
     } else if (tjoy_b[TJ_LEFT]) {
