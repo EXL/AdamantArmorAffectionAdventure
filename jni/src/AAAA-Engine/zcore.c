@@ -5,8 +5,11 @@
 
 // System
 
+#include <time.h>
+#include <stdlib.h>
+
 #ifndef SDL2_PORT
-    #include <SDL/SDL.h>
+    // #include <SDL/SDL.h>
     #ifndef NO_SDL_MIXER
         #include <SDL/SDL_mixer.h>
     #endif
@@ -14,7 +17,7 @@
     #ifndef ANDROID_NDK
         #include <SDL2/SDL.h>
     #else
-        #include <SDL.h>
+        // #include <SDL.h>
     #endif
     #ifndef NO_SDL_MIXER
         #ifndef ANDROID_NDK
@@ -46,7 +49,7 @@
             //#include <EGL/egl.h>
         #endif
         #ifndef SDL2_PORT
-            #include <SDL/SDL_syswm.h>
+            // #include <SDL/SDL_syswm.h>
         #else
             #ifndef ANDROID_NDK
                 #include <SDL2/SDL_syswm.h>
@@ -123,16 +126,16 @@ EGLint attrib_list[] = {
 #endif
 
 #ifndef SDL2_PORT
-    SDL_Surface *screen = NULL;
+    //SDL_Surface *screen = NULL;
 #else
     SDL_Window *globalWindow = NULL;
     SDL_GLContext *glContext_SDL = NULL;
 #endif
 
-SDL_Joystick *gamepad = NULL;
+//SDL_Joystick *gamepad = NULL;
 
-int audio_channels = 2, audio_rate = 22050, audio_buffers = 1024;
-Uint16 audio_format = AUDIO_S16;
+//int audio_channels = 2, audio_rate = 22050, audio_buffers = 1024;
+//Uint16 audio_format = AUDIO_S16;
 
 char spath[256];
 
@@ -214,37 +217,39 @@ void zcore_video_init(void)
 {
     screenwidth = 800;
     screenheight = 480;
-    SDL_InitSubSystem(SDL_INIT_VIDEO);
-    SDL_ShowCursor(0);
+    //SDL_InitSubSystem(SDL_INIT_VIDEO);
+    //SDL_ShowCursor(0);
+
+    srand(time(0));
 
 #ifdef ANDROID_NDK
     // EXL: Android OpenGLES 1.1 via SDL2 initialization
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 0);
-    SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE, 0);
-    SDL_GL_SetAttribute(SDL_GL_ACCUM_GREEN_SIZE, 0);
-    SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE, 0);
-    SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE, 0);
+    // SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+    // SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+    // SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+    // SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+    // SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    // SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 0);
+    // SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE, 0);
+    // SDL_GL_SetAttribute(SDL_GL_ACCUM_GREEN_SIZE, 0);
+    // SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE, 0);
+    // SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE, 0);
+    //
+    // SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
+    // SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1); // TODO: Check this.
+    // SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
 
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1); // TODO: Check this.
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
-
-    globalWindow = SDL_CreateWindow("AAAA", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenwidth, screenheight,
-                                    SDL_WINDOW_OPENGL);
+    //globalWindow = SDL_CreateWindow("AAAA", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenwidth, screenheight,
+    //                                SDL_WINDOW_OPENGL);
 
     TO_DEBUG_LOG("Init SDL window: %dx%d\n", screenwidth, screenheight);
-    SDL_SetWindowFullscreen(globalWindow, SDL_TRUE);
+    //SDL_SetWindowFullscreen(globalWindow, SDL_TRUE);
 
     // Update Size
-    SDL_GetWindowSize(globalWindow, &screenwidth, &screenheight);
-    TO_DEBUG_LOG("Resize SDL window: %dx%d\n", screenwidth, screenheight);
+    //SDL_GetWindowSize(globalWindow, &screenwidth, &screenheight);
+    //TO_DEBUG_LOG("Resize SDL window: %dx%d\n", screenwidth, screenheight);
 
-    glContext_SDL = SDL_GL_CreateContext(globalWindow);
+    //glContext_SDL = SDL_GL_CreateContext(globalWindow);
 
     glVertexPointer(3, GL_FIXED, 0, mesh);
     glTexCoordPointer(2, GL_FIXED, 0, mesht);
@@ -370,7 +375,7 @@ void zcore_video_frame(void)
             glAccum(GL_RETURN,1.0);
         */
 #ifndef SDL2_PORT
-        SDL_GL_SwapBuffers();
+        //SDL_GL_SwapBuffers();
 #else
         SDL_GL_SwapWindow(globalWindow);
 #endif
@@ -405,7 +410,7 @@ void zcore_video_down(void)
 
 void zcore_sound_init(void)
 {
-    SDL_InitSubSystem(SDL_INIT_AUDIO);
+    //SDL_InitSubSystem(SDL_INIT_AUDIO);
 
 #ifndef NO_SDL_MIXER
     Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers);
@@ -433,11 +438,11 @@ void zcore_sound_down(void)
 
 #ifdef ANDROID_NDK
 int i_keyb[20];
-static const SDL_Keycode code_keyb[20] = {
+/*static const SDL_Keycode code_keyb[20] = {
     // EXL: Motorola Photon Q and Motorola Droid 4 hardware keyboard mapping
     SDLK_BACKSPACE, SDLK_SPACE, SDLK_RETURN, SDLK_z, SDLK_LSHIFT, SDLK_x, SDLK_b, SDLK_n, SDLK_AC_BACK, SDLK_c,
     SDLK_f,         SDLK_g,     SDLK_h,      SDLK_j, SDLK_k,      SDLK_0, SDLK_w, SDLK_d, SDLK_s,       SDLK_a
-};
+};*/
 s8 jkey_map[16] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1, -1, -1, -1 };
 #endif
 
@@ -467,17 +472,18 @@ void zcore_input_init(void)
 {
     u8 i;
 
-    SDL_InitSubSystem(SDL_INIT_JOYSTICK);
+    //SDL_InitSubSystem(SDL_INIT_JOYSTICK);
 
     for (i = 0; i < 16; i++) {
         button[i] = 0;
     }
 
+    /*
     if (SDL_NumJoysticks() > 0) {
         gamepad = SDL_JoystickOpen(0);
-    }
+    }*/
 
-#ifdef ANDROID_NDK
+#ifndef ANDROID_NDK
 
     for (i = 0; i < SDL_NumJoysticks(); ++i) {
         TO_DEBUG_LOG("SDL Joystick %d: %s\n", i, SDL_JoystickNameForIndex(i));
@@ -497,6 +503,7 @@ void zcore_input_frame(void)
         axis[i] = 0;
     }
 
+    /*
     if (SDL_NumJoysticks() > 0) {
         SDL_JoystickUpdate();
 
@@ -699,10 +706,10 @@ void zcore_input_frame(void)
     }
 
 #endif
-
+    */
 }
 
-#ifdef ANDROID_NDK
+#ifndef ANDROID_NDK
 void test_jkeys(void)
 {
     int i, c = SDL_JoystickNumButtons(gamepad);
@@ -796,9 +803,13 @@ void zcoreloop(void)
     count = 0;
     zcoreenabled = 1;
 
+#ifndef ANDROID_NDK
     while (zcoreenabled != 0) {
+#endif
         zcorestep();
+#ifndef ANDROID_NDK
     } // Embrace thy hopeless destiny loop
+#endif
 }
 
 void zcoredown(void)
@@ -807,7 +818,7 @@ void zcoredown(void)
     zcore_video_down();
     zcore_sound_down();
     zlextshutdown();
-    SDL_Quit();
+    //SDL_Quit();
 #ifdef GP2X
     chdir("/usr/gp2x");
     execl("/usr/gp2x/gp2xmenu", "/usr/gp2x/gp2xmenu", NULL);

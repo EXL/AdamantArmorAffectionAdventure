@@ -117,3 +117,11 @@ s32 autismdelay = 0, autismstuff = 0;
 s32 debugprobe[3], levelstarttick, ltime[2], currenttick;
 
 u8 ai_attack_disable_cheat = 0;
+
+#ifdef ANDROID_NDK
+#include <stdlib.h>
+
+u32 SDL_GetTicks() {
+    return rand();
+}
+#endif

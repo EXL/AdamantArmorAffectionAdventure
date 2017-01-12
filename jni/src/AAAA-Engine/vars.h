@@ -26,7 +26,7 @@ extern u8 secretskin;
 
 #ifdef ANDROID_NDK
     // EXL: For replacing main() to SDL_main() need include SDL.h in main.c
-    #include <SDL.h>
+    // #include <SDL.h>
     #include <android/log.h>
 
     #define LOG_TAG "AAAA"
@@ -130,5 +130,9 @@ extern s32 autismdelay, autismstuff;
 extern s32 debugprobe[3], levelstarttick, ltime[2], currenttick;
 
 extern u8 ai_attack_disable_cheat;
+
+#ifdef ANDROID_NDK
+extern u32 SDL_GetTicks();
+#endif
 
 #endif // VARS_H
