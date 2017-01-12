@@ -7,7 +7,7 @@ TARGET = AAAA-Engine
 
 CONFIG -= qt
 
-CONFIG -= gles
+CONFIG += gles
 
 INCLUDEPATH += . AAAA-Engine/
 

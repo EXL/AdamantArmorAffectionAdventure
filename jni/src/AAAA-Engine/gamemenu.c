@@ -631,6 +631,9 @@ void menuconfigcontrol(void)
                 break;
 
             case 5:
+#ifdef ANDROID_NDK
+                break;
+#endif
                 zcplaysound(1);
                 configdata[12] = (configdata[12] + 1) % 3;
                 break;
@@ -675,9 +678,12 @@ void menuconfigcontrol(void)
     } else {
         sprintf(conftxt[4], "G-SENSE    <OFF>");
     }
-
-    sprintf(conftxt[5], "TURBO MODE <%s>", fstxt[configdata[12]]);
-
+#ifndef ANDROID_NDK
+    // sprintf(conftxt[5], "TURBO MODE <%s>", fstxt[configdata[12]]);
+    sprintf(conftxt[5], "TURBO MODE <%s>", (configdata[12] > 3) ? "ON" : fstxt[configdata[12]]);
+#else
+    sprintf(conftxt[5], "TURBO MODE <%s>", "FIXED");
+#endif
     if (configdata[13]) {
         sprintf(conftxt[6], "FILM GRAIN <ON>");
     } else {

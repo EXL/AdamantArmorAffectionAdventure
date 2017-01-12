@@ -590,12 +590,17 @@ void applycheats(void)
     }
 
     // 2. Open all levels
-    for (i = 16; i < 32; ++i) {
-        configdata[i] = 99;
+    for (i = 0; i < 8; i++) {
+        configdata[16 + i * 2] = 99;
+        configdata[17 + i * 2] = 59;
     }
 
     // 3. Disable mobs attack
     ai_attack_disable_cheat = 1;
+
+    // 4. Frameskip or turbohack
+    configdata[12] = 2;
+    TO_DEBUG_LOG("Frameskip: %d\n", configdata[12]);
 }
 
 void zresminit(void)
