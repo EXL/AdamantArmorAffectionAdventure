@@ -718,7 +718,7 @@ void test_jkeys(void)
 
 void zcore_input_down(void)
 {
-
+    SDL_JoystickClose(0);
 }
 
 // Input SubSystem End
