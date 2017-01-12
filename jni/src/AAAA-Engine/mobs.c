@@ -7,6 +7,9 @@
 #include "mobai.h"
 #include "sprites.h"
 
+#include "zcsound.h"
+#include "particles.h"
+
 #define FPML(x, y) ((((x) >> 7) * ((y) >> 7)) >> 2)
 
 /*

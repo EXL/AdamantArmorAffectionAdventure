@@ -389,7 +389,7 @@ void zcore_video_down(void)
     eglDestroySurface(glDisplay, glSurface);
     eglDestroyContext(glDisplay, glContext);
     eglTerminate(glDisplay);
-    free(hNativeWnd);
+    // free(hNativeWnd);
 #endif
 #ifdef SDL2_PORT
     SDL_GL_DeleteContext(glContext_SDL);
@@ -746,7 +746,7 @@ void zcoreinit(void)
     zcore_sound_init();
     zcore_video_init();
     zcore_input_init();
-    zlextinit();
+    // zlextinit();
 }
 
 void zcorestep(void)
@@ -770,7 +770,7 @@ void zcorestep(void)
     zresmstep();
     zcore_video_frame();
     zcore_sound_frame();
-    zlextframe();
+    // zlextframe();
     count++;
     fstick1 = SDL_GetTicks();
     currenttick = fstick1;
@@ -806,7 +806,7 @@ void zcoredown(void)
     zcore_input_down();
     zcore_video_down();
     zcore_sound_down();
-    zlextshutdown();
+    // zlextshutdown();
     SDL_Quit();
 #ifdef GP2X
     chdir("/usr/gp2x");

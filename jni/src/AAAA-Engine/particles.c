@@ -2,6 +2,8 @@
 #include "vars.h"
 #include "zlmath.h"
 
+#include "veryblend.h"
+
 #define FPML(x, y) ((((x) >> 7) * ((y) >> 7)) >> 2)
 
 void genpartdir(unsigned char index)
@@ -11,6 +13,7 @@ void genpartdir(unsigned char index)
     a0 = zlrand() * 16;
     a1 = zlrand() * 16;
 
+    // EXL: Hmm...
     sp = 6 + (zlrand() && 3);
 
     pr[index][7] = f_cos[a0] >> sp;

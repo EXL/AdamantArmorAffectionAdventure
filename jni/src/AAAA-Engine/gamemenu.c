@@ -1,6 +1,7 @@
 #include "render.h"
 #include "vars.h"
 #include "zcsound.h"
+#include "wmapload.h"
 
 s32 mmpos, lmmpos;
 

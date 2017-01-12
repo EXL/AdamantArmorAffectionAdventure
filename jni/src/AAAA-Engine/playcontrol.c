@@ -2,6 +2,10 @@
 #include "intro.h"
 #include "vars.h"
 
+#include "zcsound.h"
+#include "mobs.h"
+#include "wmapload.h"
+
 #define FPML(x, y) ((((x) >> 7) * ((y) >> 7)) >> 2)
 
 void procplaycontrol(void)

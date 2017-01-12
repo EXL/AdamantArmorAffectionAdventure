@@ -5,12 +5,21 @@
 #include "sprites.h"
 #include "vars.h"
 #include "veryblend.h"
+#include "camera.h"
 
 #include "mobs.h"
 #include "wlight.h"
 #include "zgui.h"
 
 #include "zlmath.h"
+
+#ifdef SDL2_PORT
+    #ifdef ANDROID_NDK
+        #include <SDL.h>
+    #else
+        #include <SDL2/SDL.h>
+    #endif
+#endif
 
 #define RENDERCUBEW 10
 #define RENDERCUBEY 9

@@ -2,6 +2,8 @@
 #include "vars.h"
 #include "zlmath.h"
 
+#include "wmapload.h"
+
 void procnoise(void)
 {
     s32 x, y, s, i;

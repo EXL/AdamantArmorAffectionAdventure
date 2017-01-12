@@ -7,6 +7,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifdef SDL2_PORT
+    #ifdef ANDROID_NDK
+        #include <SDL.h>
+    #else
+        #include <SDL2/SDL.h>
+    #endif
+#endif
+
 #define FPML(x, y) ((((x) >> 7) * ((y) >> 7)) >> 2)
 
 void clearmap(void)

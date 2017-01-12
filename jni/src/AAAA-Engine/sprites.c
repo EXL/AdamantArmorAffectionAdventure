@@ -2,7 +2,7 @@
 #include "vars.h"
 #include "zlmath.h"
 
-firesize[8] = { 25536, 55536, 65536, 55536, 45536, 35536, 25536, 15536 };
+s32 firesize[8] = { 25536, 55536, 65536, 55536, 45536, 35536, 25536, 15536 };
 
 void procsprites(void)
 {

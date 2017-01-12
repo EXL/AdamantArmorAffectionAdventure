@@ -1,7 +1,9 @@
 #include "vars.h"
 #include "zlmath.h"
 
-s32 ta, taa, range, insight, ta;
+#include "zcsound.h"
+
+s32 ta, taa, range, insight;
 s32 x, y, z, dx, dy, dz, vx, vy;
 
 s32 airange = 5 * 65536;
