@@ -131,9 +131,9 @@ EGLint attrib_list[] = {
 
 #ifdef ANDROID_NDK
 u8 tjoy_b[8] = { 0 };
-#endif
-
+#else
 SDL_Joystick *gamepad = NULL;
+#endif
 
 int audio_channels = 2, audio_rate = 22050, audio_buffers = 1024;
 Uint16 audio_format = AUDIO_S16;
@@ -471,6 +471,7 @@ s32 mousetapfade;
 
 void zcore_input_init(void)
 {
+#ifndef ANDROID_NDK
     u8 i;
 
     SDL_InitSubSystem(SDL_INIT_JOYSTICK);
@@ -483,14 +484,10 @@ void zcore_input_init(void)
         gamepad = SDL_JoystickOpen(0);
     }
 
-#ifdef ANDROID_NDK
-
     for (i = 0; i < SDL_NumJoysticks(); ++i) {
         TO_DEBUG_LOG("SDL Joystick %d: %s\n", i, SDL_JoystickNameForIndex(i));
     }
-
 #endif
-
 }
 
 u16 s_button[16];
@@ -741,7 +738,7 @@ void zcore_input_frame(void)
 
 }
 
-#ifdef ANDROID_NDK
+#ifndef ANDROID_NDK
 void test_jkeys(void)
 {
     int i, c = SDL_JoystickNumButtons(gamepad);
@@ -757,7 +754,9 @@ void test_jkeys(void)
 
 void zcore_input_down(void)
 {
+#ifndef ANDROID_NDK
     SDL_JoystickClose(0);
+#endif
 }
 
 // Input SubSystem End
