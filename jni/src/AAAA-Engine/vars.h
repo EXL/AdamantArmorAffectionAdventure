@@ -32,6 +32,19 @@ extern u8 secretskin;
     #define LOG_TAG "AAAA_jni"
     #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
     #define TO_DEBUG_LOG(...) LOGI(__VA_ARGS__)
+
+    // EXL: Touch Joystick
+    extern u8 tjoy_b[8];
+    enum TJButtons {
+        TJ_UP,
+        TJ_LEFT,
+        TJ_DOWN,
+        TJ_RIGHT,
+        TJ_UPRIGHT,
+        TJ_UPLEFT,
+        TJ_DOWNRIGHT,
+        TJ_DOWNLEFT
+    };
 #else
     #define TO_DEBUG_LOG(...) fprintf(stderr, __VA_ARGS__)
 #endif

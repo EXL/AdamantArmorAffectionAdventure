@@ -36,17 +36,17 @@ public class AAAAInputView extends View {
 	private static final int KC_GAME_A = 8;
 	private static final int KC_GAME_B = 9;
 
-	// --- SDL Keycodes Table
-	private static final int SDL_DPAD_ID = 0; // I'm not sure for this...
-	private static final int KC_SDL_UP = 19;
-	private static final int KC_SDL_DOWN = 20;
-	private static final int KC_SDL_RIGHT = 22;
-	private static final int KC_SDL_LEFT = 21;
-	// private static final int KC_SDL_UPRIGHT = 24;
-	// private static final int KC_SDL_UPLEFT = 25;
-	// private static final int KC_SDL_DOWNLEFT = 26;
-	// private static final int KC_SDL_DOWNRIGHT = 27;
-
+	// Send To AAAA-Engine
+	// Joystick
+	private static final int TJ_GAME_UP = 0;
+	private static final int TJ_GAME_LEFT = 1;
+	private static final int TJ_GAME_DOWN = 2;
+	private static final int TJ_GAME_RIGHT = 3;
+	private static final int TJ_GAME_UPRIGHT = 4;
+	private static final int TJ_GAME_UPLEFT = 5;
+	private static final int TJ_GAME_DOWNRIGHT = 6;
+	private static final int TJ_GAME_DOWNLEFT = 7;
+	// Buttons
 	private static final int KC_SDL_A = 62; // Space
 	private static final int KC_SDL_B = 67; // Backspace
 
@@ -227,32 +227,28 @@ public class AAAAInputView extends View {
 			SDLActivity.onNativeKeyDown(KC_SDL_B);
 			break;
 		case KC_GAME_UP:
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_UP);
+			AAAANativeLibProxy.AAAAJoystickButtonDown(TJ_GAME_UP);
 			break;
 		case KC_GAME_DOWN:
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_DOWN);
+			AAAANativeLibProxy.AAAAJoystickButtonDown(TJ_GAME_DOWN);
 			break;
 		case KC_GAME_RIGHT:
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_RIGHT);
+			AAAANativeLibProxy.AAAAJoystickButtonDown(TJ_GAME_RIGHT);
 			break;
 		case KC_GAME_LEFT:
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_LEFT);
+			AAAANativeLibProxy.AAAAJoystickButtonDown(TJ_GAME_LEFT);
 			break;
 		case KC_GAME_UPRIGHT:
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_UP);
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_LEFT);
+			AAAANativeLibProxy.AAAAJoystickButtonDown(TJ_GAME_UPRIGHT);
 			break;
 		case KC_GAME_UPLEFT:
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_UP);
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_RIGHT);
+			AAAANativeLibProxy.AAAAJoystickButtonDown(TJ_GAME_UPLEFT);
 			break;
 		case KC_GAME_DOWNRIGHT:
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_DOWN);
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_LEFT);
+			AAAANativeLibProxy.AAAAJoystickButtonDown(TJ_GAME_DOWNRIGHT);
 			break;
 		case KC_GAME_DOWNLEFT:
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_DOWN);
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_RIGHT);
+			AAAANativeLibProxy.AAAAJoystickButtonDown(TJ_GAME_DOWNLEFT);
 			break;
 		default:
 			break;
@@ -269,32 +265,28 @@ public class AAAAInputView extends View {
 			SDLActivity.onNativeKeyUp(KC_SDL_B);
 			break;
 		case KC_GAME_UP:
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_UP);
+			AAAANativeLibProxy.AAAAJoystickButtonUp(TJ_GAME_UP);
 			break;
 		case KC_GAME_DOWN:
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_DOWN);
+			AAAANativeLibProxy.AAAAJoystickButtonUp(TJ_GAME_DOWN);
 			break;
 		case KC_GAME_RIGHT:
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_RIGHT);
+			AAAANativeLibProxy.AAAAJoystickButtonUp(TJ_GAME_RIGHT);
 			break;
 		case KC_GAME_LEFT:
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_LEFT);
+			AAAANativeLibProxy.AAAAJoystickButtonUp(TJ_GAME_LEFT);
 			break;
 		case KC_GAME_UPRIGHT:
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_UP);
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_LEFT);
+			AAAANativeLibProxy.AAAAJoystickButtonUp(TJ_GAME_UPRIGHT);
 			break;
 		case KC_GAME_UPLEFT:
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_UP);
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_RIGHT);
+			AAAANativeLibProxy.AAAAJoystickButtonUp(TJ_GAME_UPLEFT);
 			break;
 		case KC_GAME_DOWNRIGHT:
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_DOWN);
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_LEFT);
+			AAAANativeLibProxy.AAAAJoystickButtonUp(TJ_GAME_DOWNRIGHT);
 			break;
 		case KC_GAME_DOWNLEFT:
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_DOWN);
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_RIGHT);
+			AAAANativeLibProxy.AAAAJoystickButtonUp(TJ_GAME_DOWNLEFT);
 			break;
 		default:
 			break;

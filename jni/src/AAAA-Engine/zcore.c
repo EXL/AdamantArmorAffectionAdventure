@@ -129,6 +129,10 @@ EGLint attrib_list[] = {
     SDL_GLContext *glContext_SDL = NULL;
 #endif
 
+#ifdef ANDROID_NDK
+u8 tjoy_b[8] = { 0 };
+#endif
+
 SDL_Joystick *gamepad = NULL;
 
 int audio_channels = 2, audio_rate = 22050, audio_buffers = 1024;
@@ -498,7 +502,7 @@ void zcore_input_frame(void)
     for (i = 0; i < 2; i++) {
         axis[i] = 0;
     }
-
+//#ifndef ANDROID_NDK
     if (SDL_NumJoysticks() > 0) {
         SDL_JoystickUpdate();
 
@@ -520,7 +524,6 @@ void zcore_input_frame(void)
         axis[1] = axis[1] / 256;
 
 #ifdef GP2XWIZ
-
         if (SDL_JoystickGetButton(gamepad, 0) > 0) {
             axis[1] = -128;
         } else if (SDL_JoystickGetButton(gamepad, 1) > 0) {
@@ -545,10 +548,9 @@ void zcore_input_frame(void)
             axis[1] = -128;
             axis[0] = 128;
         }
-
-#elif ANDROID_NDK
-
-        // EXL: Since SDL2 2.0.5 DPAD connected as Joystick
+#elif 0
+        // EXL: Deprecated
+        // Since SDL2 2.0.5 DPAD connected as Joystick
         // Checking diagonales first
         // Support for Touch Joystick
         // test_jkeys();
@@ -578,13 +580,40 @@ void zcore_input_frame(void)
         } else if (SDL_JoystickGetButton(gamepad, 19)) { // DPAD OK
             s_button[0]++; // 0 - is index for firekey
         }
-
 #endif
     } else {
         for (i = 0; i < 16; i++) {
             s_button[i] = 0;
         }
     }
+//#endif
+
+#ifdef ANDROID_NDK
+    if (tjoy_b[TJ_UP]) {
+        axis[1] = -128;
+    } else if (tjoy_b[TJ_LEFT]) {
+        axis[1] = 0;
+        axis[0] = -128 / 2;
+    } else if (tjoy_b[TJ_DOWN]) {
+        axis[1] = 128;
+        axis[0] = 0;
+    } else if (tjoy_b[TJ_RIGHT]) {
+        axis[1] = 0;
+        axis[0] = 128 / 2;
+    } else if (tjoy_b[TJ_UPLEFT]) {
+        axis[1] = -128;
+        axis[0] = 128 / 3;
+    } else if (tjoy_b[TJ_UPRIGHT]) {
+        axis[1] = -128;
+        axis[0] = -128 / 3;
+    } else if (tjoy_b[TJ_DOWNRIGHT]) {
+        axis[1] = 128;
+        axis[0] = -128 / 3;
+    } else if (tjoy_b[TJ_DOWNLEFT]) {
+        axis[1] = 128;
+        axis[0] = 128 / 3;
+    }
+#endif
 
     SDL_Event event;
 

@@ -17,6 +17,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include $(LOCAL_PATH)/$(SDL_MIXER_
 
 # Add your application source files here...
 LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
+	$(AAAA_PATH)/zlext/android_extras.c \
 	$(AAAA_PATH)/bullets.c \
 	$(AAAA_PATH)/camera.c \
 	$(AAAA_PATH)/drawmob.c \
