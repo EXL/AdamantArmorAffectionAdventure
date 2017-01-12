@@ -49,7 +49,46 @@ public class AAAAInputView extends View {
 	// Buttons
 	private static final int KC_SDL_A = 62; // Space
 	private static final int KC_SDL_B = 67; // Backspace
+	private static final int KC_SDL_UP = 51; // W
+	private static final int KC_SDL_DOWN = 47; // S
+	private static final int KC_SDL_LEFT = 29; // A
+	private static final int KC_SDL_RIGHT = 32; // D
+	// D-Pad
+	private static final int DPAD_UP = 19;
+	private static final int DPAD_DOWN = 20;
+	private static final int DPAD_LEFT = 21;
+	private static final int DPAD_RIGHT = 22;
+	private static final int DPAD_OK = 23;
 
+	public static void pressOrReleaseKey(int keyCode, boolean press) {
+		if (press) {
+			SDLActivity.onNativeKeyDown(keyCode);
+		} else {
+			SDLActivity.onNativeKeyUp(keyCode);
+		}
+	}
+
+	public static boolean convertJoyDpadToKeysFilter(int keyCode, boolean press) {
+		switch (keyCode) {
+		case DPAD_UP:
+			pressOrReleaseKey(KC_SDL_UP, press);
+			return true;
+		case DPAD_DOWN:
+			pressOrReleaseKey(KC_SDL_DOWN, press);
+			return true;
+		case DPAD_LEFT:
+			pressOrReleaseKey(KC_SDL_LEFT, press);
+			return true;
+		case DPAD_RIGHT:
+			pressOrReleaseKey(KC_SDL_RIGHT, press);
+			return true;
+		case DPAD_OK:
+			pressOrReleaseKey(KC_SDL_B, press);
+			return true;
+		default:
+			return false;
+		}
+	}
 
 	public AAAAInputView(Context context) {
 
