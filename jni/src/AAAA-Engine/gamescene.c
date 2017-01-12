@@ -1946,7 +1946,7 @@ void RenderMap(void)
         contblock[3] = contblock[0] + contblock[1] + contblock[2];
     }
 
-#ifdef PC32
+#ifdef PC_GL
     // if (((count)%10)==0) printf("cubes:%i sides:%i verts:%i/%i/%i\n",cubes,sides,sverts,verts,verts0);
     // if (((count)%10)==0) printf("a:%i c:%i \n",contblock[3],contblock[4]);
 #endif
@@ -2146,7 +2146,7 @@ void gamesceneframe(void)
     zlPop();
     zlFog(0);
     zlDepthTest(0);
-    //#ifdef PC32
+    //#ifdef PC_GL
     zlScreen(65536, 65536, 0);
     //#endif
 

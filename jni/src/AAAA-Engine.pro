@@ -4,14 +4,24 @@
 
 TEMPLATE = app
 TARGET = AAAA-Engine
+
 CONFIG -= qt
+
+CONFIG -= gles
 
 INCLUDEPATH += . AAAA-Engine/
 
-DEFINES += PC_GLES SDL2_PORT
+gles {
+    DEFINES += PC_GLES SDL2_PORT
 
-LIBS += -lSDL2 -lSDL2_mixer
-LIBS += -lGLESv1_CM -lEGL
+    LIBS += -lSDL2 -lSDL2_mixer
+    LIBS += -lGLESv1_CM -lEGL
+} else {
+    DEFINES += PC_GL SDL2_PORT
+
+    LIBS += -lSDL2 -lSDL2_mixer
+    LIBS += -lGL
+}
 
 # Input
 HEADERS += AAAA-Engine/bullets.h \

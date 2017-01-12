@@ -2,10 +2,9 @@
 
 // System
 
-#ifdef PC32
-    #include <SDL/SDL.h>
-    #include <SDL/SDL_opengl.h>
+#ifdef PC_GL
     #include <GL/gl.h>
+    #include <GL/glext.h>
 #endif
 
 #if defined(GP2XCAANOO) || defined(PC_GLES) || defined(ANDROID_NDK)
@@ -15,6 +14,7 @@
     #include <GLES/gl.h>
     #include <GLES/glext.h>
 #endif
+
 #ifdef GP2XWIZ
     #include <OpenGLES/egl.h>
     #include <OpenGLES/gl.h>
@@ -64,7 +64,7 @@ void RenderMeshii(u32 istart, u32 icount)
 void corerenderrender(void)
 {
     // corerenderprocess();
-#ifdef PC32
+#ifdef PC_GL
     /*
         glAccum(GL_MULT,0.5);
         glAccum(GL_ACCUM,0.5);
@@ -91,7 +91,7 @@ void zlTranslate(signed long x, signed long y, signed long z)
 #if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
     glTranslatex(x, y, z);
 #endif
-#ifdef PC32
+#ifdef PC_GL
     glTranslatef(x / 65536.0, y / 65536.0, z / 65536.0);
 #endif
 }
@@ -101,7 +101,7 @@ void zlRotatex(signed long x)
 #if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
     glRotatex(x * 5760, 65536, 0, 0);
 #endif
-#ifdef PC32
+#ifdef PC_GL
     glRotatef(x / 11.37778, 1.0, 0.0, 0.0);
 #endif
 }
@@ -111,7 +111,7 @@ void zlRotatey(signed long y)
 #if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
     glRotatex(y * 5760, 0, 65536, 0);
 #endif
-#ifdef PC32
+#ifdef PC_GL
     glRotatef(y / 11.37778, 0.0, 1.0, 0.0);
 #endif
 }
@@ -121,7 +121,7 @@ void zlRotatez(signed long z)
 #if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
     glRotatex(z * 5760, 0, 0, 65536);
 #endif
-#ifdef PC32
+#ifdef PC_GL
     glRotatef(z / 11.37778, 0.0, 0.0, 1.0);
 #endif
 }
@@ -131,14 +131,14 @@ void zlScale(signed long x, signed long y, signed long z)
 #if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
     glScalex(x, y, z);
 #endif
-#ifdef PC32
+#ifdef PC_GL
     glScalef(x / 65536.0, y / 65536.0, z / 65536.0);
 #endif
 }
 
 void zlFogParam(signed long fogstart, signed long fogend)
 {
-#ifdef PC32
+#ifdef PC_GL
     glFogf(GL_FOG_START, fogstart / 65536.0f);
     glFogf(GL_FOG_END, fogend / 65536.0f);
 #endif
@@ -162,7 +162,7 @@ void zlRender(unsigned long first, unsigned long pcount)
 {
     // TO DO OPTIMIZE
 
-#ifdef PC32
+#ifdef PC_GL
     u32 i;
 
     for (i = 0; i < pcount * 3; i++) {
@@ -186,7 +186,7 @@ void zlScreen(signed long x, signed long y, signed long zoom)
     glFrustumx(-x, x, -y, y, zoom, fog_end);
     glMatrixMode(GL_MODELVIEW);
 #endif
-#ifdef PC32
+#ifdef PC_GL
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glFrustum(-x / 65536.0, x / 65536.0, -y / 65536.0, y / 65536.0, zoom / 65536.0, fog_end / 65536.0);
@@ -230,7 +230,7 @@ extern void zlBlend(unsigned char value)
 #if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
         glAlphaFuncx(GL_GREATER, 65);
 #endif
-#ifdef PC32
+#ifdef PC_GL
         glAlphaFunc(GL_GREATER, 0.01f);
 #endif
     } else {
@@ -238,7 +238,7 @@ extern void zlBlend(unsigned char value)
 #if defined(GP2X) || defined(PC_GLES) || defined(ANDROID_NDK)
         glAlphaFuncx(GL_GREATER, 31728);
 #endif
-#ifdef PC32
+#ifdef PC_GL
         glAlphaFunc(GL_GREATER, 0.50f);
 #endif
     }

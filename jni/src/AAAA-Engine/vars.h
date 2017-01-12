@@ -36,7 +36,7 @@ extern u8 secretskin;
     #define TO_DEBUG_LOG(...) fprintf(stderr, __VA_ARGS__)
 #endif
 
-#ifdef PC32
+#ifdef PC_GL
     #include <GL/gl.h>
     extern GLfloat mesh[MESH_CNT * 3];
     extern GLfloat mesht[MESH_CNT * 2];

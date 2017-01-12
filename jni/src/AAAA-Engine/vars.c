@@ -21,7 +21,7 @@ u8 secretskin = 0;
 
 #define MESH_CNT 16384
 
-#ifdef PC32
+#ifdef PC_GL
     #include <GL/gl.h>
     GLfloat mesh[MESH_CNT * 3];
     GLfloat mesht[MESH_CNT * 2];

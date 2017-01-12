@@ -25,11 +25,8 @@
     #endif
 #endif
 
-#ifdef PC32
-    #include <GL/gl.h>
-    #include <SDL/SDL.h>
-    #include <SDL/SDL_opengl.h>
-    SDL_Surface *screen = NULL;
+#ifdef PC_GL
+    #include <SDL2/SDL_opengl.h>
 #endif
 
 #ifdef GP2XWIZ
@@ -74,12 +71,14 @@
 
 // EXL: Drop EGL
 #ifndef ANDROID_NDK
+#if defined(PC_GLES) || defined(GP2X)
 EGLDisplay glDisplay;
 EGLConfig glConfig;
 EGLContext glContext;
 EGLSurface glSurface;
 NativeWindowType hNativeWnd = 0;
 const char *gl_vendor, *gl_renderer, *gl_version, *gl_extensions;
+#endif
 
 #if defined(PC_GLES)
 EGLint attrib_list_fsaa[] = {
@@ -105,7 +104,7 @@ EGLint attrib_list[] = {
     EGL_SAMPLES,                            4,
     EGL_NONE
 };
-#else
+#elif defined(GP2X)
 EGLint attrib_list_fsaa[] = {
     EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
     EGL_BUFFER_SIZE,              16,
@@ -287,16 +286,28 @@ void zcore_video_init(void)
     glAlphaFuncx(GL_GREATER, 65536 / 2);
 #endif
 
-#ifdef PC32
+#ifdef PC_GL
     // screenwidth=800;
     // screenheight=600;
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    // screen=SDL_SetVideoMode(screenwidth,screenheight,32, SDL_OPENGL | SDL_FULLSCREEN);
-    screen = SDL_SetVideoMode(screenwidth, screenheight, 32, SDL_OPENGL);
+    SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 0);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE, 0);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_GREEN_SIZE, 0);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE, 0);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE, 0);
+
+    globalWindow = SDL_CreateWindow("AAAA", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenwidth, screenheight,
+                                    SDL_WINDOW_OPENGL);
+
+    TO_DEBUG_LOG("Init SDL window: %dx%d\n", screenwidth, screenheight);
+    //SDL_SetWindowFullscreen(globalWindow, SDL_TRUE);
+
+    glContext_SDL = SDL_GL_CreateContext(globalWindow);
 
     glVertexPointer(3, GL_FLOAT, 0, mesh);
     glTexCoordPointer(2, GL_FLOAT, 0, mesht);
@@ -330,6 +341,12 @@ void zcore_video_init(void)
     glAlphaFuncx(GL_GREATER, 65536 / 2);
 #endif
 
+
+    TO_DEBUG_LOG("Vendor: %s\n", glGetString(GL_VENDOR));
+    TO_DEBUG_LOG("Version: %s\n", glGetString(GL_VERSION));
+    TO_DEBUG_LOG("Renderer: %s\n", glGetString(GL_RENDERER));
+    //TO_DEBUG_LOG("Extensions: %s\n", glGetString(GL_EXTENSIONS));
+
     glGenTextures(256, zc_texture);
     glColorPointer(4, GL_UNSIGNED_BYTE, 0, meshc);
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -346,7 +363,7 @@ void zcore_video_frame(void)
         coreupdatetextures();
         corerenderrender();
 
-#if defined(PC32) || defined(ANDROID_NDK)
+#if defined(PC_GL) || defined(ANDROID_NDK)
         /*
             glAccum(GL_MULT,0.5);
             glAccum(GL_ACCUM,0.5);
@@ -424,7 +441,7 @@ static const SDL_Keycode code_keyb[20] = {
 s8 jkey_map[16] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1, -1, -1, -1 };
 #endif
 
-#if defined(PC32) || defined(PC_GLES)
+#if defined(PC_GL) || defined(PC_GLES)
 int i_keyb[20];
 static const SDL_Keycode code_keyb[20]
     = { SDLK_LCTRL, SDLK_SPACE,     SDLK_LALT, SDLK_z,     SDLK_LSHIFT, SDLK_x,   SDLK_7,
@@ -571,7 +588,7 @@ void zcore_input_frame(void)
 
     while (SDL_PollEvent(&event))
         switch (event.type) {
-#if defined(PC32) || defined(PC_GLES) || defined(ANDROID_NDK)
+#if defined(PC_GL) || defined(PC_GLES) || defined(ANDROID_NDK)
 
             case SDL_KEYDOWN:
                 for (i = 0; i < 20; i++)
@@ -595,7 +612,7 @@ void zcore_input_frame(void)
                 break;
         }
 
-#if defined(PC32) || defined(PC_GLES) || defined(ANDROID_NDK)
+#if defined(PC_GL) || defined(PC_GLES) || defined(ANDROID_NDK)
 
     for (k = 0; k < 16; k++) {
         if (i_keyb[k] > 0) {
@@ -762,7 +779,7 @@ void zcorestep(void)
         calcfps();
     }
     // EXL: Disable FPS Limiter on ANDROID
-#if !defined(ANDROID_NDK) && !defined(PC_GLES)
+#if !defined(ANDROID_NDK) && !defined(PC_GLES) && !defined(PC_GL)
     if ((gamemode != ZGM_MENU) & (gamemode != ZGM_CONFIG) & (gamemode != ZGM_SELECTOR)) {
         if (thisframenice) {
             while (fstick1 - fstick0 < 20) {

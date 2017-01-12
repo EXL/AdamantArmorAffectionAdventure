@@ -565,7 +565,7 @@ void premeshccc(void)
             mesht[(i+5)*2]=65536;
             mesht[(i+5)*2+1]=65536;
 
-            #ifdef PC32
+            #ifdef PC_GL
             for (k=i;k<i+12;k++) {
                 mesh[k*3]=mesh[k*3]/65536.0;
                 mesh[k*3+1]=mesh[k*3+1]/65536.0;
