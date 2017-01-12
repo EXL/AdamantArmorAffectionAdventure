@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.libsdl.app.SDLActivity;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -221,38 +219,38 @@ public class AAAAInputView extends View {
 		// AAAAActivity.toDebugLog(keyCode + " pushed!");
 		switch (keyCode) {
 		case KC_GAME_A:
-			SDLActivity.onNativeKeyDown(KC_SDL_A);
+			AAAANativeLibProxy.AAANativeKeyDown(0);
 			break;
 		case KC_GAME_B:
-			SDLActivity.onNativeKeyDown(KC_SDL_B);
+			AAAANativeLibProxy.AAANativeKeyDown(1);
 			break;
 		case KC_GAME_UP:
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_UP);
+			AAAANativeLibProxy.AAANativeKeyDown(16);
 			break;
 		case KC_GAME_DOWN:
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_DOWN);
+			AAAANativeLibProxy.AAANativeKeyDown(18);
 			break;
 		case KC_GAME_RIGHT:
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_RIGHT);
+			AAAANativeLibProxy.AAANativeKeyDown(17);
 			break;
 		case KC_GAME_LEFT:
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_LEFT);
+			AAAANativeLibProxy.AAANativeKeyDown(19);
 			break;
 		case KC_GAME_UPRIGHT:
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_UP);
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_LEFT);
+			AAAANativeLibProxy.AAANativeKeyDown(16);
+			AAAANativeLibProxy.AAANativeKeyDown(19);
 			break;
 		case KC_GAME_UPLEFT:
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_UP);
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_RIGHT);
+			AAAANativeLibProxy.AAANativeKeyDown(16);
+			AAAANativeLibProxy.AAANativeKeyDown(17);
 			break;
 		case KC_GAME_DOWNRIGHT:
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_DOWN);
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_LEFT);
+			AAAANativeLibProxy.AAANativeKeyDown(18);
+			AAAANativeLibProxy.AAANativeKeyDown(19);
 			break;
 		case KC_GAME_DOWNLEFT:
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_DOWN);
-			SDLActivity.onNativePadDown(SDL_DPAD_ID, KC_SDL_RIGHT);
+			AAAANativeLibProxy.AAANativeKeyDown(18);
+			AAAANativeLibProxy.AAANativeKeyDown(17);
 			break;
 		default:
 			break;
@@ -263,38 +261,38 @@ public class AAAAInputView extends View {
 		// AAAAActivity.toDebugLog(keyCode + " released!");
 		switch (keyCode) {
 		case KC_GAME_A:
-			SDLActivity.onNativeKeyUp(KC_SDL_A);
+			AAAANativeLibProxy.AAANativeKeyUp(0);
 			break;
 		case KC_GAME_B:
-			SDLActivity.onNativeKeyUp(KC_SDL_B);
+			AAAANativeLibProxy.AAANativeKeyUp(1);
 			break;
 		case KC_GAME_UP:
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_UP);
+			AAAANativeLibProxy.AAANativeKeyUp(16);
 			break;
 		case KC_GAME_DOWN:
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_DOWN);
+			AAAANativeLibProxy.AAANativeKeyUp(18);
 			break;
 		case KC_GAME_RIGHT:
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_RIGHT);
+			AAAANativeLibProxy.AAANativeKeyUp(17);
 			break;
 		case KC_GAME_LEFT:
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_LEFT);
+			AAAANativeLibProxy.AAANativeKeyUp(19);
 			break;
 		case KC_GAME_UPRIGHT:
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_UP);
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_LEFT);
+			AAAANativeLibProxy.AAANativeKeyUp(16);
+			AAAANativeLibProxy.AAANativeKeyUp(19);
 			break;
 		case KC_GAME_UPLEFT:
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_UP);
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_RIGHT);
+			AAAANativeLibProxy.AAANativeKeyUp(16);
+			AAAANativeLibProxy.AAANativeKeyUp(17);
 			break;
 		case KC_GAME_DOWNRIGHT:
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_DOWN);
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_LEFT);
+			AAAANativeLibProxy.AAANativeKeyUp(18);
+			AAAANativeLibProxy.AAANativeKeyUp(19);
 			break;
 		case KC_GAME_DOWNLEFT:
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_DOWN);
-			SDLActivity.onNativePadUp(SDL_DPAD_ID, KC_SDL_RIGHT);
+			AAAANativeLibProxy.AAANativeKeyUp(18);
+			AAAANativeLibProxy.AAANativeKeyUp(17);
 			break;
 		default:
 			break;

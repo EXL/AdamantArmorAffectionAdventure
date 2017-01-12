@@ -133,6 +133,7 @@ extern u8 ai_attack_disable_cheat;
 
 #ifdef ANDROID_NDK
 extern u32 SDL_GetTicks();
+extern int i_keyb[20];
 #endif
 
 #endif // VARS_H

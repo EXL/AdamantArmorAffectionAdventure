@@ -119,9 +119,11 @@ s32 debugprobe[3], levelstarttick, ltime[2], currenttick;
 u8 ai_attack_disable_cheat = 0;
 
 #ifdef ANDROID_NDK
-#include <stdlib.h>
+#include <time.h>
 
 u32 SDL_GetTicks() {
-    return rand();
+    struct timeval now;
+    gettimeofday(&now, NULL);
+    return (u32) ((now.tv_sec - start_tv.tv_sec) * 1000 + (now.tv_usec - start_tv.tv_usec) / 1000);
 }
 #endif

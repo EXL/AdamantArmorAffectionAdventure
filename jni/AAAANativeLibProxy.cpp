@@ -56,7 +56,19 @@ void JNICALL Java_ru_exlmoto_aaaa_AAAANativeLibProxy_AAANativeDrawStep
 	}
 }
 
+// Key Down
+void JNICALL Java_ru_exlmoto_aaaa_AAAANativeLibProxy_AAANativeKeyDown
+  (JNIEnv *env, jclass c, jint k) {
+	i_keyb[k] = 1;
+}
+
+
+// Key Up
+void JNICALL Java_ru_exlmoto_aaaa_AAAANativeLibProxy_AAANativeKeyUp
+  (JNIEnv *env, jclass c, jint k) {
+	i_keyb[k] = 0;
+}
+
 void JNICALL Java_ru_exlmoto_aaaa_AAAANativeLibProxy_SpoutInitilizeGlobalJavaEnvPointer
   (JNIEnv *env, jclass c) {
-
 }

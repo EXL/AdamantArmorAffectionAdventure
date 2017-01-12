@@ -6,7 +6,7 @@
 // System
 
 #include <time.h>
-#include <stdlib.h>
+struct timeval start_tv;
 
 #ifndef SDL2_PORT
     // #include <SDL/SDL.h>
@@ -220,7 +220,7 @@ void zcore_video_init(void)
     //SDL_InitSubSystem(SDL_INIT_VIDEO);
     //SDL_ShowCursor(0);
 
-    srand(time(0));
+    gettimeofday(&start_tv, NULL);
 
 #ifdef ANDROID_NDK
     // EXL: Android OpenGLES 1.1 via SDL2 initialization
@@ -502,8 +502,7 @@ void zcore_input_frame(void)
     for (i = 0; i < 2; i++) {
         axis[i] = 0;
     }
-
-    /*
+/*
     if (SDL_NumJoysticks() > 0) {
         SDL_JoystickUpdate();
 
@@ -590,7 +589,8 @@ void zcore_input_frame(void)
             s_button[i] = 0;
         }
     }
-
+*/
+#ifndef ANDROID_NDK
     SDL_Event event;
 
     while (SDL_PollEvent(&event))
@@ -618,7 +618,7 @@ void zcore_input_frame(void)
                 zcoreenabled = 0;
                 break;
         }
-
+#endif
 #if defined(PC_GL) || defined(PC_GLES) || defined(ANDROID_NDK)
 
     for (k = 0; k < 16; k++) {
@@ -706,10 +706,9 @@ void zcore_input_frame(void)
     }
 
 #endif
-    */
 }
 
-#ifndef ANDROID_NDK
+#if 0
 void test_jkeys(void)
 {
     int i, c = SDL_JoystickNumButtons(gamepad);
@@ -758,7 +757,7 @@ void zcoreinit(void)
 
 void zcorestep(void)
 {
-    frameskip = configdata[12];
+    frameskip = 10;
 
     // if (frameskip) thisframenice=((count+1) & 1); else thisframenice=1;
     if (frameskip) {

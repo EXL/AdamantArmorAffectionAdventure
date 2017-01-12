@@ -41,6 +41,22 @@ JNIEXPORT void JNICALL Java_ru_exlmoto_aaaa_AAAANativeLibProxy_AAANativeDrawStep
 
 /*
  * Class:     ru_exlmoto_aaaa_AAAANativeLibProxy
+ * Method:    AAANativeKeyDown
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_ru_exlmoto_aaaa_AAAANativeLibProxy_AAANativeKeyDown
+  (JNIEnv *, jclass, jint);
+
+/*
+ * Class:     ru_exlmoto_aaaa_AAAANativeLibProxy
+ * Method:    AAANativeKeyUp
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_ru_exlmoto_aaaa_AAAANativeLibProxy_AAANativeKeyUp
+  (JNIEnv *, jclass, jint);
+
+/*
+ * Class:     ru_exlmoto_aaaa_AAAANativeLibProxy
  * Method:    SpoutInitilizeGlobalJavaEnvPointer
  * Signature: ()V
  */

@@ -12,6 +12,9 @@ public class AAAANativeLibProxy {
 	public native static void AAAANativeSurfaceChanged(int width, int height);
 	public native static void AAANativeDrawStep();
 
+	public native static void AAANativeKeyDown(int keycode);
+	public native static void AAANativeKeyUp(int keycode);
+
 	//public native static void SpoutNativeKeyDown(int keyCode);
 	//public native static void SpoutNativeKeyUp(int keyCode);
 

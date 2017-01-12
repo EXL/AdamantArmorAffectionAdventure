@@ -38,4 +38,6 @@ enum ZLAI_STATE {
     AI_ATTACK
 };
 
+extern struct timeval start_tv;
+
 #endif // ZTYPES_H

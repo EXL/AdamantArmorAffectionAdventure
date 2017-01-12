@@ -7,12 +7,12 @@ TARGET = AAAA-Engine
 
 CONFIG -= qt
 
-CONFIG -= gles
+CONFIG += gles
 
 INCLUDEPATH += . AAAA-Engine/
 
 gles {
-    DEFINES += PC_GLES SDL2_PORT
+    DEFINES += PC_GLES SDL2_PORT NO_SDL_MIXER
 
     LIBS += -lSDL2 -lSDL2_mixer
     LIBS += -lGLESv1_CM -lEGL
