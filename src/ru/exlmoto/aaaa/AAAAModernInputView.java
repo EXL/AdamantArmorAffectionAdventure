@@ -42,6 +42,8 @@ public class AAAAModernInputView extends View {
 	private int row3_h = 0;
 	private int rad_d2 = 0;
 
+	private static final int VIBRO_OFFSET = 20;
+
 	// --- Game Keycodes Table
 	// Joystick
 	private static final int KC_GAME_UP = 2;
@@ -269,6 +271,7 @@ public class AAAAModernInputView extends View {
 					if (x < radius * 3 && (int) e.getY(index) < radius) {
 						npid[KC_GAME_R] = id;
 						extraKeyPressed = true;
+						AAAAActivity.doVibrate(50 - VIBRO_OFFSET);
 						break;
 					}
 					p1b = -1;
@@ -281,6 +284,7 @@ public class AAAAModernInputView extends View {
 					b = getButton((int) e.getX(index), (int) e.getY(index));
 					if (b >= 0) {
 						npid[b] = id;
+						AAAAActivity.doVibrate(50 - VIBRO_OFFSET);
 					}
 				}
 				break;
@@ -301,6 +305,7 @@ public class AAAAModernInputView extends View {
 					if (x < radius * 3 && (int) e.getY(index) < radius) {
 						npid[KC_GAME_R] = id;
 						extraKeyPressed = true;
+						AAAAActivity.doVibrate(50 - VIBRO_OFFSET);
 						break;
 					}
 					if (p0id < 0) {
@@ -315,6 +320,7 @@ public class AAAAModernInputView extends View {
 					b = getButton((int) e.getX(index), (int) e.getY(index));
 					if (b >= 0) {
 						npid[b] = id;
+						AAAAActivity.doVibrate(50 - VIBRO_OFFSET);
 					}
 				}
 				break;

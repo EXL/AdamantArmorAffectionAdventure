@@ -13,21 +13,17 @@ public class AAAAActivity extends SDLActivity {
 
 	private static final String APP_TAG = "AAAA_App";
 
-	//private static Vibrator m_vibrator;
+	private static Vibrator m_vibrator = null;
 
 	private AAAAModernInputView aaaaModernInputView = null;
 
-	public static void toDebugLog(String debugMessage) {
-		Log.d(APP_TAG, "=== " + debugMessage);
-	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		toDebugLog("Start SDL Activity from AAAAActivity");
 		super.onCreate(savedInstanceState);
 
-		//toDebugLog("Setting Vibration");
-		//m_vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+		toDebugLog("Start SDL Activity from AAAAActivity");
+
+		m_vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 
 		aaaaModernInputView = new AAAAModernInputView(this);
 
@@ -35,5 +31,16 @@ public class AAAAActivity extends SDLActivity {
 				new LinearLayout.LayoutParams(
 						LayoutParams.MATCH_PARENT,
 						LayoutParams.MATCH_PARENT));
+	}
+
+	public static void toDebugLog(String debugMessage) {
+		Log.d(APP_TAG, "=== " + debugMessage);
+	}
+
+	// JNI-method
+	public static void doVibrate(int duration) {
+		if (true) { // AAAASettings
+			m_vibrator.vibrate(duration);
+		}
 	}
 }
