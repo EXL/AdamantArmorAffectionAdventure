@@ -34,8 +34,13 @@ public class AAAAInputView extends View {
 	private Bitmap button_s = null;
 
 	private int b_wh = 0;
-	private int b_s_w = 0;
-	private int b_s_h = 0;
+
+	private int col1_w = 0;
+	private int col2_w = 0;
+	private int row1_h = 0;
+	private int row2_h = 0;
+	private int row3_h = 0;
+	private int rad_d2 = 0;
 
 	// --- Game Keycodes Table
 	// Joystick
@@ -131,11 +136,8 @@ public class AAAAInputView extends View {
 		button_s = BitmapFactory.decodeResource(context.getResources(), R.drawable.button_s);
 
 		b_wh = button_a.getWidth();
-		b_s_w = button_r.getWidth();
-		b_s_h = button_r.getHeight();
 
-		AAAAActivity.toDebugLog("Buttons size: " + b_wh + "x" + b_wh);
-		AAAAActivity.toDebugLog("Buttons special size: " + b_s_w + "x" + b_s_h);
+		AAAAActivity.toDebugLog("Touch buttons size: " + b_wh + "x" + b_wh);
 
 		paint = new Paint();
 	}
@@ -163,29 +165,30 @@ public class AAAAInputView extends View {
 		}
 
 		// buttons
-		paint.setARGB(pid[KC_GAME_X] < 0 ? 64 : 128, 255, 255, 255);
-		canvas.drawBitmap(button_x, width - b_wh - b_wh / 4, height - b_wh - b_wh / 4, paint);
+		paint.setARGB(pid[KC_GAME_X] < 0 ? 64 : 160, 255, 255, 255);
+		canvas.drawBitmap(button_x, col1_w, row1_h, paint);
 		//canvas.drawCircle(width - radius - radius / 3, height - radius - radius / 3, radius, paint);
-		paint.setARGB(pid[KC_GAME_L] < 0 ? 64 : 128, 255, 255, 255);
-		canvas.drawBitmap(button_l, width - b_wh - b_wh / 4, b_wh / 4, paint);
+		paint.setARGB(pid[KC_GAME_L] < 0 ? 64 : 160, 255, 255, 255);
+		canvas.drawBitmap(button_l, col1_w, row2_h, paint);
 		//canvas.drawCircle(width - radius - radius / 3, radius + radius / 3, radius, paint);
-		paint.setARGB(pid[KC_GAME_A] < 0 ? 64 : 128, 255, 255, 255);
-		canvas.drawBitmap(button_a, width - b_wh - b_wh / 4, height / 2 - b_wh / 2, paint);
+		paint.setARGB(pid[KC_GAME_A] < 0 ? 64 : 160, 255, 255, 255);
+		canvas.drawBitmap(button_a, col1_w, row3_h, paint);
 		//canvas.drawCircle(width - radius - radius / 3, height / 2, radius, paint);
-		paint.setARGB(pid[KC_GAME_B] < 0 ? 64 : 128, 255, 255, 255);
-		canvas.drawBitmap(button_b, width - b_wh * 3, height - b_wh - b_wh / 4, paint);
+		paint.setARGB(pid[KC_GAME_B] < 0 ? 64 : 160, 255, 255, 255);
+		canvas.drawBitmap(button_b, col2_w, row1_h, paint);
 		//canvas.drawCircle(width - radius * 5, height - radius - radius / 3, radius, paint);
-		paint.setARGB(pid[KC_GAME_Y] < 0 ? 64 : 128, 255, 255, 255);
-		canvas.drawBitmap(button_y, width - b_wh * 3, b_wh / 4, paint);
+		paint.setARGB(pid[KC_GAME_Y] < 0 ? 64 : 160, 255, 255, 255);
+		canvas.drawBitmap(button_y, col2_w, row2_h, paint);
 		//canvas.drawCircle(width - radius * 5, radius + radius / 3, radius, paint);
-		paint.setARGB(pid[KC_GAME_SELECT] < 0 ? 64 : 128, 255, 255, 255);
-		canvas.drawBitmap(button_s, width - b_wh * 3, height / 2 - b_wh / 2, paint);
+		paint.setARGB(pid[KC_GAME_SELECT] < 0 ? 64 : 160, 255, 255, 255);
+		canvas.drawBitmap(button_s, col2_w, row3_h, paint);
 		//canvas.drawCircle(width - radius * 5, height / 2, radius, paint);
-		paint.setARGB(pid[KC_GAME_R] < 0 ? 64 : 128, 255, 255, 255);
+		paint.setARGB(pid[KC_GAME_R] < 0 ? 64 : 160, 255, 255, 255);
 		//canvas.drawRect(0, 0, radius * 3, radius, paint);
-		canvas.drawBitmap(button_r, 0, 0, paint);
+		canvas.drawBitmap(button_r, rad_d2, rad_d2, paint);
 
 		invalidate();
+
 		super.onDraw(canvas);
 	}
 
@@ -214,6 +217,14 @@ public class AAAAInputView extends View {
 
 		radius = Math.min(width, height) / 11;
 		Arrays.fill(pid, -1);
+
+		// Some optimizations
+		col1_w = width - b_wh - b_wh / 4;
+		col2_w = width - b_wh * 3;
+		row1_h = height - b_wh - b_wh / 4;
+		row2_h = b_wh / 4;
+		row3_h = height / 2 - b_wh / 2;
+		rad_d2 = radius / 3;
 
 		AAAAActivity.toDebugLog("Set Resolution of Input layer as: " + width + "x" + height);
 	}
