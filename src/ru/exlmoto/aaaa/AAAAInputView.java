@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.libsdl.app.SDLActivity;
-
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.View;
+
+import org.libsdl.app.SDLActivity;
 
 public class AAAAInputView extends View {
 
@@ -23,6 +25,18 @@ public class AAAAInputView extends View {
 	private static int[] pid = new int[16];
 	private boolean extraKeyPressed = false;
 
+	private Bitmap button_a = null;
+	private Bitmap button_b = null;
+	private Bitmap button_x = null;
+	private Bitmap button_y = null;
+	private Bitmap button_l = null;
+	private Bitmap button_r = null;
+	private Bitmap button_s = null;
+
+	private int b_wh = 0;
+	private int b_s_w = 0;
+	private int b_s_h = 0;
+
 	// --- Game Keycodes Table
 	// Joystick
 	private static final int KC_GAME_UP = 2;
@@ -34,12 +48,12 @@ public class AAAAInputView extends View {
 	private static final int KC_GAME_DOWNLEFT = 5;
 	private static final int KC_GAME_DOWNRIGHT = 7;
 	// Buttons
-	private static final int KC_GAME_A = 8;
-	private static final int KC_GAME_B = 9;
-	private static final int KC_GAME_X = 10;
-	private static final int KC_GAME_Y = 11;
-	private static final int KC_GAME_L = 12;
-	private static final int KC_GAME_R = 13;
+	private static final int KC_GAME_X = 8;
+	private static final int KC_GAME_A = 9;
+	private static final int KC_GAME_L = 10;
+	private static final int KC_GAME_B = 11;
+	private static final int KC_GAME_R = 12;
+	private static final int KC_GAME_Y = 13;
 	private static final int KC_GAME_SELECT = 14;
 	private static final int KC_GAME_START = 15;
 
@@ -108,6 +122,21 @@ public class AAAAInputView extends View {
 	public AAAAInputView(Context context) {
 		super(context);
 
+		button_a = BitmapFactory.decodeResource(context.getResources(), R.drawable.button_a);
+		button_b = BitmapFactory.decodeResource(context.getResources(), R.drawable.button_b);
+		button_x = BitmapFactory.decodeResource(context.getResources(), R.drawable.button_x);
+		button_y = BitmapFactory.decodeResource(context.getResources(), R.drawable.button_y);
+		button_r = BitmapFactory.decodeResource(context.getResources(), R.drawable.button_r);
+		button_l = BitmapFactory.decodeResource(context.getResources(), R.drawable.button_l);
+		button_s = BitmapFactory.decodeResource(context.getResources(), R.drawable.button_s);
+
+		b_wh = button_a.getWidth();
+		b_s_w = button_r.getWidth();
+		b_s_h = button_r.getHeight();
+
+		AAAAActivity.toDebugLog("Buttons size: " + b_wh + "x" + b_wh);
+		AAAAActivity.toDebugLog("Buttons special size: " + b_s_w + "x" + b_s_h);
+
 		paint = new Paint();
 	}
 
@@ -134,20 +163,27 @@ public class AAAAInputView extends View {
 		}
 
 		// buttons
-		paint.setARGB(pid[KC_GAME_A] < 0 ? 64 : 128, 255, 255, 255);
-		canvas.drawCircle(width - radius - radius / 3, height - radius - radius / 3, radius, paint);
 		paint.setARGB(pid[KC_GAME_X] < 0 ? 64 : 128, 255, 255, 255);
-		canvas.drawCircle(width - radius - radius / 3, radius + radius / 3, radius, paint);
-		paint.setARGB(pid[KC_GAME_B] < 0 ? 64 : 128, 255, 255, 255);
-		canvas.drawCircle(width - radius - radius / 3, height / 2, radius, paint);
-		paint.setARGB(pid[KC_GAME_Y] < 0 ? 64 : 128, 255, 255, 255);
-		canvas.drawCircle(width - radius * 5, height - radius - radius / 3, radius, paint);
-		paint.setARGB(pid[KC_GAME_R] < 0 ? 64 : 128, 255, 255, 255);
-		canvas.drawCircle(width - radius * 5, radius + radius / 3, radius, paint);
-		paint.setARGB(pid[KC_GAME_SELECT] < 0 ? 64 : 128, 255, 255, 255);
-		canvas.drawCircle(width - radius * 5, height / 2, radius, paint);
+		canvas.drawBitmap(button_x, width - b_wh - b_wh / 4, height - b_wh - b_wh / 4, paint);
+		//canvas.drawCircle(width - radius - radius / 3, height - radius - radius / 3, radius, paint);
 		paint.setARGB(pid[KC_GAME_L] < 0 ? 64 : 128, 255, 255, 255);
-		canvas.drawRect(0, 0, radius * 3, radius, paint);
+		canvas.drawBitmap(button_l, width - b_wh - b_wh / 4, b_wh / 4, paint);
+		//canvas.drawCircle(width - radius - radius / 3, radius + radius / 3, radius, paint);
+		paint.setARGB(pid[KC_GAME_A] < 0 ? 64 : 128, 255, 255, 255);
+		canvas.drawBitmap(button_a, width - b_wh - b_wh / 4, height / 2 - b_wh / 2, paint);
+		//canvas.drawCircle(width - radius - radius / 3, height / 2, radius, paint);
+		paint.setARGB(pid[KC_GAME_B] < 0 ? 64 : 128, 255, 255, 255);
+		canvas.drawBitmap(button_b, width - b_wh * 3, height - b_wh - b_wh / 4, paint);
+		//canvas.drawCircle(width - radius * 5, height - radius - radius / 3, radius, paint);
+		paint.setARGB(pid[KC_GAME_Y] < 0 ? 64 : 128, 255, 255, 255);
+		canvas.drawBitmap(button_y, width - b_wh * 3, b_wh / 4, paint);
+		//canvas.drawCircle(width - radius * 5, radius + radius / 3, radius, paint);
+		paint.setARGB(pid[KC_GAME_SELECT] < 0 ? 64 : 128, 255, 255, 255);
+		canvas.drawBitmap(button_s, width - b_wh * 3, height / 2 - b_wh / 2, paint);
+		//canvas.drawCircle(width - radius * 5, height / 2, radius, paint);
+		paint.setARGB(pid[KC_GAME_R] < 0 ? 64 : 128, 255, 255, 255);
+		//canvas.drawRect(0, 0, radius * 3, radius, paint);
+		canvas.drawBitmap(button_r, 0, 0, paint);
 
 		invalidate();
 		super.onDraw(canvas);
@@ -205,7 +241,7 @@ public class AAAAInputView extends View {
 					} else {
 						b = getButton((int) e.getX(index), (int) e.getY(index));
 						if (extraKeyPressed) {
-							b = KC_GAME_L;
+							b = KC_GAME_R;
 						}
 					}
 					if (b >= 0) {
@@ -220,7 +256,7 @@ public class AAAAInputView extends View {
 				x = (int) e.getX(index);
 				if (x < (2 * width / 3)) {
 					if (x < radius * 3 && (int) e.getY(index) < radius) {
-						npid[KC_GAME_L] = id;
+						npid[KC_GAME_R] = id;
 						extraKeyPressed = true;
 						break;
 					}
@@ -252,7 +288,7 @@ public class AAAAInputView extends View {
 				x = (int) e.getX(index);
 				if (x < (2 * width / 3)) {
 					if (x < radius * 3 && (int) e.getY(index) < radius) {
-						npid[KC_GAME_L] = id;
+						npid[KC_GAME_R] = id;
 						extraKeyPressed = true;
 						break;
 					}
@@ -298,22 +334,22 @@ public class AAAAInputView extends View {
 	public void pressKey(int keyCode) {
 		// AAAAActivity.toDebugLog(keyCode + " pushed!");
 		switch (keyCode) {
-		case KC_GAME_A:
+		case KC_GAME_X:
 			SDLActivity.onNativeKeyDown(KC_SDL_A);
 			break;
-		case KC_GAME_B:
+		case KC_GAME_A:
 			SDLActivity.onNativeKeyDown(KC_SDL_B);
 			break;
-		case KC_GAME_X:
+		case KC_GAME_L:
 			SDLActivity.onNativeKeyDown(KC_SDL_X);
 			break;
-		case KC_GAME_Y:
+		case KC_GAME_B:
 			SDLActivity.onNativeKeyDown(KC_SDL_Y);
 			break;
-		case KC_GAME_L:
+		case KC_GAME_R:
 			SDLActivity.onNativeKeyDown(KC_SDL_L);
 			break;
-		case KC_GAME_R:
+		case KC_GAME_Y:
 			SDLActivity.onNativeKeyDown(KC_SDL_R);
 			break;
 		case KC_GAME_SELECT:
@@ -354,22 +390,22 @@ public class AAAAInputView extends View {
 	public void releaseKey(int keyCode) {
 		// AAAAActivity.toDebugLog(keyCode + " released!");
 		switch (keyCode) {
-		case KC_GAME_A:
+		case KC_GAME_X:
 			SDLActivity.onNativeKeyUp(KC_SDL_A);
 			break;
-		case KC_GAME_B:
+		case KC_GAME_A:
 			SDLActivity.onNativeKeyUp(KC_SDL_B);
 			break;
-		case KC_GAME_X:
+		case KC_GAME_L:
 			SDLActivity.onNativeKeyUp(KC_SDL_X);
 			break;
-		case KC_GAME_Y:
+		case KC_GAME_B:
 			SDLActivity.onNativeKeyUp(KC_SDL_Y);
 			break;
-		case KC_GAME_L:
+		case KC_GAME_R:
 			SDLActivity.onNativeKeyUp(KC_SDL_L);
 			break;
-		case KC_GAME_R:
+		case KC_GAME_Y:
 			SDLActivity.onNativeKeyUp(KC_SDL_R);
 			break;
 		case KC_GAME_SELECT:
@@ -446,18 +482,18 @@ public class AAAAInputView extends View {
 		int b = -1;
 		if (x > (2 * width / 2.5)) {
 			if (y > (height / 3) * 2) { // Down
-				b = KC_GAME_A;
-			} else if (y < (height / 3)) { // Up
 				b = KC_GAME_X;
+			} else if (y < (height / 3)) { // Up
+				b = KC_GAME_L;
 			} else { // Center
-				b = KC_GAME_B;
+				b = KC_GAME_A;
 			}
 		} else {
 			// AAAAActivity.toDebugLog("Second Buttons Column:" + x + "x" + y);
 			if (y > (height / 3) * 2) { // Down
-				b = KC_GAME_Y;
+				b = KC_GAME_B;
 			} else if (y < (height / 3)) { // Up
-				b = KC_GAME_R;
+				b = KC_GAME_Y;
 			} else { // Center
 				b = KC_GAME_SELECT;
 			}
