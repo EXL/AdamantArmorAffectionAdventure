@@ -662,7 +662,11 @@ void zcore_input_frame(void)
     }
 
     if (i_keyb[17] > 0) {
+#ifndef ANDROID_NDK
         axis[0] = 128;
+#else
+        axis[0] = 128 / 2;
+#endif
     }
 
     if (i_keyb[18] > 0) {
@@ -670,7 +674,11 @@ void zcore_input_frame(void)
     }
 
     if (i_keyb[19] > 0) {
+#ifndef ANDROID_NDK
         axis[0] = -128;
+#else
+        axis[0] = -128 / 2;
+#endif
     }
 
 #endif

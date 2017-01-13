@@ -90,3 +90,4 @@ gen-external-apklibs
 jni/SDL2*
 jni/build*
 res/drawable-*
+!res/drawable-n*

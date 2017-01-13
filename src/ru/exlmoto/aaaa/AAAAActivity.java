@@ -6,12 +6,16 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 
 public class AAAAActivity extends SDLActivity {
 
 	private static final String APP_TAG = "AAAA_App";
+
+	public static final boolean oControls = true;
 
 	private static Vibrator m_vibrator = null;
 
@@ -25,12 +29,19 @@ public class AAAAActivity extends SDLActivity {
 
 		m_vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 
-		aaaaModernInputView = new AAAAModernInputView(this);
-
-		addContentView(aaaaModernInputView,
-				new LinearLayout.LayoutParams(
-						LayoutParams.MATCH_PARENT,
-						LayoutParams.MATCH_PARENT));
+		if (false) {
+			aaaaModernInputView = new AAAAModernInputView(this);
+			addContentView(aaaaModernInputView,
+					new LinearLayout.LayoutParams(
+							LayoutParams.MATCH_PARENT,
+							LayoutParams.MATCH_PARENT));
+		} else if (oControls) {
+			LinearLayout ll = new LinearLayout(this);
+			ll.setBackgroundDrawable(getResources().getDrawable(R.drawable.overlay_controls));
+			addContentView(ll, new LinearLayout.LayoutParams(
+					LayoutParams.MATCH_PARENT,
+					LayoutParams.MATCH_PARENT));
+		}
 	}
 
 	public static void toDebugLog(String debugMessage) {

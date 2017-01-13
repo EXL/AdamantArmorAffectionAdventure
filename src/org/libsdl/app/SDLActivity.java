@@ -29,8 +29,9 @@ import android.graphics.drawable.Drawable;
 import android.media.*;
 import android.hardware.*;
 import android.content.pm.ActivityInfo;
-
+import ru.exlmoto.aaaa.AAAAActivity;
 import ru.exlmoto.aaaa.AAAAModernInputView;
+import ru.exlmoto.aaaa.AAAASimpleInputView;
 
 /**
     SDL Activity
@@ -1043,6 +1044,8 @@ class SDLMain implements Runnable {
 class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
     View.OnKeyListener, View.OnTouchListener, SensorEventListener  {
 
+    private AAAASimpleInputView mTouchButtons = null;
+
     // Sensors
     protected static SensorManager mSensorManager;
     protected static Display mDisplay;
@@ -1060,6 +1063,8 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         requestFocus();
         setOnKeyListener(this);
         setOnTouchListener(this);
+
+        mTouchButtons = new AAAASimpleInputView();
 
         mDisplay = ((WindowManager)context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         mSensorManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
@@ -1298,6 +1303,35 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
     // Touch events
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+    	if (AAAAActivity.oControls) {
+    		int touchId = event.getPointerCount() - 1;
+            if (touchId < 0) {
+                return false;
+            }
+
+            float touchX = event.getX(touchId) / getWidth();
+            float touchY = event.getY(touchId) / getHeight();
+
+            switch (event.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN:
+                mTouchButtons.checkTouchButtons(touchX, touchY, touchId);
+                mTouchButtons.pressSingleTouchButtons();
+                break;
+            case MotionEvent.ACTION_POINTER_DOWN:
+                mTouchButtons.checkTouchButtons(touchX, touchY, touchId);
+                mTouchButtons.pressMultiTouchButtons();
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+                mTouchButtons.checkTouchButtons(touchX, touchY, touchId);
+                mTouchButtons.releaseMultiTouchButtons(touchId);
+                break;
+            case MotionEvent.ACTION_UP:
+                mTouchButtons.releaseAllButtons();
+                break;
+            default:
+                break;
+            }
+    	} else {
         /* Ref: http://developer.android.com/training/gestures/multi.html */
         final int touchDevId = event.getDeviceId();
         final int pointerCount = event.getPointerCount();
@@ -1378,7 +1412,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
                     break;
             }
         }
-
+    	}
         return true;
    }
 
