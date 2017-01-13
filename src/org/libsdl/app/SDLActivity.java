@@ -30,7 +30,7 @@ import android.media.*;
 import android.hardware.*;
 import android.content.pm.ActivityInfo;
 
-import ru.exlmoto.aaaa.AAAAInputView;
+import ru.exlmoto.aaaa.AAAAModernInputView;
 
 /**
     SDL Activity
@@ -1249,14 +1249,14 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         if (SDLActivity.isDeviceSDLJoystick(event.getDeviceId())) {
             // Note that we process events with specific key codes here
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                if (AAAAInputView.convertJoyDpadToKeysFilter(keyCode, true)) {
+                if (AAAAModernInputView.convertJoyDpadToKeysFilter(keyCode, true)) {
                     return true;
                 }
                 if (SDLActivity.onNativePadDown(event.getDeviceId(), keyCode) == 0) {
                     return true;
                 }
             } else if (event.getAction() == KeyEvent.ACTION_UP) {
-                if (AAAAInputView.convertJoyDpadToKeysFilter(keyCode, false)) {
+                if (AAAAModernInputView.convertJoyDpadToKeysFilter(keyCode, false)) {
                     return true;
                 }
                 if (SDLActivity.onNativePadUp(event.getDeviceId(), keyCode) == 0) {

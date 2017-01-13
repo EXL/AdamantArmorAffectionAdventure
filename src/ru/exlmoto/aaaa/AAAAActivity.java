@@ -15,7 +15,7 @@ public class AAAAActivity extends SDLActivity {
 
 	//private static Vibrator m_vibrator;
 
-	private AAAAInputView aaaaInputView = null;
+	private AAAAModernInputView aaaaModernInputView = null;
 
 	public static void toDebugLog(String debugMessage) {
 		Log.d(APP_TAG, "=== " + debugMessage);
@@ -29,9 +29,9 @@ public class AAAAActivity extends SDLActivity {
 		//toDebugLog("Setting Vibration");
 		//m_vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 
-		aaaaInputView = new AAAAInputView(this);
+		aaaaModernInputView = new AAAAModernInputView(this);
 
-		addContentView(aaaaInputView,
+		addContentView(aaaaModernInputView,
 				new LinearLayout.LayoutParams(
 						LayoutParams.MATCH_PARENT,
 						LayoutParams.MATCH_PARENT));

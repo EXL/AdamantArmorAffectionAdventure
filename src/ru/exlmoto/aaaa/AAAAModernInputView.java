@@ -14,7 +14,7 @@ import android.view.View;
 
 import org.libsdl.app.SDLActivity;
 
-public class AAAAInputView extends View {
+public class AAAAModernInputView extends View {
 
 	private Paint paint = null;
 
@@ -124,7 +124,7 @@ public class AAAAInputView extends View {
 	}
 	// ---
 
-	public AAAAInputView(Context context) {
+	public AAAAModernInputView(Context context) {
 		super(context);
 
 		button_a = BitmapFactory.decodeResource(context.getResources(), R.drawable.button_a);
