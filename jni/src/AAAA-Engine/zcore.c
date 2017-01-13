@@ -594,6 +594,7 @@ void zcore_input_frame(void)
     }
 
     // EXL: Second check tjoy_b array
+    // Divide by 2 or 3 for more responsive handling
     if (tjoy_b[TJ_UP]) {
         axis[1] = -128;
     } else if (tjoy_b[TJ_LEFT]) {

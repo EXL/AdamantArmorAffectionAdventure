@@ -20,7 +20,8 @@ public class AAAAInputView extends View {
 	private int height = 0;
 
 	private int radius = 0;
-	private static int[] pid = new int[10];
+	private static int[] pid = new int[16];
+	private boolean extraKeyPressed = false;
 
 	// --- Game Keycodes Table
 	// Joystick
@@ -35,6 +36,12 @@ public class AAAAInputView extends View {
 	// Buttons
 	private static final int KC_GAME_A = 8;
 	private static final int KC_GAME_B = 9;
+	private static final int KC_GAME_X = 10;
+	private static final int KC_GAME_Y = 11;
+	private static final int KC_GAME_L = 12;
+	private static final int KC_GAME_R = 13;
+	private static final int KC_GAME_SELECT = 14;
+	private static final int KC_GAME_START = 15;
 
 	// Send To AAAA-Engine
 	// Joystick
@@ -49,6 +56,12 @@ public class AAAAInputView extends View {
 	// Buttons
 	private static final int KC_SDL_A = 62; // Space
 	private static final int KC_SDL_B = 67; // Backspace
+	private static final int KC_SDL_X = 59; // Shift
+	private static final int KC_SDL_Y = 66; // Enter
+	private static final int KC_SDL_R = 54; // Z
+	private static final int KC_SDL_L = 52; // X
+	private static final int KC_SDL_SELECT = 31; // C
+	private static final int KC_SDL_START = 7; // 0 - Zero Digit
 	private static final int KC_SDL_UP = 51; // W
 	private static final int KC_SDL_DOWN = 47; // S
 	private static final int KC_SDL_LEFT = 29; // A
@@ -60,6 +73,7 @@ public class AAAAInputView extends View {
 	private static final int DPAD_RIGHT = 22;
 	private static final int DPAD_OK = 23;
 
+	// --- SDL Patch Functions
 	public static void pressOrReleaseKey(int keyCode, boolean press) {
 		if (press) {
 			SDLActivity.onNativeKeyDown(keyCode);
@@ -89,9 +103,9 @@ public class AAAAInputView extends View {
 			return false;
 		}
 	}
+	// ---
 
 	public AAAAInputView(Context context) {
-
 		super(context);
 
 		paint = new Paint();
@@ -122,8 +136,18 @@ public class AAAAInputView extends View {
 		// buttons
 		paint.setARGB(pid[KC_GAME_A] < 0 ? 64 : 128, 255, 255, 255);
 		canvas.drawCircle(width - radius - radius / 3, height - radius - radius / 3, radius, paint);
-		paint.setARGB(pid[KC_GAME_B] < 0 ? 64 : 128, 255, 255, 255);
+		paint.setARGB(pid[KC_GAME_X] < 0 ? 64 : 128, 255, 255, 255);
 		canvas.drawCircle(width - radius - radius / 3, radius + radius / 3, radius, paint);
+		paint.setARGB(pid[KC_GAME_B] < 0 ? 64 : 128, 255, 255, 255);
+		canvas.drawCircle(width - radius - radius / 3, height / 2, radius, paint);
+		paint.setARGB(pid[KC_GAME_Y] < 0 ? 64 : 128, 255, 255, 255);
+		canvas.drawCircle(width - radius * 5, height - radius - radius / 3, radius, paint);
+		paint.setARGB(pid[KC_GAME_R] < 0 ? 64 : 128, 255, 255, 255);
+		canvas.drawCircle(width - radius * 5, radius + radius / 3, radius, paint);
+		paint.setARGB(pid[KC_GAME_SELECT] < 0 ? 64 : 128, 255, 255, 255);
+		canvas.drawCircle(width - radius * 5, height / 2, radius, paint);
+		paint.setARGB(pid[KC_GAME_L] < 0 ? 64 : 128, 255, 255, 255);
+		canvas.drawRect(0, 0, radius * 3, radius, paint);
 
 		invalidate();
 		super.onDraw(canvas);
@@ -141,7 +165,7 @@ public class AAAAInputView extends View {
 	public boolean onTouchEvent(MotionEvent event) {
 		addEvent(MotionEvent.obtainNoHistory(event));
 		checkInput();
-		//event.recycle();
+		// event.recycle();
 		return true;
 	}
 
@@ -180,6 +204,9 @@ public class AAAAInputView extends View {
 						b = getDirection((int) e.getX(index), (int) e.getY(index));
 					} else {
 						b = getButton((int) e.getX(index), (int) e.getY(index));
+						if (extraKeyPressed) {
+							b = KC_GAME_L;
+						}
 					}
 					if (b >= 0) {
 						npid[b] = id;
@@ -192,6 +219,11 @@ public class AAAAInputView extends View {
 				cleanPointer(npid, id);
 				x = (int) e.getX(index);
 				if (x < (2 * width / 3)) {
+					if (x < radius * 3 && (int) e.getY(index) < radius) {
+						npid[KC_GAME_L] = id;
+						extraKeyPressed = true;
+						break;
+					}
 					p1b = -1;
 					p0x = x;
 					p0y = (int) e.getY(index);
@@ -207,6 +239,7 @@ public class AAAAInputView extends View {
 				break;
 			case MotionEvent.ACTION_UP:
 				id = e.getPointerId(e.getActionIndex());
+				extraKeyPressed = false;
 				cleanPointer(npid, id);
 				if (id == p0id) {
 					p0id = -1;
@@ -218,6 +251,11 @@ public class AAAAInputView extends View {
 				cleanPointer(npid, id);
 				x = (int) e.getX(index);
 				if (x < (2 * width / 3)) {
+					if (x < radius * 3 && (int) e.getY(index) < radius) {
+						npid[KC_GAME_L] = id;
+						extraKeyPressed = true;
+						break;
+					}
 					if (p0id < 0) {
 						p1b = -1;
 						p0x = x;
@@ -236,14 +274,15 @@ public class AAAAInputView extends View {
 			case MotionEvent.ACTION_POINTER_UP:
 				id = e.getPointerId(e.getActionIndex());
 				cleanPointer(npid, id);
+				extraKeyPressed = false;
 				if (id == p0id) {
 					p0id = -1;
 				}
 				break;
 			}
 		}
-		//lastKeyTyped = 0;
-		//lastKey = 0;
+		// lastKeyTyped = 0;
+		// lastKey = 0;
 		for (int i = 0; i < npid.length; ++i) {
 			if (npid[i] < 0) {
 				if (pid[i] >= 0) {
@@ -264,6 +303,24 @@ public class AAAAInputView extends View {
 			break;
 		case KC_GAME_B:
 			SDLActivity.onNativeKeyDown(KC_SDL_B);
+			break;
+		case KC_GAME_X:
+			SDLActivity.onNativeKeyDown(KC_SDL_X);
+			break;
+		case KC_GAME_Y:
+			SDLActivity.onNativeKeyDown(KC_SDL_Y);
+			break;
+		case KC_GAME_L:
+			SDLActivity.onNativeKeyDown(KC_SDL_L);
+			break;
+		case KC_GAME_R:
+			SDLActivity.onNativeKeyDown(KC_SDL_R);
+			break;
+		case KC_GAME_SELECT:
+			SDLActivity.onNativeKeyDown(KC_SDL_SELECT);
+			break;
+		case KC_GAME_START:
+			SDLActivity.onNativeKeyDown(KC_SDL_START);
 			break;
 		case KC_GAME_UP:
 			AAAANativeLibProxy.AAAAJoystickButtonDown(TJ_GAME_UP);
@@ -302,6 +359,24 @@ public class AAAAInputView extends View {
 			break;
 		case KC_GAME_B:
 			SDLActivity.onNativeKeyUp(KC_SDL_B);
+			break;
+		case KC_GAME_X:
+			SDLActivity.onNativeKeyUp(KC_SDL_X);
+			break;
+		case KC_GAME_Y:
+			SDLActivity.onNativeKeyUp(KC_SDL_Y);
+			break;
+		case KC_GAME_L:
+			SDLActivity.onNativeKeyUp(KC_SDL_L);
+			break;
+		case KC_GAME_R:
+			SDLActivity.onNativeKeyUp(KC_SDL_R);
+			break;
+		case KC_GAME_SELECT:
+			SDLActivity.onNativeKeyUp(KC_SDL_SELECT);
+			break;
+		case KC_GAME_START:
+			SDLActivity.onNativeKeyUp(KC_SDL_START);
 			break;
 		case KC_GAME_UP:
 			AAAANativeLibProxy.AAAAJoystickButtonUp(TJ_GAME_UP);
@@ -369,11 +444,22 @@ public class AAAAInputView extends View {
 
 	public int getButton(int x, int y) {
 		int b = -1;
-		if (x > (2 * width / 3)) {
-			if (y > (height >> 1)) {
+		if (x > (2 * width / 2.5)) {
+			if (y > (height / 3) * 2) { // Down
 				b = KC_GAME_A;
-			} else {
+			} else if (y < (height / 3)) { // Up
+				b = KC_GAME_X;
+			} else { // Center
 				b = KC_GAME_B;
+			}
+		} else {
+			// AAAAActivity.toDebugLog("Second Buttons Column:" + x + "x" + y);
+			if (y > (height / 3) * 2) { // Down
+				b = KC_GAME_Y;
+			} else if (y < (height / 3)) { // Up
+				b = KC_GAME_R;
+			} else { // Center
+				b = KC_GAME_SELECT;
 			}
 		}
 		return b;
