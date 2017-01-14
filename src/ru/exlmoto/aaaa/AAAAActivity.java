@@ -29,13 +29,13 @@ public class AAAAActivity extends SDLActivity {
 
 		m_vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 
-		if (false) {
+		if (!oControls) {
 			aaaaModernInputView = new AAAAModernInputView(this);
 			addContentView(aaaaModernInputView,
 					new LinearLayout.LayoutParams(
 							LayoutParams.MATCH_PARENT,
 							LayoutParams.MATCH_PARENT));
-		} else if (oControls) {
+		} else {
 			LinearLayout ll = new LinearLayout(this);
 			ll.setBackgroundDrawable(getResources().getDrawable(R.drawable.overlay_controls));
 			addContentView(ll, new LinearLayout.LayoutParams(
