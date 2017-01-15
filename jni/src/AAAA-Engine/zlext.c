@@ -1,17 +1,28 @@
 #include "vars.h"
 
 #ifdef ANDROID_NDK
-#include "../../SDL2-2.0.5/src/core/android/SDL_android.h"
+#include "../../SDL2-2.0.5/src/core/android/SDL_android.h" // For G-Sensor
+#include "zlext/android_extras.h" // For Vibration
 
 float accelValue[3];
 
 u16 accelScale = 1000;
 
-// G Sensor
+// Vibration Haptics
 
-void zlProcVibe() { }
+void zlProcVibe()
+{
+    int vibr = vibro / 3;
+    if (vibr > 10) {
+        // TO_DEBUG_LOG("Vibro = %d\n", vibro / 2);
+        doVibrateFromJNI(vibr);
+    }
+}
 
-void zlProcGSensor() {
+// G-Sensor
+
+void zlProcGSensor()
+{
     Android_JNI_GetAccelerometerValues(accelValue);
     // TO_DEBUG_LOG("X = %f, Y = %f, Z = %f\n", accelValue[0], accelValue[1], accelValue[2]);
 
