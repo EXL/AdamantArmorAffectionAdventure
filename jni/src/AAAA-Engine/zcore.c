@@ -487,6 +487,8 @@ void zcore_input_init(void)
     for (i = 0; i < SDL_NumJoysticks(); ++i) {
         TO_DEBUG_LOG("SDL Joystick %d: %s\n", i, SDL_JoystickNameForIndex(i));
     }
+#else
+    SDL_SetHint(SDL_HINT_ACCELEROMETER_AS_JOYSTICK, "0");
 #endif
 }
 
@@ -817,7 +819,7 @@ void zcorestep(void)
     zresmstep();
     zcore_video_frame();
     zcore_sound_frame();
-    // zlextframe();
+    zlextframe();
     count++;
     fstick1 = SDL_GetTicks();
     currenttick = fstick1;

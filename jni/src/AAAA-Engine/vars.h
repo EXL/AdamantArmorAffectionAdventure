@@ -35,6 +35,9 @@ extern u8 secretskin;
 
     // EXL: Touch Joystick
     extern u8 tjoy_b[8];
+
+    extern u16 accelScale;
+
     enum TJButtons {
         TJ_UP,
         TJ_LEFT,

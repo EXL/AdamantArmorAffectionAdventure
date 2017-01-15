@@ -1,5 +1,70 @@
 #include "vars.h"
 
+#ifdef ANDROID_NDK
+#include "../../SDL2-2.0.5/src/core/android/SDL_android.h"
+
+float accelValue[3];
+
+u16 accelScale = 1000;
+
+// G Sensor
+
+void zlProcVibe() { }
+
+void zlProcGSensor() {
+    Android_JNI_GetAccelerometerValues(accelValue);
+    // TO_DEBUG_LOG("X = %f, Y = %f, Z = %f\n", accelValue[0], accelValue[1], accelValue[2]);
+
+    int x, y, z, ix, iy, iz;
+
+    x = accelValue[0] * accelScale;
+    y = accelValue[1] * accelScale;
+    z = accelValue[2] * accelScale;
+
+    // TO_DEBUG_LOG("X = %d, Y = %d, Z = %d\n", x, y, z);
+
+    ix = x - gsensor[0];
+    iy = y - gsensor[1];
+    iz = z - gsensor[2];
+
+    gsensor[0] = x;
+    gsensor[1] = y;
+    gsensor[2] = z;
+
+    int gsensor_filter = 40;
+
+    if (abs(ix) < gsensor_filter) {
+        ix = 0;
+    }
+
+    if (abs(iy) < gsensor_filter) {
+        iy = 0;
+    }
+
+    if (abs(iz) < gsensor_filter) {
+        iz = 0;
+    }
+
+    gsensor[3] = gsensor[3] + (ix - gsensor[3]) / 4;
+    gsensor[4] = gsensor[4] + (iy - gsensor[4]) / 4;
+    gsensor[5] = gsensor[5] + (iz - gsensor[5]) / 4;
+
+    int gsensor_filter0 = 5;
+
+    if (abs(gsensor[3]) < gsensor_filter0) {
+        gsensor[3] = 0;
+    }
+
+    if (abs(gsensor[4]) < gsensor_filter0) {
+        gsensor[4] = 0;
+    }
+
+    if (abs(gsensor[5]) < gsensor_filter0) {
+        gsensor[5] = 0;
+    }
+}
+#endif
+
 #ifdef GP2XCAANOO
 
 // Vibration
@@ -9,6 +74,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <sys/ioctl.h>
+#include <sys/mman.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -156,16 +222,6 @@ void zlShutDownGSensor()
     close(accel_fd);
 }
 
-//
-#endif
-
-#ifdef GP2XCAANOO
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
-
 void caanoohack(void)
 {
     volatile unsigned short *mregs;
@@ -192,11 +248,6 @@ void caanoohack(void)
 #endif
 
 #ifdef GP2XWIZ
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
 void wizhack(void)
 {
     volatile unsigned short *mregs;
@@ -241,9 +292,8 @@ void zlextinit(void)
 
     caanoohack();
 #endif
-#ifdef GP2XWZ
+#ifdef GP2XWIZ
     wizhack();
-
 #endif
 }
 void zlextframe(void)
@@ -252,7 +302,7 @@ void zlextframe(void)
         vibro -= 20;
     }
 
-#ifdef GP2XCAANOO
+#if defined(GP2XCAANOO) || defined(ANDROID_NDK)
 
     if (configdata[11]) {
         zlProcGSensor();
