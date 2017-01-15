@@ -84,7 +84,7 @@ public class AAAASimpleInputView {
 		public void release() {
 			m_buttonPushed = false;
 
-			setTouchId(-1);
+			m_buttonTouchId = -1;
 
 			SDLActivity.onNativeKeyUp(m_buttonCode);
 		}
