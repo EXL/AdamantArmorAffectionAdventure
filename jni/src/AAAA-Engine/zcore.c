@@ -861,4 +861,7 @@ void zcoredown(void)
     chdir("/usr/gp2x");
     execl("/usr/gp2x/gp2xmenu", "/usr/gp2x/gp2xmenu", NULL);
 #endif
+#ifdef ANDROID_NDK
+    exit(0); // Unload AAAA-Engine Library
+#endif
 }
