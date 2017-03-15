@@ -239,8 +239,11 @@ public class AAAAModernInputView extends View {
 			events.clear();
 		}
 		int[] npid = Arrays.copyOf(pid, pid.length);
-		int id, index, b, x;
+		int id, index, b, x, y;
+		int sector_move, sector_button_r;
 		for (MotionEvent e : copy) {
+			sector_move = 2 * width / 3;
+			sector_button_r = radius * 3;
 			switch(e.getActionMasked()) {
 			case MotionEvent.ACTION_MOVE:
 				int len = e.getPointerCount();
@@ -249,14 +252,15 @@ public class AAAAModernInputView extends View {
 				for (index = 0; index < len; ++index) {
 					id = e.getPointerId(index);
 					x = (int) e.getX(index);
-					if (x < (2 * width / 3)) {
-						if (x < radius * 3 && (int) e.getY(index) < radius) {
-							b = getButton((int) e.getX(index), (int) e.getY(index));
+					y = (int) e.getY(index);
+					if (x < sector_move) {
+						if (x < sector_button_r && y < radius) {
+							b = getButton(x, y);
 						} else {
-							b = getDirection((int) e.getX(index), (int) e.getY(index));
+							b = getDirection(x, y);
 						}
 					} else {
-						b = getButton((int) e.getX(index), (int) e.getY(index));
+						b = getButton(x, y);
 					}
 					if (b >= 0) {
 						npid[b] = id;
@@ -268,9 +272,10 @@ public class AAAAModernInputView extends View {
 				id = e.getPointerId(index);
 				cleanPointer(npid, id);
 				x = (int) e.getX(index);
-				if (x < (2 * width / 3)) {
-					if (x < radius * 3 && (int) e.getY(index) < radius) {
-						b = getButton((int) e.getX(index), (int) e.getY(index));
+				y = (int) e.getY(index);
+				if (x < sector_move) {
+					if (x < sector_button_r && y < radius) {
+						b = getButton(x, y);
 						if (b >= 0) {
 							npid[b] = id;
 							AAAAActivity.doVibrate(50 - VIBRO_OFFSET);
@@ -279,12 +284,12 @@ public class AAAAModernInputView extends View {
 					}
 					p1b = -1;
 					p0x = x;
-					p0y = (int) e.getY(index);
+					p0y = y;
 					p1x = p0x;
 					p1y = p0y;
 					p0id = id;
 				} else {
-					b = getButton((int) e.getX(index), (int) e.getY(index));
+					b = getButton(x, y);
 					if (b >= 0) {
 						npid[b] = id;
 						AAAAActivity.doVibrate(50 - VIBRO_OFFSET);
@@ -303,9 +308,10 @@ public class AAAAModernInputView extends View {
 				id = e.getPointerId(index);
 				cleanPointer(npid, id);
 				x = (int) e.getX(index);
-				if (x < (2 * width / 3)) {
-					if (x < radius * 3 && (int) e.getY(index) < radius) {
-						b = getButton((int) e.getX(index), (int) e.getY(index));
+				y = (int) e.getY(index);
+				if (x < sector_move) {
+					if (x < sector_button_r && y < radius) {
+						b = getButton(x, y);
 						if (b >= 0) {
 							npid[b] = id;
 							AAAAActivity.doVibrate(50 - VIBRO_OFFSET);
@@ -315,13 +321,13 @@ public class AAAAModernInputView extends View {
 					if (p0id < 0) {
 						p1b = -1;
 						p0x = x;
-						p0y = (int) e.getY(index);
+						p0y = y;
 						p1x = p0x;
 						p1y = p0y;
 						p0id = id;
 					}
 				} else {
-					b = getButton((int) e.getX(index), (int) e.getY(index));
+					b = getButton(x, y);
 					if (b >= 0) {
 						npid[b] = id;
 						AAAAActivity.doVibrate(50 - VIBRO_OFFSET);
