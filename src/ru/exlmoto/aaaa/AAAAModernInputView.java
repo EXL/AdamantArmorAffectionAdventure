@@ -75,18 +75,18 @@ public class AAAAModernInputView extends View {
 	private static final int TJ_GAME_DOWNRIGHT = 6;
 	private static final int TJ_GAME_DOWNLEFT = 7;
 	// Buttons
-	private static final int KC_SDL_A = 62; // Space
-	private static final int KC_SDL_B = 67; // Backspace
-	private static final int KC_SDL_X = 59; // Shift
-	private static final int KC_SDL_Y = 66; // Enter
-	private static final int KC_SDL_R = 54; // Z
-	private static final int KC_SDL_L = 52; // X
+	private static final int KC_SDL_X = 62;      // Space
+	private static final int KC_SDL_A = 67;      // Backspace
+	private static final int KC_SDL_L = 59;      // Shift
+	private static final int KC_SDL_B = 66;      // Enter
+	private static final int KC_SDL_Y = 54;      // Z
+	private static final int KC_SDL_R = 52;      // X
 	private static final int KC_SDL_SELECT = 31; // C
-	private static final int KC_SDL_START = 7; // 0 - Zero Digit
-	private static final int KC_SDL_UP = 51; // W
-	private static final int KC_SDL_DOWN = 47; // S
-	private static final int KC_SDL_LEFT = 29; // A
-	private static final int KC_SDL_RIGHT = 32; // D
+	private static final int KC_SDL_START = 7;   // 0 - Zero Digit
+	private static final int KC_SDL_UP = 51;     // W
+	private static final int KC_SDL_DOWN = 47;   // S
+	private static final int KC_SDL_LEFT = 29;   // A
+	private static final int KC_SDL_RIGHT = 32;  // D
 	// D-Pad
 	private static final int DPAD_UP = 19;
 	private static final int DPAD_DOWN = 20;
@@ -118,7 +118,7 @@ public class AAAAModernInputView extends View {
 			pressOrReleaseKey(KC_SDL_RIGHT, press);
 			return true;
 		case DPAD_OK:
-			pressOrReleaseKey(KC_SDL_B, press);
+			pressOrReleaseKey(KC_SDL_A, press);
 			return true;
 		default:
 			return false;
@@ -352,22 +352,22 @@ public class AAAAModernInputView extends View {
 		// AAAAActivity.toDebugLog(keyCode + " pushed!");
 		switch (keyCode) {
 		case KC_GAME_X:
-			SDLActivity.onNativeKeyDown(KC_SDL_A);
-			break;
-		case KC_GAME_A:
-			SDLActivity.onNativeKeyDown(KC_SDL_B);
-			break;
-		case KC_GAME_L:
 			SDLActivity.onNativeKeyDown(KC_SDL_X);
 			break;
-		case KC_GAME_B:
-			SDLActivity.onNativeKeyDown(KC_SDL_Y);
+		case KC_GAME_A:
+			SDLActivity.onNativeKeyDown(KC_SDL_A);
 			break;
-		case KC_GAME_R:
+		case KC_GAME_L:
 			SDLActivity.onNativeKeyDown(KC_SDL_L);
 			break;
-		case KC_GAME_Y:
+		case KC_GAME_B:
+			SDLActivity.onNativeKeyDown(KC_SDL_B);
+			break;
+		case KC_GAME_R:
 			SDLActivity.onNativeKeyDown(KC_SDL_R);
+			break;
+		case KC_GAME_Y:
+			SDLActivity.onNativeKeyDown(KC_SDL_Y);
 			break;
 		case KC_GAME_SELECT:
 			SDLActivity.onNativeKeyDown(KC_SDL_SELECT);
@@ -408,22 +408,22 @@ public class AAAAModernInputView extends View {
 		// AAAAActivity.toDebugLog(keyCode + " released!");
 		switch (keyCode) {
 		case KC_GAME_X:
-			SDLActivity.onNativeKeyUp(KC_SDL_A);
-			break;
-		case KC_GAME_A:
-			SDLActivity.onNativeKeyUp(KC_SDL_B);
-			break;
-		case KC_GAME_L:
 			SDLActivity.onNativeKeyUp(KC_SDL_X);
 			break;
-		case KC_GAME_B:
-			SDLActivity.onNativeKeyUp(KC_SDL_Y);
+		case KC_GAME_A:
+			SDLActivity.onNativeKeyUp(KC_SDL_A);
 			break;
-		case KC_GAME_R:
+		case KC_GAME_L:
 			SDLActivity.onNativeKeyUp(KC_SDL_L);
 			break;
-		case KC_GAME_Y:
+		case KC_GAME_B:
+			SDLActivity.onNativeKeyUp(KC_SDL_B);
+			break;
+		case KC_GAME_R:
 			SDLActivity.onNativeKeyUp(KC_SDL_R);
+			break;
+		case KC_GAME_Y:
+			SDLActivity.onNativeKeyUp(KC_SDL_Y);
 			break;
 		case KC_GAME_SELECT:
 			SDLActivity.onNativeKeyUp(KC_SDL_SELECT);

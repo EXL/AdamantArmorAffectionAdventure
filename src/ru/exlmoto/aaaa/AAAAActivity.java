@@ -15,7 +15,7 @@ public class AAAAActivity extends SDLActivity {
 
 	private static final String APP_TAG = "AAAA_App";
 
-	public static final boolean oControls = true;
+	public static final boolean oControls = false;
 
 	private static Vibrator m_vibrator = null;
 
