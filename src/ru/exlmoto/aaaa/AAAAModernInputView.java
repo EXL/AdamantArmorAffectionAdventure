@@ -23,7 +23,6 @@ public class AAAAModernInputView extends View {
 
 	private int radius = 0;
 	private static int[] pid = new int[16];
-	private boolean extraKeyPressed = false;
 
 	private Bitmap button_a = null;
 	private Bitmap button_b = null;
@@ -249,13 +248,15 @@ public class AAAAModernInputView extends View {
 				p1b = -1;
 				for (index = 0; index < len; ++index) {
 					id = e.getPointerId(index);
-					if (id == p0id) {
-						b = getDirection((int) e.getX(index), (int) e.getY(index));
+					x = (int) e.getX(index);
+					if (x < (2 * width / 3)) {
+						if (x < radius * 3 && (int) e.getY(index) < radius) {
+							b = getButton((int) e.getX(index), (int) e.getY(index));
+						} else {
+							b = getDirection((int) e.getX(index), (int) e.getY(index));
+						}
 					} else {
 						b = getButton((int) e.getX(index), (int) e.getY(index));
-						if (extraKeyPressed) {
-							b = KC_GAME_R;
-						}
 					}
 					if (b >= 0) {
 						npid[b] = id;
@@ -269,9 +270,11 @@ public class AAAAModernInputView extends View {
 				x = (int) e.getX(index);
 				if (x < (2 * width / 3)) {
 					if (x < radius * 3 && (int) e.getY(index) < radius) {
-						npid[KC_GAME_R] = id;
-						extraKeyPressed = true;
-						AAAAActivity.doVibrate(50 - VIBRO_OFFSET);
+						b = getButton((int) e.getX(index), (int) e.getY(index));
+						if (b >= 0) {
+							npid[b] = id;
+							AAAAActivity.doVibrate(50 - VIBRO_OFFSET);
+						}
 						break;
 					}
 					p1b = -1;
@@ -290,7 +293,6 @@ public class AAAAModernInputView extends View {
 				break;
 			case MotionEvent.ACTION_UP:
 				id = e.getPointerId(e.getActionIndex());
-				extraKeyPressed = false;
 				cleanPointer(npid, id);
 				if (id == p0id) {
 					p0id = -1;
@@ -303,9 +305,11 @@ public class AAAAModernInputView extends View {
 				x = (int) e.getX(index);
 				if (x < (2 * width / 3)) {
 					if (x < radius * 3 && (int) e.getY(index) < radius) {
-						npid[KC_GAME_R] = id;
-						extraKeyPressed = true;
-						AAAAActivity.doVibrate(50 - VIBRO_OFFSET);
+						b = getButton((int) e.getX(index), (int) e.getY(index));
+						if (b >= 0) {
+							npid[b] = id;
+							AAAAActivity.doVibrate(50 - VIBRO_OFFSET);
+						}
 						break;
 					}
 					if (p0id < 0) {
@@ -327,7 +331,6 @@ public class AAAAModernInputView extends View {
 			case MotionEvent.ACTION_POINTER_UP:
 				id = e.getPointerId(e.getActionIndex());
 				cleanPointer(npid, id);
-				extraKeyPressed = false;
 				if (id == p0id) {
 					p0id = -1;
 				}
@@ -497,7 +500,9 @@ public class AAAAModernInputView extends View {
 
 	public int getButton(int x, int y) {
 		int b = -1;
-		if (x > (2 * width / 2.5)) {
+		if (x < radius * 3 && y < radius) {
+			b = KC_GAME_R;
+		} else if (x > (2 * width / 2.5)) {
 			if (y > (height / 3) * 2) { // Down
 				b = KC_GAME_X;
 			} else if (y < (height / 3)) { // Up
