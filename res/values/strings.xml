@@ -3,7 +3,7 @@
 	<string name="app_name">Adamant Armor Affection Adventure</string>
 	<string name="button_run">Run AAAA!</string>
 	<string name="button_about">About...</string>
-	<string name="button_browse">Browse OBB...</string>
+	<string name="button_browse">Browse...</string>
 	<string name="label_path">Path to OBB file w/ cache of game data:</string>
-	<string name="editText_hint">Please select OBB file</string>
+	<string name="editText_hint">Please select OBB file by \"Browse...\" button</string>
 </resources>

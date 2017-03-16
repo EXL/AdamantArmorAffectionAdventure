@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.ObbInfo;
 import android.content.res.ObbScanner;
@@ -17,7 +18,9 @@ import android.widget.EditText;
 
 public class AAAALauncherActivity extends Activity {
 
-	private String obbFilePathName = "/storage/sdcard0/main.1.ru.exlmoto.aaaa.obb";
+	private static final int PICKFILE_RESULT_CODE = 1;
+
+	private String obbFilePathName;
 	private EditText editTextObbPath = null;
 	// private final String obbKey = "aaaa";
 	private ObbInfo mObbInfo = null;
@@ -45,6 +48,25 @@ public class AAAALauncherActivity extends Activity {
 				checkObbMount();
 			}
 		});
+
+		Button buttonBrowse = (Button) findViewById(R.id.buttonObbBrowse);
+		buttonBrowse.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				checkFileManager();
+			}
+		});
+	}
+
+	private void checkFileManager() {
+		Intent fileintent = new Intent(Intent.ACTION_GET_CONTENT);
+		fileintent.setType("application/octet-stream");
+		try {
+			startActivityForResult(fileintent, PICKFILE_RESULT_CODE);
+		} catch (ActivityNotFoundException e) {
+			AAAAActivity.toDebugLog("No activity can handle picking a file. Showing alternatives.");
+		}
 	}
 
 	private void checkObbMount() {
@@ -109,6 +131,23 @@ public class AAAALauncherActivity extends Activity {
 			default:
 				break;
 			}
+		}
+	};
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (data == null) {
+			return;
+		}
+
+		switch (requestCode) {
+		case PICKFILE_RESULT_CODE:
+			if (resultCode == RESULT_OK) {
+				editTextObbPath.setText(data.getData().getPath());
+			}
+			break;
+		default:
+			break;
 		}
 	};
 }
