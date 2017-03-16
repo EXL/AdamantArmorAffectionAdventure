@@ -369,7 +369,7 @@ u8 mp2block[64] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 0,
     0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
-char spath[128];
+char spath[PATH_M];
 
 void loadmapdisc(unsigned char index)
 {
@@ -380,7 +380,7 @@ void loadmapdisc(unsigned char index)
 #ifndef ANDROID_NDK
     sprintf(spath, "maps/%i%i.aaa", index / 10, index % 10);
 #else
-    sprintf(spath, "/storage/sdcard1/AAAA-Data/maps/%i%i.aaa", index / 10, index % 10);
+    sprintf(spath, "%s/AAAA-Data/maps/%i%i.aaa", obbMountedPath, index / 10, index % 10);
 #endif
     fp = fopen(spath, "rb");
 
@@ -444,7 +444,7 @@ void savemapdisc(unsigned char index)
 #ifndef ANDROID_NDK
     sprintf(spath, "maps/%i%i.aaa", index / 10, index % 10);
 #else
-    sprintf(spath, "/storage/sdcard1/AAAA-Data/maps/%i%i.aaa", index / 10, index % 10);
+    sprintf(spath, "%s/%i%i.aaa", SDL_AndroidGetInternalStoragePath(), index / 10, index % 10);
 #endif
     fp = fopen(spath, "wb");
 

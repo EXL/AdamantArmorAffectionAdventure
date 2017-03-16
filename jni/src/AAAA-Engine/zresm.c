@@ -19,7 +19,9 @@ void zrmloadtextures(void)
 #ifndef ANDROID_NDK
     fp = fopen("textures.gfx", "rb");
 #else
-    fp = fopen("/storage/sdcard1/AAAA-Data/textures.gfx", "rb");
+    char path[PATH_M];
+    sprintf(path, "%s/AAAA-Data/textures.gfx", obbMountedPath);
+    fp = fopen(path, "rb");
 #endif
 
     ii = 0;
@@ -55,7 +57,9 @@ void loadconfig(void)
 #ifndef ANDROID_NDK
     fp = fopen("donothexedit.me", "rb");
 #else
-    fp = fopen("/storage/sdcard1/AAAA-Data/donothexedit.me", "rb");
+    char path[PATH_M];
+    sprintf(path, "%s/AAAA-Data/donothexedit.me", obbMountedPath);
+    fp = fopen(path, "rb");
 #endif
 
     for (i = 0; i < 32; i++) {
@@ -72,7 +76,9 @@ void saveconfig(void)
 #ifndef ANDROID_NDK
     fp = fopen("donothexedit.me", "rb");
 #else
-    fp = fopen("/storage/sdcard1/AAAA-Data/donothexedit.me", "wb");
+    char path[PATH_M];
+    sprintf(path, "%s/donothexedit.me", SDL_AndroidGetInternalStoragePath());
+    fp = fopen(path, "wb");
 #endif
 
     for (i = 0; i < 32; i++) {
@@ -649,8 +655,5 @@ void zresmstep(void)
 
 void zresmdown(void)
 {
-#if ANDROID_NDK
-    free(obbMountedPath);
-#endif
     saveconfig();
 }

@@ -855,6 +855,11 @@ void zcoredown(void)
     zcore_input_down();
     zcore_video_down();
     zcore_sound_down();
+
+#if ANDROID_NDK
+    free(obbMountedPath);
+#endif
+
     // zlextshutdown();
     SDL_Quit();
 #ifdef GP2X
