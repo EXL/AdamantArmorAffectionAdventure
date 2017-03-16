@@ -5,11 +5,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/layout_margin"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="vertical" >
+
 
         <TableRow
             android:layout_width="match_parent"
@@ -27,7 +28,28 @@
                 android:layout_height="wrap_content"
                 android:text="@string/button_about" />
 
+            <Button
+                android:id="@+id/buttonObbBrowse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_browse" />
+
         </TableRow>
+
+        <TextView
+            android:id="@+id/textViewLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/label_margin"
+            android:text="@string/label_path" />
+
+        <EditText
+            android:id="@+id/editTextObbPath"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/editText_hint"
+            android:inputType="text|textNoSuggestions"
+            android:textSize="@dimen/layout_margin" />
 
     </LinearLayout>
 

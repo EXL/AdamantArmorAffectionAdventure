@@ -86,7 +86,6 @@ void saveconfig(void)
     }
 
     fclose(fp);
-    TO_DEBUG_LOG("END TEST SAVE CONFIG\n");
 }
 
 void zrmterraininfo(void)

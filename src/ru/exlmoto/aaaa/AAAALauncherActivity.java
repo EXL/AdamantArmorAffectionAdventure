@@ -13,10 +13,12 @@ import android.os.storage.StorageManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class AAAALauncherActivity extends Activity {
 
 	private String obbFilePathName = "/storage/sdcard0/main.1.ru.exlmoto.aaaa.obb";
+	private EditText editTextObbPath = null;
 	// private final String obbKey = "aaaa";
 	private ObbInfo mObbInfo = null;
 	// JNI-access
@@ -32,6 +34,9 @@ public class AAAALauncherActivity extends Activity {
 
 		setContentView(R.layout.aaaa_launcher);
 
+		editTextObbPath = (EditText) findViewById(R.id.editTextObbPath);
+		editTextObbPath.setText(obbFilePathName);
+
 		Button buttonRun = (Button) findViewById(R.id.buttonRun);
 		buttonRun.setOnClickListener(new OnClickListener() {
 
@@ -43,6 +48,8 @@ public class AAAALauncherActivity extends Activity {
 	}
 
 	private void checkObbMount() {
+		obbFilePathName = editTextObbPath.getEditableText().toString();
+
 		File obbFile = new File(obbFilePathName);
 		if (obbFile.exists() && obbFile.isFile()) {
 			try {
@@ -86,6 +93,7 @@ public class AAAALauncherActivity extends Activity {
 				obbMountedPath = mStorageManager.getMountedObbPath(obbFilePathName);
 				AAAAActivity.toDebugLog("Obb Mounted! Path: " + obbMountedPath);
 
+				// Attempt to read the random file
 				File readMeFile = new File(obbMountedPath + "/AAAA-Data/DONOTREAD.ME");
 				if (readMeFile.exists() && readMeFile.isFile()) {
 					Intent intent = new Intent(aaaaLauncherActivity, AAAAActivity.class);
