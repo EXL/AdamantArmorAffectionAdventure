@@ -19,15 +19,16 @@ public class AAAALauncherActivity extends Activity {
 	private String obbFilePathName = "/storage/sdcard0/main.1.ru.exlmoto.aaaa.obb";
 	// private final String obbKey = "aaaa";
 	private ObbInfo mObbInfo = null;
+	// JNI-access
+	public static String obbMountedPath = "";
 	private StorageManager mStorageManager = null;
+	AAAALauncherActivity aaaaLauncherActivity = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		mStorageManager = (StorageManager) getApplicationContext().getSystemService(STORAGE_SERVICE);
-
-		checkObbMount();
 
 		setContentView(R.layout.aaaa_launcher);
 
@@ -36,8 +37,7 @@ public class AAAALauncherActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(v.getContext(), AAAAActivity.class);
-				startActivity(intent);
+				checkObbMount();
 			}
 		});
 	}
@@ -55,7 +55,6 @@ public class AAAALauncherActivity extends Activity {
 					e.printStackTrace();
 					AAAAActivity.toDebugLog("The OBB file could not be read!");
 				}
-
 				if (mStorageManager.mountObb(obbFilePathName, null, mObbEventListener)) {
 					AAAAActivity.toDebugLog("Mount OBB file...");
 				} else {
@@ -78,14 +77,23 @@ public class AAAALauncherActivity extends Activity {
 		@Override
 		public void onObbStateChange(String path, int state) {
 			AAAAActivity.toDebugLog("ObbStateChanged, path: " + path + ", state: " + state);
-
 			switch (state) {
 			case OnObbStateChangeListener.ERROR_ALREADY_MOUNTED:
 				AAAAActivity.toDebugLog("Obb File Already Mounted! Unmounting... #2");
 				mStorageManager.unmountObb(obbFilePathName, true, mObbEventListener);
 				break;
 			case OnObbStateChangeListener.MOUNTED:
-				AAAAActivity.toDebugLog("Obb Mounted! Path: " + mStorageManager.getMountedObbPath(obbFilePathName));
+				obbMountedPath = mStorageManager.getMountedObbPath(obbFilePathName);
+				AAAAActivity.toDebugLog("Obb Mounted! Path: " + obbMountedPath);
+
+				File readMeFile = new File(obbMountedPath + "/AAAA-Data/DONOTREAD.ME");
+				if (readMeFile.exists() && readMeFile.isFile()) {
+					Intent intent = new Intent(aaaaLauncherActivity, AAAAActivity.class);
+					startActivity(intent);
+				} else {
+					AAAAActivity.toDebugLog("Error access to mounted files!");
+				}
+
 				break;
 			case OnObbStateChangeListener.UNMOUNTED:
 				AAAAActivity.toDebugLog("Obb File Unmounted!");
