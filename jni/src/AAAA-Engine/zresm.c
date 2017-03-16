@@ -5,6 +5,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifdef ANDROID_NDK
+#include "zlext/android_extras.h"
+
+char *obbMountedPath = NULL;
+#endif
+
 void zrmloadtextures(void)
 {
     FILE *fp;
@@ -605,6 +611,15 @@ void applycheats(void)
 
 void zresminit(void)
 {
+#ifdef ANDROID_NDK
+    obbMountedPath = getObbMountedPath();
+    if (obbMountedPath == NULL) {
+        TO_DEBUG_LOG("OBB Mounted Path from JNI: is NULL! Exiting!");
+        exit(0);
+    } else {
+        TO_DEBUG_LOG("OBB Mounted Path from JNI: %s", obbMountedPath);
+    }
+#endif
     loadconfig();
     applycheats();
     zrmterraininfo();
@@ -634,5 +649,8 @@ void zresmstep(void)
 
 void zresmdown(void)
 {
+#if ANDROID_NDK
+    free(obbMountedPath);
+#endif
     saveconfig();
 }

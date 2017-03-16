@@ -48,6 +48,7 @@ extern u8 secretskin;
         TJ_DOWNRIGHT,
         TJ_DOWNLEFT
     };
+    extern char *obbMountedPath;
 #else
     #define TO_DEBUG_LOG(...) fprintf(stderr, __VA_ARGS__)
 #endif
