@@ -91,3 +91,4 @@ jni/SDL2*
 jni/build*
 res/drawable-*
 !res/drawable-n*
+assets*
