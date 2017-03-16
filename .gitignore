@@ -90,4 +90,3 @@ gen-external-apklibs
 jni/build*
 res/drawable-*
 !res/drawable-n*
-assets*
