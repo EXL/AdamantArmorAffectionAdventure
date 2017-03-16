@@ -74,7 +74,7 @@ void saveconfig(void)
     FILE *fp;
     u8 i;
 #ifndef ANDROID_NDK
-    fp = fopen("donothexedit.me", "rb");
+    fp = fopen("donothexedit.me", "wb");
 #else
     char path[PATH_M];
     sprintf(path, "%s/donothexedit.me", SDL_AndroidGetInternalStoragePath());
@@ -86,6 +86,7 @@ void saveconfig(void)
     }
 
     fclose(fp);
+    TO_DEBUG_LOG("END TEST SAVE CONFIG\n");
 }
 
 void zrmterraininfo(void)
