@@ -87,7 +87,6 @@ lint.xml
 gen-external-apklibs
 
 # Other
-jni/SDL2*
 jni/build*
 res/drawable-*
 !res/drawable-n*
