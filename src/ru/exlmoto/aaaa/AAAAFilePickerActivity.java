@@ -195,10 +195,10 @@ class FArrayAdapter extends ArrayAdapter<FItem> {
 
 		final FItem fInstance = itemsList.get(position);
 		if (fInstance != null) {
-			TextView fileName = (TextView) view.findViewById(R.id.filename);
-			TextView fileItems = (TextView) view.findViewById(R.id.fileitems);
-			TextView fileDate = (TextView) view.findViewById(R.id.filedate);
-			ImageView imageIcon = (ImageView) view.findViewById(R.id.fd_Icon1);
+			TextView fileName = (TextView) view.findViewById(R.id.fileName);
+			TextView fileItems = (TextView) view.findViewById(R.id.fileItems);
+			TextView fileDate = (TextView) view.findViewById(R.id.fileDate);
+			ImageView imageIcon = (ImageView) view.findViewById(R.id.fileIcon);
 
 			@SuppressWarnings("deprecation")
 			Drawable drawable = context.getResources().getDrawable(fInstance.getImageId());

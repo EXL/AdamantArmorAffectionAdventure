@@ -2,5 +2,7 @@
 <resources>
     <dimen name="layout_margin">10dp</dimen>
     <dimen name="path_width">130dp</dimen>
+    <dimen name="big_button_width">230dp</dimen>
     <dimen name="label_margin">5dp</dimen>
+    <dimen name="icon_size">40dp</dimen>
 </resources>

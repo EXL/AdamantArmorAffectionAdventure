@@ -14,7 +14,7 @@
 
     <Button
         android:id="@+id/buttonCancel"
-        android:layout_width="@dimen/path_width"
+        android:layout_width="@dimen/big_button_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/layout_margin"

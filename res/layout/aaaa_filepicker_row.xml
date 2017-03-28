@@ -1,43 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dip"
-    android:orientation="vertical"
-    android:layout_width="fill_parent" >
+    android:layout_marginTop="@dimen/label_margin"
+    android:orientation="vertical" >
 
     <ImageView
-        android:id="@+id/fd_Icon1"
-        android:layout_width="40dip"
-        android:layout_height="40dip" >
+        android:id="@+id/fileIcon"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:contentDescription="@string/icon" >
     </ImageView>
 
-    <TextView android:text=""
-        android:id="@+id/filename"
+    <TextView
+        android:id="@+id/fileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:textStyle="bold"
-        android:layout_toRightOf="@+id/fd_Icon1"
-        android:layout_marginTop="5dip"
-        android:layout_marginLeft="5dip">
+        android:layout_toRightOf="@+id/fileIcon"
+        android:layout_marginTop="@dimen/label_margin"
+        android:layout_marginLeft="@dimen/label_margin" >
     </TextView>
 
-    <TextView android:text=""
-        android:id="@+id/fileitems"
+    <TextView
+        android:id="@+id/fileItems"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/fd_Icon1"
-        android:layout_below="@+id/filename"
-        android:layout_marginLeft="10dip">
+        android:layout_toRightOf="@+id/fileIcon"
+        android:layout_below="@+id/fileName"
+        android:layout_marginLeft="@dimen/layout_margin" >
     </TextView>
 
-    <TextView android:text=""
-        android:id="@+id/filedate"
+    <TextView
+        android:id="@+id/fileDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/filename"
+        android:layout_below="@+id/fileName"
         android:layout_alignParentRight="true"
-        android:layout_marginLeft="5dip">
+        android:layout_marginLeft="@dimen/label_margin" >
     </TextView>
 
 </RelativeLayout>
