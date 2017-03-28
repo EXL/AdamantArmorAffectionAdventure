@@ -6,4 +6,6 @@
 	<string name="button_browse">Browse...</string>
 	<string name="label_path">Path to OBB file w/ cache of game data:</string>
 	<string name="editText_hint">Please select OBB file by \"Browse...\" button</string>
+	<string name="button_cancel">Cancel</string>
+	<string name="button_ok">OK</string>
 </resources>
