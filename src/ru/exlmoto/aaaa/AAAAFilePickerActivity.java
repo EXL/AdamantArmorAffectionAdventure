@@ -88,24 +88,24 @@ public class AAAAFilePickerActivity extends Activity {
 
 	private class FillListTask extends AsyncTask<Void, Void, List<FItem>> {
 
-		File startFolder = null;
+		File s_startPath = null;
 
 		public FillListTask(File a_startFolder) {
-			startFolder = a_startFolder;
+			s_startPath = a_startFolder;
 		}
 
 		@Override
 		protected List<FItem> doInBackground(Void... params) {
-			File[] listFiles = startFolder.listFiles();
+			File[] listFiles = s_startPath.listFiles();
 			List<FItem> listItemsDirs = new ArrayList<FItem>();
 			List<FItem> listItemsFiles = new ArrayList<FItem>();
 
 			while (listFiles == null) {
-				startFolder = new File(startFolder.getParent());
-				if (startFolder == null) {
+				s_startPath = new File(s_startPath.getParent());
+				if (s_startPath == null) {
 					return listItemsDirs;
 				}
-				listFiles = startFolder.listFiles();
+				listFiles = s_startPath.listFiles();
 			}
 
 			for (File file : listFiles) {
@@ -124,7 +124,7 @@ public class AAAAFilePickerActivity extends Activity {
 					String numItems = String.valueOf(num);
 					// TODO: i18n
 					if (num == 0) {
-						numItems = "Some items";
+						numItems = "No items";
 					} else if (num == 1) {
 						numItems += " item";
 					} else {
@@ -133,7 +133,7 @@ public class AAAAFilePickerActivity extends Activity {
 					listItemsDirs.add(new FItem(file.getName(), numItems, dateModified,
 							file.getAbsolutePath(), android.R.drawable.ic_menu_compass));
 				} else {
-					listItemsFiles.add(new FItem(file.getName(), file.length() + " Byte(s)", dateModified,
+					listItemsFiles.add(new FItem(file.getName(), file.length() + " bytes", dateModified,
 							file.getAbsolutePath(), android.R.drawable.ic_dialog_alert));
 				}
 			}
@@ -142,9 +142,9 @@ public class AAAAFilePickerActivity extends Activity {
 			listItemsDirs.addAll(listItemsFiles);
 
 			// TODO: i18n
-			if(startFolder.getPath().length() > 1) {
+			if(s_startPath.getPath().length() > 1) {
 				listItemsDirs.add(0, new FItem("..", "Parent Directory", "",
-						startFolder.getParent(), android.R.drawable.ic_menu_compass));
+						s_startPath.getParent(), android.R.drawable.ic_menu_compass));
 			}
 
 			return listItemsDirs;
@@ -152,7 +152,6 @@ public class AAAAFilePickerActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(List<FItem> result) {
-			setTitle("Current Dir: " + startFolder.getName());
 			adapter = new FArrayAdapter(AAAAFilePickerActivity.this, R.layout.aaaa_filepicker_row, result);
 			delta = (ListView) findViewById(R.id.FileView);
 			delta.setAdapter(adapter);
@@ -161,6 +160,9 @@ public class AAAAFilePickerActivity extends Activity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					FItem fItem = adapter.getItem(position);
+
+					AAAAActivity.toDebugLog(fItem.getPath() + ":" + fItem.getName());
+
 					currentPath = new File(fItem.getPath());
 					fillFileList(currentPath);
 				}

@@ -62,7 +62,7 @@
             -->
         </activity>
         <activity android:name="AAAAFilePickerActivity"
-                  android:label="@string/file_manager"
+                  android:label="@string/obb_file"
                   android:configChanges="keyboard|keyboardHidden|orientation" >
         </activity>
     </application>

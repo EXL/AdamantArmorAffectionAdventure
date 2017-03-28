@@ -8,5 +8,5 @@
 	<string name="editText_hint">Please select OBB file by \"Browse...\" button</string>
 	<string name="button_cancel">Cancel</string>
 	<string name="button_ok">OK</string>
-	<string name="file_manager">File Manager</string>
+	<string name="obb_file">Please choose OBB file:</string>
 </resources>
