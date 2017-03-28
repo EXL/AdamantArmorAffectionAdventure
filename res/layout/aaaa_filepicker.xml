@@ -10,28 +10,15 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1" >
-
     </ListView>
 
-    <TableRow
-        android:id="@+id/tableRow"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/buttonCancel"
+        android:layout_width="@dimen/path_width"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/layout_margin"
-        android:gravity="center" >
-
-        <Button
-            android:id="@+id/buttonCancel"
-            android:layout_width="@dimen/path_width"
-            android:layout_height="wrap_content"
-            android:text="@string/button_cancel" />
-
-        <Button
-            android:id="@+id/buttonOk"
-            android:layout_width="@dimen/path_width"
-            android:layout_height="wrap_content"
-            android:text="@string/button_ok" />
-
-    </TableRow>
+        android:text="@string/button_cancel" >
+    </Button>
 
 </LinearLayout>

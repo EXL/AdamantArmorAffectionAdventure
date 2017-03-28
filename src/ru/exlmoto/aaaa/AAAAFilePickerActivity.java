@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,6 +30,9 @@ import android.widget.Toast;
 
 public class AAAAFilePickerActivity extends Activity {
 
+	// For OBB cache files
+	final private static String fExt = ".OBB";
+
 	private static File currentPath = null;
 	private FArrayAdapter adapter = null;
 	private static ListView delta = null;
@@ -44,40 +48,29 @@ public class AAAAFilePickerActivity extends Activity {
 			currentPath = new File(startPath);
 		}
 
-		Button buttonOk = (Button) findViewById(R.id.buttonOk);
-		buttonOk.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				AAAAActivity.toDebugLog("Click button Ok");
-				onOkClick(v);
-			}
-		});
-
 		Button buttonCancel = (Button) findViewById(R.id.buttonCancel);
 		buttonCancel.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				AAAAActivity.toDebugLog("Click button Cancel");
-				onCancelClick(v);
+				onCancelButtonClick(v);
 			}
 		});
 
 		fillFileList(currentPath);
 	}
 
-	public void onOkClick(View v) {
-		Toast.makeText(this, "Chosen path : " + currentPath, Toast.LENGTH_SHORT).show();
+	public void onObbClick() {
+		Toast.makeText(this, getResources().getString(R.string.obb_file_c)
+				+ " " + currentPath, Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent();
 		intent.putExtra("ObbPath", currentPath.toString());
 		setResult(RESULT_OK, intent);
 		finish();
 	}
 
-	public void onCancelClick(View v) {
+	public void onCancelButtonClick(View v) {
 		Intent intent = new Intent();
-		intent.putExtra("GetPath", "NaN");
 		setResult(RESULT_CANCELED, intent);
 		finish();
 	}
@@ -122,31 +115,31 @@ public class AAAAFilePickerActivity extends Activity {
 						num = 0;
 					}
 					String numItems = String.valueOf(num);
-					// TODO: i18n
 					if (num == 0) {
-						numItems = "No items";
+						numItems = getResources().getString(R.string.no_items);
 					} else if (num == 1) {
-						numItems += " item";
+						numItems += " " + getResources().getString(R.string.item);
 					} else {
-						numItems += " items";
+						numItems += " " + getResources().getString(R.string.items);
 					}
 					listItemsDirs.add(new FItem(file.getName(), numItems, dateModified,
 							file.getAbsolutePath(), android.R.drawable.ic_menu_compass));
 				} else {
-					listItemsFiles.add(new FItem(file.getName(), file.length() + " bytes", dateModified,
+					if (file.getName().endsWith(fExt.toLowerCase(Locale.getDefault()))
+							|| file.getName().endsWith(fExt)) {
+						listItemsFiles.add(new FItem(file.getName(), file.length() + " " +
+							getResources().getString(R.string.bytes), dateModified,
 							file.getAbsolutePath(), android.R.drawable.ic_dialog_alert));
+					}
 				}
 			}
 			Collections.sort(listItemsDirs);
 			Collections.sort(listItemsFiles);
 			listItemsDirs.addAll(listItemsFiles);
-
-			// TODO: i18n
 			if(s_startPath.getPath().length() > 1) {
-				listItemsDirs.add(0, new FItem("..", "Parent Directory", "",
+				listItemsDirs.add(0, new FItem("..", getResources().getString(R.string.parent_dir), "",
 						s_startPath.getParent(), android.R.drawable.ic_menu_compass));
 			}
-
 			return listItemsDirs;
 		}
 
@@ -160,11 +153,13 @@ public class AAAAFilePickerActivity extends Activity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					FItem fItem = adapter.getItem(position);
-
-					AAAAActivity.toDebugLog(fItem.getPath() + ":" + fItem.getName());
-
 					currentPath = new File(fItem.getPath());
-					fillFileList(currentPath);
+					if (fItem.getName().endsWith(fExt.toLowerCase(Locale.getDefault()))
+							|| fItem.getName().endsWith(fExt)) {
+						onObbClick();
+					} else {
+						fillFileList(currentPath);
+					}
 				}
 			});
 		}
@@ -209,9 +204,15 @@ class FArrayAdapter extends ArrayAdapter<FItem> {
 			Drawable drawable = context.getResources().getDrawable(fInstance.getImageId());
 			imageIcon.setImageDrawable(drawable);
 
-			if (fileName != null) { fileName.setText(fInstance.getName()); }
-			if (fileItems != null) { fileItems.setText(fInstance.getItemsData()); }
-			if (fileDate != null) { fileDate.setText(fInstance.getDate()); }
+			if (fileName != null) {
+				fileName.setText(fInstance.getName());
+			}
+			if (fileItems != null) {
+				fileItems.setText(fInstance.getItemsData());
+			}
+			if (fileDate != null) {
+				fileDate.setText(fInstance.getDate());
+			}
 
 		}
 		return view;
