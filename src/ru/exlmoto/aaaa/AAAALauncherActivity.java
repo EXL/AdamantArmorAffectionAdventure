@@ -53,12 +53,12 @@ public class AAAALauncherActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				checkFileManager();
+				runFilePicker();
 			}
 		});
 	}
 
-	private void checkFileManager() {
+	private void runFilePicker() {
 		Intent intent = new Intent(this, AAAAFilePickerActivity.class);
 		startActivityForResult(intent, AC_FILE_PICKER_CODE);
 	}
