@@ -62,7 +62,7 @@ public class AAAAFilePickerActivity extends Activity {
 
 	public void onObbClick() {
 		Toast.makeText(this, getResources().getString(R.string.obb_file_c)
-				+ " " + currentPath, Toast.LENGTH_SHORT).show();
+				+ " " + currentPath.getName(), Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent();
 		intent.putExtra("ObbPath", currentPath.toString());
 		setResult(RESULT_OK, intent);
@@ -123,13 +123,14 @@ public class AAAAFilePickerActivity extends Activity {
 						numItems += " " + getResources().getString(R.string.items);
 					}
 					listItemsDirs.add(new FItem(file.getName(), numItems, dateModified,
-							file.getAbsolutePath(), android.R.drawable.ic_menu_compass));
+							file.getAbsolutePath(), R.drawable.folder));
 				} else {
 					if (file.getName().endsWith(fExt.toLowerCase(Locale.getDefault()))
 							|| file.getName().endsWith(fExt)) {
-						listItemsFiles.add(new FItem(file.getName(), file.length() + " " +
-							getResources().getString(R.string.bytes), dateModified,
-							file.getAbsolutePath(), android.R.drawable.ic_dialog_alert));
+						listItemsFiles.add(new FItem(file.getName(), Math.round(
+								file.length() / 1024.0d / 1024.0d * 100.0d) / 100.0d + " " +
+								getResources().getString(R.string.mbytes), dateModified,
+								file.getAbsolutePath(), R.drawable.obb_package));
 					}
 				}
 			}
@@ -138,7 +139,7 @@ public class AAAAFilePickerActivity extends Activity {
 			listItemsDirs.addAll(listItemsFiles);
 			if(s_startPath.getPath().length() > 1) {
 				listItemsDirs.add(0, new FItem("..", getResources().getString(R.string.parent_dir), "",
-						s_startPath.getParent(), android.R.drawable.ic_menu_compass));
+						s_startPath.getParent(), R.drawable.folder_up));
 			}
 			return listItemsDirs;
 		}
