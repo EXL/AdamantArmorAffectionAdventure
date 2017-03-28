@@ -1,7 +1,7 @@
 package ru.exlmoto.aaaa;
 
 import java.io.File;
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -103,9 +103,8 @@ public class AAAAFilePickerActivity extends Activity {
 
 			for (File file : listFiles) {
 				Date lastModifiedDate = new Date(file.lastModified());
-				DateFormat formatter = DateFormat.getDateTimeInstance();
+				SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy, HH:mm:ss", Locale.getDefault());
 				String dateModified = formatter.format(lastModifiedDate);
-
 				if (file.isDirectory()) {
 					File[] dirFiles = file.listFiles();
 					int num;

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.ObbInfo;
 import android.content.res.ObbScanner;
@@ -18,7 +17,7 @@ import android.widget.EditText;
 
 public class AAAALauncherActivity extends Activity {
 
-	private static final int PICKFILE_RESULT_CODE = 1;
+	private static final int AC_FILE_PICKER_CODE = 1;
 
 	private String obbFilePathName;
 	private EditText editTextObbPath = null;
@@ -61,8 +60,7 @@ public class AAAALauncherActivity extends Activity {
 
 	private void checkFileManager() {
 		Intent intent = new Intent(this, AAAAFilePickerActivity.class);
-		// TODO: 42 ??
-		startActivityForResult(intent, 42);
+		startActivityForResult(intent, AC_FILE_PICKER_CODE);
 	}
 
 	private void checkObbMount() {
@@ -134,10 +132,15 @@ public class AAAALauncherActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (data == null) {
 			return;
-		} else {
+		}
+		switch (requestCode) {
+		case AC_FILE_PICKER_CODE:
 			if (resultCode == RESULT_OK) {
 				editTextObbPath.setText(data.getStringExtra("ObbPath"));
 			}
+			break;
+		default:
+			break;
 		}
 	}
 }
