@@ -60,13 +60,9 @@ public class AAAALauncherActivity extends Activity {
 	}
 
 	private void checkFileManager() {
-		Intent fileintent = new Intent(Intent.ACTION_GET_CONTENT);
-		fileintent.setType("application/octet-stream");
-		try {
-			startActivityForResult(fileintent, PICKFILE_RESULT_CODE);
-		} catch (ActivityNotFoundException e) {
-			AAAAActivity.toDebugLog("No activity can handle picking a file. Showing alternatives.");
-		}
+		Intent intent = new Intent(this, AAAAFilePickerActivity.class);
+		// TODO: 42 ??
+		startActivityForResult(intent, 42);
 	}
 
 	private void checkObbMount() {
@@ -138,16 +134,10 @@ public class AAAALauncherActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (data == null) {
 			return;
-		}
-
-		switch (requestCode) {
-		case PICKFILE_RESULT_CODE:
+		} else {
 			if (resultCode == RESULT_OK) {
-				editTextObbPath.setText(data.getData().getPath());
+				editTextObbPath.setText(data.getStringExtra("ObbPath"));
 			}
-			break;
-		default:
-			break;
 		}
-	};
+	}
 }

@@ -61,6 +61,10 @@
             </intent-filter>
             -->
         </activity>
+        <activity android:name="AAAAFilePickerActivity"
+                  android:label="@string/file_manager"
+                  android:configChanges="keyboard|keyboardHidden|orientation" >
+        </activity>
     </application>
 
 </manifest>
