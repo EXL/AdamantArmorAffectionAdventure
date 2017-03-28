@@ -11,7 +11,7 @@
         android:layout_height="40dip" >
     </ImageView>
 
-    <TextView android:text="@+id/filename"
+    <TextView android:text=""
         android:id="@+id/filename"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         android:layout_marginLeft="5dip">
     </TextView>
 
-    <TextView android:text="@+id/fileitems"
+    <TextView android:text=""
         android:id="@+id/fileitems"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         android:layout_marginLeft="10dip">
     </TextView>
 
-    <TextView android:text="@+id/filedate"
+    <TextView android:text=""
         android:id="@+id/filedate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
