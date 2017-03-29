@@ -38,8 +38,6 @@ extern u8 secretskin;
     // EXL: Touch Joystick
     extern u8 tjoy_b[8];
 
-    extern u16 accelScale;
-
     enum TJButtons {
         TJ_UP,
         TJ_LEFT,
@@ -152,5 +150,7 @@ extern s32 autismdelay, autismstuff;
 extern s32 debugprobe[3], levelstarttick, ltime[2], currenttick;
 
 extern u8 ai_attack_disable_cheat;
+extern u8 frame_limit;
+extern u16 gsensor_scale;
 
 #endif // VARS_H

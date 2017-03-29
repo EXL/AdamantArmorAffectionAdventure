@@ -27,10 +27,6 @@ public class AAAALauncherActivity extends Activity {
 		public static final int MODERN_TOUCH_CONTROLS = 0;
 		public static final int OLD_TOUCH_CONTROLS = 1;
 		public static final int NO_TOUCH_CONTROLS = 2;
-		public static final int FRAMELIMIT_OFF = 0;
-		public static final int FRAMELIMIT_ON = 1;
-		public static final int AI_DISABLE_OFF = 0;
-		public static final int AI_DISABLE_ON = 1;
 
 		// GAME CONFIG
 		public static int[] configuration = {
@@ -43,9 +39,10 @@ public class AAAALauncherActivity extends Activity {
 		// GAME SETTINGS
 		public static int touchControls = MODERN_TOUCH_CONTROLS;
 		public static boolean touchVibration = true;
-		public static int frameLimit = FRAMELIMIT_OFF;
-		public static int aiDisable = AI_DISABLE_OFF;
-		public static int gSensorScale = 1000;
+		public static boolean frameLimit = false; // Access from JNI
+		public static boolean aiDisable = false;  // Access from JNI
+		public static boolean showFps = false;    // Access from JNI
+		public static int gSensorScale = 1000;    // Access from JNI
 		public static int vibroScale = 30;
 	}
 

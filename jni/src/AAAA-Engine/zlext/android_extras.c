@@ -76,7 +76,7 @@ char *getObbMountedPath() {
 	}
 }
 
-void readJavaConfigurationFromJni() {
+void readJavaConfigurationFromJNI() {
 	if (javaEnviron != NULL) {
 		jclass clazz = (*javaEnviron)->FindClass(javaEnviron, "ru/exlmoto/aaaa/AAAALauncherActivity$AAAASettings");
 		if (clazz == 0) {
@@ -116,7 +116,7 @@ void readJavaConfigurationFromJni() {
 	}
 }
 
-void writeJavaConfigurationFromJni() {
+void writeJavaConfigurationFromJNI() {
 	if (javaEnviron != NULL) {
 		jclass clazz = (*javaEnviron)->FindClass(javaEnviron, "ru/exlmoto/aaaa/AAAAActivity");
 		if (clazz == 0) {
@@ -152,5 +152,54 @@ void writeJavaConfigurationFromJni() {
 }
 
 void readOtherJavaSettingsFromJNI() {
+	if (javaEnviron != NULL) {
+		jclass clazz = (*javaEnviron)->FindClass(javaEnviron, "ru/exlmoto/aaaa/AAAALauncherActivity$AAAASettings");
+		if (clazz == 0) {
+			TO_DEBUG_LOG("Error JNI: Class ru/exlmoto/aaaa/AAAALauncherActivity$AAAASettings not found!");
+			return;
+		}
 
+		// Get frameLimit Field ID
+		jfieldID fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "frameLimit", "Z");
+		if (fieldID == 0) {
+			TO_DEBUG_LOG("Error JNI: fieldID is 0, field boolean frameLimit not found!");
+			return;
+		}
+
+		jboolean frameLimit = (*javaEnviron)->GetStaticBooleanField(javaEnviron, clazz, fieldID);
+		frame_limit = (int)frameLimit;
+
+		// Get AI Disable Field ID
+		fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "aiDisable", "Z");
+		if (fieldID == 0) {
+			TO_DEBUG_LOG("Error JNI: fieldID is 0, field boolean aiDisable not found!");
+			return;
+		}
+
+		jboolean aiDisable = (*javaEnviron)->GetStaticBooleanField(javaEnviron, clazz, fieldID);
+		ai_attack_disable_cheat = (int)aiDisable;
+
+		// Get showFps Field ID
+		fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "showFps", "Z");
+		if (fieldID == 0) {
+			TO_DEBUG_LOG("Error JNI: fieldID is 0, field boolean showFps not found!");
+			return;
+		}
+
+		jboolean showFps = (*javaEnviron)->GetStaticBooleanField(javaEnviron, clazz, fieldID);
+		fpsdisplay = (int)showFps;
+
+		// Get gSensorScale Field ID
+		fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "gSensorScale", "I");
+		if (fieldID == 0) {
+			TO_DEBUG_LOG("Error JNI: fieldID is 0, field int gSensorScale not found!");
+			return;
+		}
+
+		jint gSensorScale = (*javaEnviron)->GetStaticIntField(javaEnviron, clazz, fieldID);
+		gsensor_scale = (int)gSensorScale;
+
+		// Delete Ref
+		(*javaEnviron)->DeleteLocalRef(javaEnviron, clazz);
+	}
 }

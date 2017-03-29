@@ -70,7 +70,8 @@ void loadconfig(void)
 
     fclose(fp);
 #else
-    readJavaConfigurationFromJni();
+    readJavaConfigurationFromJNI();
+    readOtherJavaSettingsFromJNI();
 #endif
 }
 
@@ -93,7 +94,7 @@ void saveconfig(void)
 
     fclose(fp);
 #else
-    writeJavaConfigurationFromJni();
+    writeJavaConfigurationFromJNI();
 #endif
 }
 

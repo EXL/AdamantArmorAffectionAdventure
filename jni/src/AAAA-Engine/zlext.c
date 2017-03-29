@@ -6,10 +6,7 @@
 
 float accelValue[3];
 
-u16 accelScale = 1000;
-
 // Vibration Haptics
-
 void zlProcVibe()
 {
     int vibr = vibro / 3;
@@ -20,7 +17,6 @@ void zlProcVibe()
 }
 
 // G-Sensor
-
 void zlProcGSensor()
 {
     Android_JNI_GetAccelerometerValues(accelValue);
@@ -28,9 +24,9 @@ void zlProcGSensor()
 
     int x, y, z, ix, iy, iz;
 
-    x = accelValue[0] * accelScale;
-    y = accelValue[1] * accelScale;
-    z = accelValue[2] * accelScale;
+    x = accelValue[0] * gsensor_scale;
+    y = accelValue[1] * gsensor_scale;
+    z = accelValue[2] * gsensor_scale;
 
     // TO_DEBUG_LOG("X = %d, Y = %d, Z = %d\n", x, y, z);
 

@@ -828,16 +828,16 @@ void zcorestep(void)
         calcfps();
     }
     // EXL: FPS Limiter option on ANDROID
-#if !defined(ANDROID_NDK) && !defined(PC_GLES) && !defined(PC_GL)
-    if ((gamemode != ZGM_MENU) & (gamemode != ZGM_CONFIG) & (gamemode != ZGM_SELECTOR)) {
-        if (thisframenice) {
-            while (fstick1 - fstick0 < 20) {
-                fstick1 = SDL_GetTicks();
-                usleep(100); // usleep is of linux
+    if (frame_limit) {
+        if ((gamemode != ZGM_MENU) & (gamemode != ZGM_CONFIG) & (gamemode != ZGM_SELECTOR)) {
+            if (thisframenice) {
+                while (fstick1 - fstick0 < 20) {
+                    fstick1 = SDL_GetTicks();
+                    usleep(100); // usleep is of linux
+                }
             }
         }
     }
-#endif
 }
 
 void zcoreloop(void)
