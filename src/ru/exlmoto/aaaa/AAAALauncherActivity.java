@@ -46,7 +46,7 @@ public class AAAALauncherActivity extends Activity {
 	// JNI-access
 	public static String obbMountedPath = "";
 
-	private StorageManager mStorageManager = null;
+	public static StorageManager mStorageManager = null;
 	AAAALauncherActivity aaaaLauncherActivity = this;
 
 	@Override
@@ -54,7 +54,7 @@ public class AAAALauncherActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		for (int i = 0; i < AAAASettings.CFG_CNT; ++i) {
-			AAAAActivity.toDebugLog("" + AAAASettings.configuration[i]);
+			AAAAActivity.toDebugLog("Act: " + AAAASettings.configuration[i]);
 		}
 
 		mStorageManager = (StorageManager) getApplicationContext().getSystemService(STORAGE_SERVICE);

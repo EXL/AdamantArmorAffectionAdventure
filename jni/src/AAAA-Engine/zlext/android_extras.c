@@ -120,5 +120,37 @@ void readJavaConfigurationFromJni() {
 }
 
 void writeJavaConfigurationFromJni() {
+	JNIEnv *javaEnviron = SDL_AndroidGetJNIEnv();
+	if (javaEnviron != NULL) {
+		jclass clazz = (*javaEnviron)->FindClass(javaEnviron, "ru/exlmoto/aaaa/AAAAActivity");
+		if (clazz == 0) {
+			TO_DEBUG_LOG("Error JNI: Class ru/exlmoto/aaaa/AAAAActivity not found!");
+			return;
+		}
 
+		jmethodID methodId = (*javaEnviron)->GetStaticMethodID(javaEnviron, clazz, "writeConfiguration", "([I)V");
+		if (methodId == 0) {
+			TO_DEBUG_LOG("Error JNI: methodId is 0, method writeConfiguration ([I)V not found!");
+			return;
+		}
+
+		// Create Int Array
+		int i, size = sizeof(configdata) / sizeof(configdata[0]);
+		jintArray cfg_array = (*javaEnviron)->NewIntArray(javaEnviron, size);
+
+		// Copy Data from configdata to cfg_array
+		jint *body_array = (*javaEnviron)->GetIntArrayElements(javaEnviron, cfg_array, 0);
+		for (i = 0; i < size; ++i) {
+			body_array[i] = configdata[i];
+		}
+
+		// Call Java-method
+		(*javaEnviron)->CallStaticVoidMethod(javaEnviron, clazz, methodId, cfg_array);
+
+		// Destroy Int Array
+		(*javaEnviron)->ReleaseIntArrayElements(javaEnviron, cfg_array, body_array, 0);
+
+		// Delete Ref
+		(*javaEnviron)->DeleteLocalRef(javaEnviron, clazz);
+	}
 }
