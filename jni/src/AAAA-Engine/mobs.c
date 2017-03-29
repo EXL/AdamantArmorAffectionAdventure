@@ -184,7 +184,7 @@ void killmob(unsigned char i)
 
     mob[i][0] = -64;
 }
-u8 moblive[17] = { 3, 1, 1, 1, 2, 3, 1, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+u8 moblive[17] = { 3, 1, 1, 1, 2, 2, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
 void hurtmob(unsigned char i)
 {

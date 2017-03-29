@@ -32,7 +32,7 @@ public class AAAALauncherActivity extends Activity {
 		public static int[] configuration = {
 				1, 0, 0, 0, 0, 0, 1, 1, // 0-7: Menu Items
 				128, 48,                // 8-9: Sound and Music Volume
-				1, 1, 2, 1, 0, 0,       // 10-15: Vibrohaptics, G-Sensor, Frameskip, Noise, Hz ?
+				1, 1, 2, 1, 0, 0,       // 10-15: Vibrohaptics, G-Sensor, Frameskip, Noise, Reserve?, Reserve?
 				99, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59 // 16-31: Levels and Time
 		};
 
