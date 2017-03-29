@@ -29,7 +29,8 @@ import android.graphics.drawable.Drawable;
 import android.media.*;
 import android.hardware.*;
 import android.content.pm.ActivityInfo;
-import ru.exlmoto.aaaa.AAAAActivity;
+
+import ru.exlmoto.aaaa.AAAALauncherActivity.AAAASettings;
 import ru.exlmoto.aaaa.AAAAModernInputView;
 import ru.exlmoto.aaaa.AAAASimpleInputView;
 
@@ -1303,7 +1304,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
     // Touch events
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (AAAAActivity.oControls) {
+        if (AAAASettings.touchControls == AAAASettings.OLD_TOUCH_CONTROLS) {
             int touchId = event.getPointerCount() - 1;
             if (touchId < 0) {
                 return false;

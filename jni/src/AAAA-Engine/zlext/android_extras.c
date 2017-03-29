@@ -27,14 +27,14 @@ void doVibrateFromJNI(int duration) {
 			return;
 		}
 
-		jmethodID methodId = (*javaEnviron)->GetStaticMethodID(javaEnviron, clazz, "doVibrate", "(I)V");
+		jmethodID methodId = (*javaEnviron)->GetStaticMethodID(javaEnviron, clazz, "doVibrate", "(II)V");
 		if (methodId == 0) {
-			TO_DEBUG_LOG("Error JNI: methodId is 0, method doVibrate (I)V not found!");
+			TO_DEBUG_LOG("Error JNI: methodId is 0, method doVibrate (II)V not found!");
 			return;
 		}
 
 		// Call Java-method
-		(*javaEnviron)->CallStaticVoidMethod(javaEnviron, clazz, methodId, (jint)duration);
+		(*javaEnviron)->CallStaticVoidMethod(javaEnviron, clazz, methodId, (jint)duration, 1);
 
 		// Delete Ref
 		(*javaEnviron)->DeleteLocalRef(javaEnviron, clazz);
@@ -78,7 +78,7 @@ char *getObbMountedPath() {
 	}
 }
 
-void rwRealCfgFromJni() {
+void readJavaConfigurationFromJni() {
 	JNIEnv *javaEnviron = SDL_AndroidGetJNIEnv();
 	if (javaEnviron != NULL) {
 		jclass clazz = (*javaEnviron)->FindClass(javaEnviron, "ru/exlmoto/aaaa/AAAALauncherActivity$AAAASettings");
@@ -87,12 +87,14 @@ void rwRealCfgFromJni() {
 			return;
 		}
 
+		// Get configuration Field ID
 		jfieldID fieldID = (*javaEnviron)->GetStaticFieldID(javaEnviron, clazz, "configuration", "[I");
 		if (fieldID == 0) {
 			TO_DEBUG_LOG("Error JNI: fieldID is 0, field int[] configuration not found!");
 			return;
 		}
 
+		// Get array of integers
 		jintArray intArray = (jintArray) (*javaEnviron)->GetStaticObjectField(javaEnviron, clazz, fieldID);
 		if (intArray == 0) {
 			TO_DEBUG_LOG("Error JNI: intArray is 0, field int[] configuration do not available!");
@@ -104,8 +106,8 @@ void rwRealCfgFromJni() {
 		// If isCopy is not NULL, then *isCopy is set to JNI_TRUE if a copy is made;
 		// or it is set to JNI_FALSE if no copy is made.
 		jint *cfg_array = (*javaEnviron)->GetIntArrayElements(javaEnviron, intArray, 0);
-		int i = 0;
-		for (; i < configdatasize; ++i) {
+		int i, size = sizeof(configdata) / sizeof(configdata[0]);
+		for (i = 0; i < size; ++i) {
 			configdata[i] = cfg_array[i];
 		}
 
@@ -115,4 +117,8 @@ void rwRealCfgFromJni() {
 		// Delete Ref
 		(*javaEnviron)->DeleteLocalRef(javaEnviron, clazz);
 	}
+}
+
+void writeJavaConfigurationFromJni() {
+
 }

@@ -10,7 +10,6 @@ u16 button[16], mousebutton[4], buttonstate, mousetap;
 u8 bgm, gamemode, newgamemode, playmode;
 s8 gameswitchdelay = 0, soundbanks = 46; // -1
 
-int configdatasize = 32;
 u8 configdata[32] = {
     1,  0,  0,   0,  0,   0,  1,   1,  128, 48, 1,   1,  2,   1,  0,   0,
     99, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59

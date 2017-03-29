@@ -75,7 +75,7 @@ public class AAAASimpleInputView {
 			m_buttonPushed = true;
 
 			if (true) {
-				AAAAActivity.doVibrate(50 - VIBRO_OFFSET);
+				AAAAActivity.doVibrate(50 - VIBRO_OFFSET, 0);
 			}
 
 			SDLActivity.onNativeKeyDown(m_buttonCode);

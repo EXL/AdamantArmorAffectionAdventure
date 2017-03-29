@@ -17,7 +17,6 @@ extern u16 button[16], mousebutton[4], buttonstate, mousetap;
 extern u8 bgm, gamemode, newgamemode, playmode;
 extern s8 gameswitchdelay, soundbanks;
 
-extern int configdatasize;
 extern u8 configdata[32];
 
 extern s32 fps, tickcount;

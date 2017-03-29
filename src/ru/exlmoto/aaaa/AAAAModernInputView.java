@@ -3,7 +3,7 @@ package ru.exlmoto.aaaa;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -201,6 +201,7 @@ public class AAAAModernInputView extends View {
 		}
 	}
 
+	@SuppressLint({ "Recycle", "ClickableViewAccessibility" })
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		addEvent(MotionEvent.obtainNoHistory(event));
@@ -278,7 +279,7 @@ public class AAAAModernInputView extends View {
 						b = getButton(x, y);
 						if (b >= 0) {
 							npid[b] = id;
-							AAAAActivity.doVibrate(50 - VIBRO_OFFSET);
+							AAAAActivity.doVibrate(50 - VIBRO_OFFSET, 0);
 						}
 						break;
 					}
@@ -292,7 +293,7 @@ public class AAAAModernInputView extends View {
 					b = getButton(x, y);
 					if (b >= 0) {
 						npid[b] = id;
-						AAAAActivity.doVibrate(50 - VIBRO_OFFSET);
+						AAAAActivity.doVibrate(50 - VIBRO_OFFSET, 0);
 					}
 				}
 				break;
@@ -314,7 +315,7 @@ public class AAAAModernInputView extends View {
 						b = getButton(x, y);
 						if (b >= 0) {
 							npid[b] = id;
-							AAAAActivity.doVibrate(50 - VIBRO_OFFSET);
+							AAAAActivity.doVibrate(50 - VIBRO_OFFSET, 0);
 						}
 						break;
 					}
@@ -330,7 +331,7 @@ public class AAAAModernInputView extends View {
 					b = getButton(x, y);
 					if (b >= 0) {
 						npid[b] = id;
-						AAAAActivity.doVibrate(50 - VIBRO_OFFSET);
+						AAAAActivity.doVibrate(50 - VIBRO_OFFSET, 0);
 					}
 				}
 				break;

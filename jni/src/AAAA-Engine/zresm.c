@@ -69,27 +69,31 @@ void loadconfig(void)
 
     fclose(fp);
 #else
-    rwRealCfgFromJni();
+    readJavaConfigurationFromJni();
 #endif
 }
 
 void saveconfig(void)
 {
+#ifndef ANDROID_NDK
     FILE *fp;
     u8 i;
-#ifndef ANDROID_NDK
+// #ifndef ANDROID_NDK
     fp = fopen("donothexedit.me", "wb");
-#else
-    char path[PATH_M];
-    sprintf(path, "%s/donothexedit.me", SDL_AndroidGetInternalStoragePath());
-    fp = fopen(path, "wb");
-#endif
+// #else
+//    char path[PATH_M];
+//    sprintf(path, "%s/donothexedit.me", SDL_AndroidGetInternalStoragePath());
+//    fp = fopen(path, "wb");
+// #endif
 
     for (i = 0; i < 32; i++) {
         fputc(configdata[i], fp);
     }
 
     fclose(fp);
+#else
+    writeJavaConfigurationFromJni();
+#endif
 }
 
 void zrmterraininfo(void)

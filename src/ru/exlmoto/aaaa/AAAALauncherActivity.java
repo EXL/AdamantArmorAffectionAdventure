@@ -21,13 +21,21 @@ public class AAAALauncherActivity extends Activity {
 
 	public static class AAAASettings {
 
-		private static final int CFG_CNT = 32;
+		// GLOBALS
+		public static final int CFG_CNT = 32;
+		public static final int MODERN_TOUCH_CONTROLS = 0;
+		public static final int OLD_TOUCH_CONTROLS = 1;
+		public static final int NO_TOUCH_CONTROLS = 2;
+
 		public static int[] configuration = {
-				1, 0, 0, 0, 0, 0, 1, 1, // Menu Items
-				128, 48,                // Sound and Music Volume
-				1, 1, 2, 1, 0, 0,       // Vibrohaptics, G-Sensor, Frameskip, Noise, Hz ?
-				99, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59 // Levels and Time
+				1, 0, 0, 0, 0, 0, 1, 1, // 0-7: Menu Items
+				128, 48,                // 8-9: Sound and Music Volume
+				1, 1, 2, 1, 0, 0,       // 10-15: Vibrohaptics, G-Sensor, Frameskip, Noise, Hz ?
+				99, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59 // 16-31: Levels and Time
 		};
+
+		public static int touchControls = MODERN_TOUCH_CONTROLS;
+		public static boolean touchVibration = true;
 	}
 
 	private String obbFilePathName;
@@ -44,6 +52,10 @@ public class AAAALauncherActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		for (int i = 0; i < AAAASettings.CFG_CNT; ++i) {
+			AAAAActivity.toDebugLog("" + AAAASettings.configuration[i]);
+		}
 
 		mStorageManager = (StorageManager) getApplicationContext().getSystemService(STORAGE_SERVICE);
 
