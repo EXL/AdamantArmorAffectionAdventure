@@ -52,21 +52,25 @@ void zrmloadtextures(void)
 
 void loadconfig(void)
 {
+#ifndef ANDROID_NDK
     FILE *fp;
     u8 i;
-#ifndef ANDROID_NDK
+// #ifndef ANDROID_NDK
     fp = fopen("donothexedit.me", "rb");
-#else
-    char path[PATH_M];
-    sprintf(path, "%s/AAAA-Data/donothexedit.me", obbMountedPath);
-    fp = fopen(path, "rb");
-#endif
+// #else
+//    char path[PATH_M];
+//    sprintf(path, "%s/AAAA-Data/donothexedit.me", obbMountedPath);
+//    fp = fopen(path, "rb");
+// #endif
 
     for (i = 0; i < 32; i++) {
         configdata[i] = fgetc(fp);
     }
 
     fclose(fp);
+#else
+    rwRealCfgFromJni();
+#endif
 }
 
 void saveconfig(void)
@@ -627,7 +631,7 @@ void zresminit(void)
     }
 #endif
     loadconfig();
-    applycheats();
+    // applycheats();
     zrmterraininfo();
     zrmloadtextures();
     zrmmobsonic();

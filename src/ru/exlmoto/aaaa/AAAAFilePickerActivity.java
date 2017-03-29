@@ -133,6 +133,7 @@ public class AAAAFilePickerActivity extends Activity {
 					}
 				}
 			}
+
 			Collections.sort(listItemsDirs);
 			Collections.sort(listItemsFiles);
 			listItemsDirs.addAll(listItemsFiles);
@@ -213,7 +214,6 @@ class FArrayAdapter extends ArrayAdapter<FItem> {
 			if (fileDate != null) {
 				fileDate.setText(fInstance.getDate());
 			}
-
 		}
 		return view;
 	}

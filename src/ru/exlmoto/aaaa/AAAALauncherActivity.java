@@ -19,12 +19,25 @@ public class AAAALauncherActivity extends Activity {
 
 	private static final int AC_FILE_PICKER_CODE = 1;
 
+	public static class AAAASettings {
+
+		private static final int CFG_CNT = 32;
+		public static int[] configuration = {
+				1, 0, 0, 0, 0, 0, 1, 1, // Menu Items
+				128, 48,                // Sound and Music Volume
+				1, 1, 2, 1, 0, 0,       // Vibrohaptics, G-Sensor, Frameskip, Noise, Hz ?
+				99, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59 // Levels and Time
+		};
+	}
+
 	private String obbFilePathName;
 	private EditText editTextObbPath = null;
 	// private final String obbKey = "aaaa";
 	private ObbInfo mObbInfo = null;
+
 	// JNI-access
 	public static String obbMountedPath = "";
+
 	private StorageManager mStorageManager = null;
 	AAAALauncherActivity aaaaLauncherActivity = this;
 
