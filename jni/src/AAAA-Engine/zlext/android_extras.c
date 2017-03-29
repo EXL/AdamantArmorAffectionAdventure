@@ -19,7 +19,6 @@ void JNICALL Java_ru_exlmoto_aaaa_AAAANativeLibProxy_AAAAJoystickButtonUp
 }
 
 void doVibrateFromJNI(int duration) {
-	JNIEnv *javaEnviron = SDL_AndroidGetJNIEnv();
 	if (javaEnviron != NULL) {
 		jclass clazz = (*javaEnviron)->FindClass(javaEnviron, "ru/exlmoto/aaaa/AAAAActivity");
 		if (clazz == 0) {
@@ -42,7 +41,6 @@ void doVibrateFromJNI(int duration) {
 }
 
 char *getObbMountedPath() {
-	JNIEnv *javaEnviron = SDL_AndroidGetJNIEnv();
 	if (javaEnviron != NULL) {
 		jclass clazz = (*javaEnviron)->FindClass(javaEnviron, "ru/exlmoto/aaaa/AAAALauncherActivity");
 		if (clazz == 0) {
@@ -79,7 +77,6 @@ char *getObbMountedPath() {
 }
 
 void readJavaConfigurationFromJni() {
-	JNIEnv *javaEnviron = SDL_AndroidGetJNIEnv();
 	if (javaEnviron != NULL) {
 		jclass clazz = (*javaEnviron)->FindClass(javaEnviron, "ru/exlmoto/aaaa/AAAALauncherActivity$AAAASettings");
 		if (clazz == 0) {
@@ -120,7 +117,6 @@ void readJavaConfigurationFromJni() {
 }
 
 void writeJavaConfigurationFromJni() {
-	JNIEnv *javaEnviron = SDL_AndroidGetJNIEnv();
 	if (javaEnviron != NULL) {
 		jclass clazz = (*javaEnviron)->FindClass(javaEnviron, "ru/exlmoto/aaaa/AAAAActivity");
 		if (clazz == 0) {
@@ -153,4 +149,8 @@ void writeJavaConfigurationFromJni() {
 		// Delete Ref
 		(*javaEnviron)->DeleteLocalRef(javaEnviron, clazz);
 	}
+}
+
+void readOtherJavaSettingsFromJNI() {
+
 }

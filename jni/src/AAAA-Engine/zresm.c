@@ -9,6 +9,7 @@
 #include "zlext/android_extras.h"
 
 char *obbMountedPath = NULL;
+JNIEnv *javaEnviron = NULL;
 #endif
 
 void zrmloadtextures(void)
@@ -626,6 +627,10 @@ void applycheats(void)
 void zresminit(void)
 {
 #ifdef ANDROID_NDK
+    // Get JNI env
+    javaEnviron = SDL_AndroidGetJNIEnv();
+
+    // OBB
     obbMountedPath = getObbMountedPath();
     if (obbMountedPath == NULL) {
         TO_DEBUG_LOG("OBB Mounted Path from JNI: is NULL! Exiting!");

@@ -28,6 +28,7 @@ extern u8 secretskin;
     // EXL: For replacing main() to SDL_main() need include SDL.h in main.c
     #include <SDL.h>
     #include <android/log.h>
+    #include <jni.h>
     #define PATH_M 256
 
     #define LOG_TAG "AAAA_jni"
@@ -51,6 +52,7 @@ extern u8 secretskin;
     };
 
     extern char *obbMountedPath;
+    extern JNIEnv *javaEnviron;
 #else
     #define TO_DEBUG_LOG(...) fprintf(stderr, __VA_ARGS__)
     #define PATH_M 128
