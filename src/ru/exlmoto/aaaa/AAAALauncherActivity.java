@@ -27,7 +27,12 @@ public class AAAALauncherActivity extends Activity {
 		public static final int MODERN_TOUCH_CONTROLS = 0;
 		public static final int OLD_TOUCH_CONTROLS = 1;
 		public static final int NO_TOUCH_CONTROLS = 2;
+		public static final int FRAMELIMIT_OFF = 0;
+		public static final int FRAMELIMIT_ON = 1;
+		public static final int AI_DISABLE_OFF = 0;
+		public static final int AI_DISABLE_ON = 1;
 
+		// GAME CONFIG
 		public static int[] configuration = {
 				1, 0, 0, 0, 0, 0, 1, 1, // 0-7: Menu Items
 				128, 48,                // 8-9: Sound and Music Volume
@@ -35,8 +40,13 @@ public class AAAALauncherActivity extends Activity {
 				99, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59, 199, 59 // 16-31: Levels and Time
 		};
 
+		// GAME SETTINGS
 		public static int touchControls = MODERN_TOUCH_CONTROLS;
 		public static boolean touchVibration = true;
+		public static int frameLimit = FRAMELIMIT_OFF;
+		public static int aiDisable = AI_DISABLE_OFF;
+		public static int gSensorScale = 1000;
+		public static int vibroScale = 30;
 	}
 
 	private String obbFilePathName;

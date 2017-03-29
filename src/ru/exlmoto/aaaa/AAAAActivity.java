@@ -50,14 +50,14 @@ public class AAAAActivity extends SDLActivity {
 	// JNI-method
 	public static void doVibrate(int duration, int fromJNI) {
 		// From JNI: 1 -- yes, 0 -- no
-		// TODO: Delays?
+		// AAAASettings.configuration[10] is vibro haptics in game config
+		// 30 is default scale for vibration
 		if ((fromJNI == 1) && (AAAASettings.configuration[10] == 1)) {
-			// AAAASettings.configuration[10] -- Vibrohaptics
-			m_vibrator.vibrate(duration);
+			m_vibrator.vibrate(duration + (AAAASettings.vibroScale - 30));
 		}
 
 		if ((fromJNI == 0) && (AAAASettings.touchVibration)) {
-			m_vibrator.vibrate(duration);
+			m_vibrator.vibrate(duration + (AAAASettings.vibroScale - 30));
 		}
 	}
 

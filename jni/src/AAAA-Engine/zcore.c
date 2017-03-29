@@ -827,7 +827,7 @@ void zcorestep(void)
     if (thisframenice) {
         calcfps();
     }
-    // EXL: Disable FPS Limiter on ANDROID
+    // EXL: FPS Limiter option on ANDROID
 #if !defined(ANDROID_NDK) && !defined(PC_GLES) && !defined(PC_GL)
     if ((gamemode != ZGM_MENU) & (gamemode != ZGM_CONFIG) & (gamemode != ZGM_SELECTOR)) {
         if (thisframenice) {
