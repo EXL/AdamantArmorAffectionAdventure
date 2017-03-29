@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ObbInfo;
 import android.content.res.ObbScanner;
 import android.os.Bundle;
@@ -46,15 +47,22 @@ public class AAAALauncherActivity extends Activity {
 	// JNI-access
 	public static String obbMountedPath = "";
 
-	public static StorageManager mStorageManager = null;
+	public static SharedPreferences mSharedPreferences = null;
+	public StorageManager mStorageManager = null;
 	AAAALauncherActivity aaaaLauncherActivity = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		for (int i = 0; i < AAAASettings.CFG_CNT; ++i) {
-			AAAAActivity.toDebugLog("Act: " + AAAASettings.configuration[i]);
+		mSharedPreferences = getSharedPreferences("ru.exlmoto.aaaa", MODE_PRIVATE);
+		// Check the first run
+		if (mSharedPreferences.getBoolean("firstrun", true)) {
+			// The first run, fill GUI layout with default values
+			mSharedPreferences.edit().putBoolean("firstrun", false).commit();
+		} else {
+			// Read settings from Shared Preferences
+			readConfig();
 		}
 
 		mStorageManager = (StorageManager) getApplicationContext().getSystemService(STORAGE_SERVICE);
@@ -152,6 +160,23 @@ public class AAAALauncherActivity extends Activity {
 			}
 		}
 	};
+
+	public static void writeConfig() {
+		AAAAActivity.toDebugLog("Write Config!");
+		SharedPreferences.Editor editor = mSharedPreferences.edit();
+		int count = 0;
+		for (int i: AAAASettings.configuration) {
+			editor.putInt("cfg_" + count++, i);
+		}
+		editor.commit();
+	}
+
+	public static void readConfig() {
+		AAAAActivity.toDebugLog("Read Config!");
+		for (int i = 0; i < AAAASettings.CFG_CNT; ++i) {
+			AAAASettings.configuration[i] = mSharedPreferences.getInt("cfg_" + i, 0);
+		}
+	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -63,14 +63,9 @@ public class AAAAActivity extends SDLActivity {
 
 	// JNI-method
 	public static void writeConfiguration(int[] cfg) {
-
-		for (int i = 0; i < AAAASettings.CFG_CNT; ++i) {
-			AAAAActivity.toDebugLog("" + cfg[i]);
-		}
-
 		for (int i = 0; i < AAAASettings.CFG_CNT; ++i) {
 			AAAASettings.configuration[i] = cfg[i];
 		}
-		// TODO: Write settings
+		AAAALauncherActivity.writeConfig();
 	}
 }
