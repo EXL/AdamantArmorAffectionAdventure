@@ -10,7 +10,7 @@
 	<string name="button_ok">OK</string>
 	<string name="obb_file">Please choose OBB file:</string>
 	<string name="parent_dir">Parent Directory</string>
-	<string name="obb_file_c">Chosen OBB file is:</string>
+	<string name="obb_file_c">The OBB cache-file is chosen!</string>
 	<string name="no_items">No items</string>
 	<string name="item">item</string>
 	<string name="items">items</string>
