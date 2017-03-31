@@ -2,7 +2,7 @@
 <resources>
 	<string name="app_name">Adamant Armor Affection Adventure</string>
 	<string name="button_run">Run AAAA!</string>
-	<string name="button_about">About...</string>
+	<string name="button_about">About AAAA...</string>
 	<string name="button_browse">Browse...</string>
 	<string name="label_path">Path to OBB file w/ cache of game data:</string>
 	<string name="editText_hint">Please select OBB file by \"Browse...\" button</string>
@@ -16,4 +16,29 @@
 	<string name="items">items</string>
 	<string name="mbytes">MiB</string>
 	<string name="icon">Icon</string>
+	<string name="label_settings">General Settings</string>
+	<string name="music">Music</string>
+	<string name="sound">Sound</string>
+	<string name="show_fps">Show FPS</string>
+	<string name="frame_limit">Frame Limit</string>
+	<string name="frame_skip">Frame Skip:</string>
+	<string name="default_frame_skip">2</string>
+	<string name="g_sensor">G-Sensor</string>
+	<string name="film_grain">Film Grain</string>
+	<string name="g_sensor_scale">G-Sensor:</string>
+	<string name="g_sensor_scale_default">1000</string>
+	<string name="vibro_settings">Vibration &#8628;</string>
+	<string name="vibro_on_touch">On touch</string>
+	<string name="vibro_in_game">In game</string>
+	<string name="vibro_scale">Haptics:</string>
+	<string name="vibro_scale_default">30</string>
+	<string name="other_settings">Other &amp; Cheats</string>
+	<string name="disable_ai_attack">Disable AI Attack</string>
+	<string name="open_all_levels">Open All Chapters</string>
+	<string name="reset_settings">Reset Settings</string>
+	<string name="touch_settings">Touchscreen Settings</string>
+	<string name="touchscreen_modern">Modern</string>
+	<string name="touchscreen_simple">Simple</string>
+	<string name="touchscreen_off">Off</string>
+	<string name="scale_vibro_settings">Scales &amp; Vibration Settings</string>
 </resources>

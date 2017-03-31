@@ -22,23 +22,17 @@
                 android:text="@string/button_run" />
 
             <Button
-                android:id="@+id/buttonAbout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/button_about" />
-
-            <Button
                 android:id="@+id/buttonObbBrowse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/button_browse" />
-
         </TableRow>
 
         <TextView
             android:id="@+id/textViewLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/label_margin"
             android:layout_marginLeft="@dimen/label_margin"
             android:text="@string/label_path" />
 
@@ -46,10 +40,255 @@
             android:id="@+id/editTextObbPath"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/layout_margin"
             android:hint="@string/editText_hint"
             android:inputType="text|textNoSuggestions"
             android:textSize="@dimen/layout_margin" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/labelSettings"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_marginBottom="@dimen/layout_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_settings" />
 
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <CheckBox
+                    android:id="@+id/checkBoxSound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sound" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxMusic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/music" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <CheckBox
+                    android:id="@+id/checkBoxGSensor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/g_sensor" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxFilmGrain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/film_grain" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <CheckBox
+                    android:id="@+id/checkBoxFps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/show_fps" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxFrameLimit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/frame_limit" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/labelTouchSettings"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_marginTop="@dimen/layout_margin"
+            android:layout_marginBottom="@dimen/layout_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/touch_settings" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/radioButtonModern"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/touchscreen_modern" />
+
+            <RadioButton
+                android:id="@+id/radioButtonSimple"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/touchscreen_simple" />
+
+            <RadioButton
+                android:id="@+id/radioButtonOff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/touchscreen_off" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/scaleSettings"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_marginTop="@dimen/layout_margin"
+            android:layout_marginBottom="@dimen/layout_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/scale_vibro_settings" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textViewVibroScale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vibro_scale"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/editTextVibroScale"
+                    android:layout_width="@dimen/edit_text_number"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/label_margin"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:text="@string/vibro_scale_default" />
+
+                <TextView
+                    android:id="@+id/textViewVibroLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/vibro_settings"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textViewFrameSkip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/frame_skip"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/editTextFrameSkip"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/label_margin"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:text="@string/default_frame_skip" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxVibroOnTouch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/label_margin"
+                    android:text="@string/vibro_on_touch" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textViewGSensorScale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/g_sensor_scale"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/editTextGSensorScale"
+                    android:layout_width="@dimen/edit_text_number"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/label_margin"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:text="@string/g_sensor_scale_default" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxVibtoInGame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/label_margin"
+                    android:text="@string/vibro_in_game" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/labelOther"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_marginTop="@dimen/layout_margin"
+            android:layout_marginBottom="@dimen/layout_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/other_settings" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/layout_margin_x2" >
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/buttonAbout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_about" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxDisableAiAttack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disable_ai_attack" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/buttonResetSettings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reset_settings" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxOpenAllLevels"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/open_all_levels" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
 </ScrollView>
