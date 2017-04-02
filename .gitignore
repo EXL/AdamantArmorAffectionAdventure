@@ -93,6 +93,3 @@ tools/gfx_unpacker/unpacked/
 tools/gfx_unpacker/unpack_gfx
 tools/gfx_unpacker/tex_collage.png
 
-# Drop this after release
-res/drawable-*
-!res/drawable-n*
