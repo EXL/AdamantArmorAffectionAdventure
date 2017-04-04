@@ -14,7 +14,9 @@ import android.os.storage.StorageManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 public class AAAALauncherActivity extends Activity {
 
@@ -39,17 +41,36 @@ public class AAAALauncherActivity extends Activity {
 		// GAME SETTINGS
 		public static int touchControls = MODERN_TOUCH_CONTROLS;
 		public static boolean touchVibration = true;
+		public static boolean openAllLevels = false;
 		public static boolean frameLimit = false; // Access from JNI
 		public static boolean aiDisable = false;  // Access from JNI
 		public static boolean showFps = false;    // Access from JNI
 		public static int gSensorScale = 1000;    // Access from JNI
 		public static int vibroScale = 30;
+		public static String obbSavedPath = "";
 	}
 
-	private String obbFilePathName;
-	private EditText editTextObbPath = null;
+	private String obbFilePathName = "";
 	// private final String obbKey = "aaaa";
 	private ObbInfo mObbInfo = null;
+
+	private EditText editTextObbPath = null;
+	private EditText editTextHaptics = null;
+	private EditText editTextGSensorScale = null;
+	private EditText editTextFrameSkip = null;
+	private CheckBox checkBoxSound = null;
+	private CheckBox checkBoxMusic = null;
+	private CheckBox checkBoxGSensor = null;
+	private CheckBox checkBoxFilmGrain = null;
+	private CheckBox checkBoxShowFps = null;
+	private CheckBox checkBoxFramelimit = null;
+	private CheckBox checkBoxVibrationOnTouch = null;
+	private CheckBox checkBoxVibrationInGame = null;
+	private CheckBox checkBoxDisableAiAttack = null;
+	private CheckBox checkBoxOpenAllLevels = null;
+	private RadioButton radioButtonModernTouchControls = null;
+	private RadioButton radioButtonSimpleTouchControls = null;
+	private RadioButton radioButtonNoTouchControls = null;
 
 	// JNI-access
 	public static String obbMountedPath = "";
@@ -76,8 +97,7 @@ public class AAAALauncherActivity extends Activity {
 
 		setContentView(R.layout.aaaa_launcher);
 
-		editTextObbPath = (EditText) findViewById(R.id.editTextObbPath);
-		editTextObbPath.setText(obbFilePathName);
+		initWidgets();
 
 		Button buttonRun = (Button) findViewById(R.id.buttonRun);
 		buttonRun.setOnClickListener(new OnClickListener() {
@@ -168,6 +188,22 @@ public class AAAALauncherActivity extends Activity {
 		}
 	};
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (data == null) {
+			return;
+		}
+		switch (requestCode) {
+		case AC_FILE_PICKER_CODE:
+			if (resultCode == RESULT_OK) {
+				editTextObbPath.setText(data.getStringExtra("ObbPath"));
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
 	public static void writeConfig() {
 		AAAAActivity.toDebugLog("Write Config!");
 		SharedPreferences.Editor editor = mSharedPreferences.edit();
@@ -185,19 +221,103 @@ public class AAAALauncherActivity extends Activity {
 		}
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (data == null) {
-			return;
+	private void fillSettingsByWidgets() {
+		AAAASettings.obbSavedPath = editTextObbPath.getEditableText().toString();
+		AAAASettings.vibroScale = Integer.parseInt(editTextHaptics.getEditableText().toString());
+		AAAASettings.gSensorScale = Integer.parseInt(editTextGSensorScale.getEditableText().toString());
+		AAAASettings.configuration[12] = Integer.parseInt(editTextFrameSkip.getEditableText().toString());
+		AAAASettings.configuration[8] = checkBoxSound.isChecked() ? 1 : 0;
+		AAAASettings.configuration[9] = checkBoxMusic.isChecked() ? 1 : 0;
+		AAAASettings.configuration[11] = checkBoxGSensor.isChecked() ? 1 : 0;
+		AAAASettings.configuration[13] = checkBoxFilmGrain.isChecked() ? 1 : 0;
+		AAAASettings.showFps = checkBoxShowFps.isChecked();
+		AAAASettings.frameLimit = checkBoxFramelimit.isChecked();
+		AAAASettings.touchVibration = checkBoxVibrationOnTouch.isChecked();
+		AAAASettings.configuration[10] = checkBoxVibrationInGame.isChecked() ? 1 : 0;
+		AAAASettings.aiDisable = checkBoxDisableAiAttack.isChecked();
+		AAAASettings.openAllLevels = checkBoxOpenAllLevels.isChecked();
+		if (radioButtonModernTouchControls.isChecked()) {
+			AAAASettings.touchControls = AAAASettings.MODERN_TOUCH_CONTROLS;
+		} else if (radioButtonSimpleTouchControls.isChecked()) {
+			AAAASettings.touchControls = AAAASettings.OLD_TOUCH_CONTROLS;
+		} else if (radioButtonNoTouchControls.isChecked()) {
+			AAAASettings.touchControls = AAAASettings.NO_TOUCH_CONTROLS;
 		}
-		switch (requestCode) {
-		case AC_FILE_PICKER_CODE:
-			if (resultCode == RESULT_OK) {
-				editTextObbPath.setText(data.getStringExtra("ObbPath"));
-			}
+	}
+
+	private void fillWidgetsBySettings() {
+		editTextObbPath.setText(AAAASettings.obbSavedPath);
+		editTextHaptics.setText(String.valueOf(AAAASettings.vibroScale));
+		editTextGSensorScale.setText(String.valueOf(AAAASettings.gSensorScale));
+		editTextFrameSkip.setText(String.valueOf(AAAASettings.configuration[12]));
+		checkBoxSound.setChecked(AAAASettings.configuration[8] > 0);
+		checkBoxMusic.setChecked(AAAASettings.configuration[9] > 0);
+		checkBoxGSensor.setChecked(AAAASettings.configuration[11] > 0);
+		checkBoxFilmGrain.setChecked(AAAASettings.configuration[13] > 0);
+		checkBoxShowFps.setChecked(AAAASettings.showFps);
+		checkBoxFramelimit.setChecked(AAAASettings.frameLimit);
+		checkBoxVibrationOnTouch.setChecked(AAAASettings.touchVibration);
+		checkBoxVibrationInGame.setChecked(AAAASettings.configuration[10] > 0);
+		checkBoxDisableAiAttack.setChecked(AAAASettings.aiDisable);
+		checkBoxOpenAllLevels.setChecked(AAAASettings.openAllLevels);
+		switch (AAAASettings.touchControls) {
+		case AAAASettings.MODERN_TOUCH_CONTROLS:
+			radioButtonModernTouchControls.setChecked(true);
+			break;
+		case AAAASettings.OLD_TOUCH_CONTROLS:
+			radioButtonSimpleTouchControls.setChecked(true);
+			break;
+		case AAAASettings.NO_TOUCH_CONTROLS:
+			radioButtonNoTouchControls.setChecked(true);
 			break;
 		default:
 			break;
 		}
+	}
+
+	private void initWidgets() {
+		editTextObbPath = (EditText) findViewById(R.id.editTextObbPath);
+		editTextHaptics = (EditText) findViewById(R.id.editTextVibroScale);
+		editTextGSensorScale = (EditText) findViewById(R.id.editTextGSensorScale);
+		editTextFrameSkip = (EditText) findViewById(R.id.editTextFrameSkip);
+		checkBoxSound = (CheckBox) findViewById(R.id.checkBoxSound);
+		checkBoxMusic = (CheckBox) findViewById(R.id.checkBoxMusic);
+		checkBoxGSensor = (CheckBox) findViewById(R.id.checkBoxGSensor);
+		checkBoxFilmGrain = (CheckBox) findViewById(R.id.checkBoxFilmGrain);
+		checkBoxShowFps = (CheckBox) findViewById(R.id.checkBoxFps);
+		checkBoxFramelimit = (CheckBox) findViewById(R.id.checkBoxFrameLimit);
+		checkBoxVibrationOnTouch = (CheckBox) findViewById(R.id.checkBoxVibroOnTouch);
+		checkBoxVibrationInGame = (CheckBox) findViewById(R.id.checkBoxVibtoInGame);
+		checkBoxDisableAiAttack = (CheckBox) findViewById(R.id.checkBoxDisableAiAttack);
+		checkBoxOpenAllLevels = (CheckBox) findViewById(R.id.checkBoxOpenAllLevels);
+		radioButtonModernTouchControls = (RadioButton) findViewById(R.id.radioButtonModern);
+		radioButtonSimpleTouchControls = (RadioButton) findViewById(R.id.radioButtonSimple);
+		radioButtonNoTouchControls = (RadioButton) findViewById(R.id.radioButtonOff);
+	}
+
+	public static void writeSettings() {
+		SharedPreferences.Editor editor = mSharedPreferences.edit();
+		editor.putInt("touchControls", AAAASettings.touchControls);
+		editor.putInt("gSensorScale", AAAASettings.gSensorScale);
+		editor.putInt("vibroScale", AAAASettings.vibroScale);
+		editor.putBoolean("touchVibration", AAAASettings.touchVibration);
+		editor.putBoolean("frameLimit", AAAASettings.frameLimit);
+		editor.putBoolean("aiDisable", AAAASettings.aiDisable);
+		editor.putBoolean("showFps", AAAASettings.showFps);
+		editor.putBoolean("openAllLevels", AAAASettings.openAllLevels);
+		editor.putString("obbSavedPath", AAAASettings.obbSavedPath);
+		editor.commit();
+	}
+
+	public static void readSettings() {
+		AAAASettings.touchControls = mSharedPreferences.getInt("touchControls", 0);
+		AAAASettings.gSensorScale = mSharedPreferences.getInt("gSensorScale", 1000);
+		AAAASettings.vibroScale = mSharedPreferences.getInt("vibroScale", 30);
+		AAAASettings.touchVibration = mSharedPreferences.getBoolean("touchVibration", true);
+		AAAASettings.frameLimit = mSharedPreferences.getBoolean("frameLimit", false);
+		AAAASettings.aiDisable = mSharedPreferences.getBoolean("aiDisable", false);
+		AAAASettings.showFps = mSharedPreferences.getBoolean("showFps", false);
+		AAAASettings.openAllLevels = mSharedPreferences.getBoolean("openAllLevels", false);
+		AAAASettings.obbSavedPath = mSharedPreferences.getString("obbSavedPath", "");
 	}
 }
