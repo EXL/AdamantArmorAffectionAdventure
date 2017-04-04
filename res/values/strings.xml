@@ -3,7 +3,7 @@
 	<string name="app_name">Adamant Armor Affection Adventure</string>
 	<string name="button_run">Run AAAA!</string>
 	<string name="button_about">About AAAA...</string>
-	<string name="button_browse">Browse...</string>
+	<string name="button_browse">Browse OBB file...</string>
 	<string name="label_path">Path to OBB file w/ cache of game data:</string>
 	<string name="editText_hint">Please select OBB file by \"Browse...\" button</string>
 	<string name="button_cancel">Cancel</string>
@@ -42,4 +42,5 @@
 	<string name="touchscreen_simple">Simple</string>
 	<string name="touchscreen_off">Off</string>
 	<string name="scale_vibro_settings">Scales &amp; Vibration Settings</string>
+	<string name="cover_string">AAAA Cover</string>
 </resources>
