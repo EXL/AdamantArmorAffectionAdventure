@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
@@ -49,6 +51,8 @@ public class AAAALauncherActivity extends Activity {
 		public static int vibroScale = 30;
 		public static String obbSavedPath = "";
 	}
+
+	private boolean firstRun = false;
 
 	private String obbFilePathName = "";
 	// private final String obbKey = "aaaa";
@@ -91,10 +95,13 @@ public class AAAALauncherActivity extends Activity {
 		if (mSharedPreferences.getBoolean("firstrun", true)) {
 			// The first run, fill GUI layout with default values
 			mSharedPreferences.edit().putBoolean("firstrun", false).commit();
+			firstRun = true;
 		} else {
+			firstRun = false;
 			// Read settings from Shared Preferences
-			readConfig();
-			readSettings();
+			// Move to onResume()
+			// readConfig();
+			// readSettings();
 		}
 
 		mStorageManager = (StorageManager) getApplicationContext().getSystemService(STORAGE_SERVICE);
@@ -106,11 +113,134 @@ public class AAAALauncherActivity extends Activity {
 		// Move to onResume()
 		// fillWidgetsBySettings();
 
+		checkBoxSound.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				AAAASettings.configuration[8] = (isChecked) ? 128 : 0;
+			}
+		});
+
+		checkBoxMusic.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				AAAASettings.configuration[9] = (isChecked) ? 48 : 0;
+			}
+		});
+
+		checkBoxGSensor.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				AAAASettings.configuration[11] = (isChecked) ? 1 : 0;
+			}
+		});
+
+		checkBoxFilmGrain.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				AAAASettings.configuration[13] = (isChecked) ? 1 : 0;
+			}
+		});
+
+		checkBoxShowFps.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				AAAASettings.showFps = isChecked;
+			}
+		});
+
+		checkBoxFramelimit.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				AAAASettings.frameLimit = isChecked;
+			}
+		});
+
+		radioButtonModernTouchControls.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				AAAASettings.touchControls = AAAASettings.MODERN_TOUCH_CONTROLS;
+			}
+		});
+
+		radioButtonSimpleTouchControls.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				AAAASettings.touchControls = AAAASettings.OLD_TOUCH_CONTROLS;
+			}
+		});
+
+		radioButtonNoTouchControls.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				AAAASettings.touchControls = AAAASettings.NO_TOUCH_CONTROLS;
+			}
+		});
+
+		checkBoxVibrationOnTouch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				AAAASettings.touchVibration = isChecked;
+			}
+		});
+
+		checkBoxVibrationInGame.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				AAAASettings.configuration[10] = (isChecked) ? 1 : 0;
+			}
+		});
+
+		checkBoxDisableAiAttack.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				AAAASettings.aiDisable = isChecked;
+			}
+		});
+
+		checkBoxOpenAllLevels.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				int i;
+				if (isChecked) {
+					for (i = 1; i <= 5; ++i) {
+						AAAASettings.configuration[i] = 1;
+					}
+					for (i = 0; i < 8; i++) {
+						AAAASettings.configuration[16 + i * 2] = 99;
+						AAAASettings.configuration[17 + i * 2] = 59;
+					}
+				} else {
+					for (i = 1; i <= 5; ++i) {
+						AAAASettings.configuration[i] = 0;
+					}
+					for (i = 0; i < 8; i++) {
+						AAAASettings.configuration[18 + i * 2] = 199;
+						AAAASettings.configuration[19 + i * 2] = 59;
+					}
+				}
+			}
+		});
+
 		Button buttonRun = (Button) findViewById(R.id.buttonRun);
 		buttonRun.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+				writeAll();
+
 				checkObbMount();
 			}
 		});
@@ -127,6 +257,10 @@ public class AAAALauncherActivity extends Activity {
 
 	@Override
 	protected void onResume() {
+		if (!firstRun) {
+			readConfig();
+			readSettings();
+		}
 		fillWidgetsBySettings();
 		super.onResume();
 	}
@@ -209,7 +343,7 @@ public class AAAALauncherActivity extends Activity {
 		switch (requestCode) {
 		case AC_FILE_PICKER_CODE:
 			if (resultCode == RESULT_OK) {
-				editTextObbPath.setText(data.getStringExtra("ObbPath"));
+				AAAASettings.obbSavedPath = data.getStringExtra("ObbPath");
 			}
 			break;
 		default:
@@ -219,8 +353,7 @@ public class AAAALauncherActivity extends Activity {
 
 	@Override
 	protected void onDestroy() {
-		writeConfig();
-		writeSettings();
+		writeAll();
 
 		super.onDestroy();
 	}
@@ -248,8 +381,8 @@ public class AAAALauncherActivity extends Activity {
 		AAAASettings.vibroScale = Integer.parseInt(editTextHaptics.getEditableText().toString());
 		AAAASettings.gSensorScale = Integer.parseInt(editTextGSensorScale.getEditableText().toString());
 		AAAASettings.configuration[12] = Integer.parseInt(editTextFrameSkip.getEditableText().toString());
-		AAAASettings.configuration[8] = checkBoxSound.isChecked() ? 1 : 0;
-		AAAASettings.configuration[9] = checkBoxMusic.isChecked() ? 1 : 0;
+		AAAASettings.configuration[8] = checkBoxSound.isChecked() ? AAAASettings.configuration[8] : 0;
+		AAAASettings.configuration[9] = checkBoxMusic.isChecked() ? AAAASettings.configuration[9] : 0;
 		AAAASettings.configuration[11] = checkBoxGSensor.isChecked() ? 1 : 0;
 		AAAASettings.configuration[13] = checkBoxFilmGrain.isChecked() ? 1 : 0;
 		AAAASettings.showFps = checkBoxShowFps.isChecked();
@@ -345,5 +478,10 @@ public class AAAALauncherActivity extends Activity {
 		AAAASettings.showFps = mSharedPreferences.getBoolean("showFps", false);
 		AAAASettings.openAllLevels = mSharedPreferences.getBoolean("openAllLevels", false);
 		AAAASettings.obbSavedPath = mSharedPreferences.getString("obbSavedPath", "");
+	}
+
+	void writeAll() {
+		writeConfig();
+		writeSettings();
 	}
 }
