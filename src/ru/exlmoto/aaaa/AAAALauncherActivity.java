@@ -83,7 +83,10 @@ public class AAAALauncherActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		mSharedPreferences = getSharedPreferences("ru.exlmoto.aaaa", MODE_PRIVATE);
+		if (mSharedPreferences == null) {
+			mSharedPreferences = getSharedPreferences("ru.exlmoto.aaaa", MODE_PRIVATE);
+		}
+
 		// Check the first run
 		if (mSharedPreferences.getBoolean("firstrun", true)) {
 			// The first run, fill GUI layout with default values
@@ -91,6 +94,7 @@ public class AAAALauncherActivity extends Activity {
 		} else {
 			// Read settings from Shared Preferences
 			readConfig();
+			readSettings();
 		}
 
 		mStorageManager = (StorageManager) getApplicationContext().getSystemService(STORAGE_SERVICE);
@@ -98,6 +102,9 @@ public class AAAALauncherActivity extends Activity {
 		setContentView(R.layout.aaaa_launcher);
 
 		initWidgets();
+
+		// Move to onResume()
+		// fillWidgetsBySettings();
 
 		Button buttonRun = (Button) findViewById(R.id.buttonRun);
 		buttonRun.setOnClickListener(new OnClickListener() {
@@ -116,6 +123,12 @@ public class AAAALauncherActivity extends Activity {
 				runFilePicker();
 			}
 		});
+	}
+
+	@Override
+	protected void onResume() {
+		fillWidgetsBySettings();
+		super.onResume();
 	}
 
 	private void runFilePicker() {
@@ -204,6 +217,14 @@ public class AAAALauncherActivity extends Activity {
 		}
 	}
 
+	@Override
+	protected void onDestroy() {
+		writeConfig();
+		writeSettings();
+
+		super.onDestroy();
+	}
+
 	public static void writeConfig() {
 		AAAAActivity.toDebugLog("Write Config!");
 		SharedPreferences.Editor editor = mSharedPreferences.edit();
@@ -222,6 +243,7 @@ public class AAAALauncherActivity extends Activity {
 	}
 
 	private void fillSettingsByWidgets() {
+		AAAAActivity.toDebugLog("FSBW!");
 		AAAASettings.obbSavedPath = editTextObbPath.getEditableText().toString();
 		AAAASettings.vibroScale = Integer.parseInt(editTextHaptics.getEditableText().toString());
 		AAAASettings.gSensorScale = Integer.parseInt(editTextGSensorScale.getEditableText().toString());
@@ -246,6 +268,7 @@ public class AAAALauncherActivity extends Activity {
 	}
 
 	private void fillWidgetsBySettings() {
+		AAAAActivity.toDebugLog("FWBS!");
 		editTextObbPath.setText(AAAASettings.obbSavedPath);
 		editTextHaptics.setText(String.valueOf(AAAASettings.vibroScale));
 		editTextGSensorScale.setText(String.valueOf(AAAASettings.gSensorScale));
@@ -295,7 +318,9 @@ public class AAAALauncherActivity extends Activity {
 		radioButtonNoTouchControls = (RadioButton) findViewById(R.id.radioButtonOff);
 	}
 
-	public static void writeSettings() {
+	public void writeSettings() {
+		fillSettingsByWidgets();
+
 		SharedPreferences.Editor editor = mSharedPreferences.edit();
 		editor.putInt("touchControls", AAAASettings.touchControls);
 		editor.putInt("gSensorScale", AAAASettings.gSensorScale);
@@ -310,6 +335,7 @@ public class AAAALauncherActivity extends Activity {
 	}
 
 	public static void readSettings() {
+		AAAAActivity.toDebugLog("Read Settings!");
 		AAAASettings.touchControls = mSharedPreferences.getInt("touchControls", 0);
 		AAAASettings.gSensorScale = mSharedPreferences.getInt("gSensorScale", 1000);
 		AAAASettings.vibroScale = mSharedPreferences.getInt("vibroScale", 30);
