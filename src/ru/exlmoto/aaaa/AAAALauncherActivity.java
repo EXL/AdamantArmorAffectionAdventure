@@ -19,6 +19,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 public class AAAALauncherActivity extends Activity {
 
@@ -43,7 +44,6 @@ public class AAAALauncherActivity extends Activity {
 		// GAME SETTINGS
 		public static int touchControls = MODERN_TOUCH_CONTROLS;
 		public static boolean touchVibration = true;
-		public static boolean openAllLevels = false;
 		public static boolean frameLimit = false; // Access from JNI
 		public static boolean aiDisable = false;  // Access from JNI
 		public static boolean showFps = false;    // Access from JNI
@@ -71,7 +71,6 @@ public class AAAALauncherActivity extends Activity {
 	private CheckBox checkBoxVibrationOnTouch = null;
 	private CheckBox checkBoxVibrationInGame = null;
 	private CheckBox checkBoxDisableAiAttack = null;
-	private CheckBox checkBoxOpenAllLevels = null;
 	private RadioButton radioButtonModernTouchControls = null;
 	private RadioButton radioButtonSimpleTouchControls = null;
 	private RadioButton radioButtonNoTouchControls = null;
@@ -209,31 +208,6 @@ public class AAAALauncherActivity extends Activity {
 			}
 		});
 
-		checkBoxOpenAllLevels.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				int i;
-				if (isChecked) {
-					for (i = 1; i <= 5; ++i) {
-						AAAASettings.configuration[i] = 1;
-					}
-					for (i = 0; i < 8; i++) {
-						AAAASettings.configuration[16 + i * 2] = 99;
-						AAAASettings.configuration[17 + i * 2] = 59;
-					}
-				} else {
-					for (i = 1; i <= 5; ++i) {
-						AAAASettings.configuration[i] = 0;
-					}
-					for (i = 0; i < 8; i++) {
-						AAAASettings.configuration[18 + i * 2] = 199;
-						AAAASettings.configuration[19 + i * 2] = 59;
-					}
-				}
-			}
-		});
-
 		Button buttonRun = (Button) findViewById(R.id.buttonRun);
 		buttonRun.setOnClickListener(new OnClickListener() {
 
@@ -251,6 +225,25 @@ public class AAAALauncherActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				runFilePicker();
+			}
+		});
+
+		Button buttonOpenAllChaptters = (Button) findViewById(R.id.buttonOpenAllChapters);
+		buttonOpenAllChaptters.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				int i;
+				for (i = 1; i <= 5; ++i) {
+					AAAASettings.configuration[i] = 1;
+				}
+				for (i = 0; i < 8; i++) {
+					AAAASettings.configuration[16 + i * 2] = 99;
+					AAAASettings.configuration[17 + i * 2] = 59;
+				}
+				Toast.makeText(aaaaLauncherActivity,
+						v.getResources().getString(R.string.open_all_levels_toast),
+						Toast.LENGTH_SHORT).show();;
 			}
 		});
 	}
@@ -344,6 +337,8 @@ public class AAAALauncherActivity extends Activity {
 		case AC_FILE_PICKER_CODE:
 			if (resultCode == RESULT_OK) {
 				AAAASettings.obbSavedPath = data.getStringExtra("ObbPath");
+				editTextObbPath.setText(AAAASettings.obbSavedPath);
+				writeAll();
 			}
 			break;
 		default:
@@ -390,7 +385,6 @@ public class AAAALauncherActivity extends Activity {
 		AAAASettings.touchVibration = checkBoxVibrationOnTouch.isChecked();
 		AAAASettings.configuration[10] = checkBoxVibrationInGame.isChecked() ? 1 : 0;
 		AAAASettings.aiDisable = checkBoxDisableAiAttack.isChecked();
-		AAAASettings.openAllLevels = checkBoxOpenAllLevels.isChecked();
 		if (radioButtonModernTouchControls.isChecked()) {
 			AAAASettings.touchControls = AAAASettings.MODERN_TOUCH_CONTROLS;
 		} else if (radioButtonSimpleTouchControls.isChecked()) {
@@ -415,7 +409,6 @@ public class AAAALauncherActivity extends Activity {
 		checkBoxVibrationOnTouch.setChecked(AAAASettings.touchVibration);
 		checkBoxVibrationInGame.setChecked(AAAASettings.configuration[10] > 0);
 		checkBoxDisableAiAttack.setChecked(AAAASettings.aiDisable);
-		checkBoxOpenAllLevels.setChecked(AAAASettings.openAllLevels);
 		switch (AAAASettings.touchControls) {
 		case AAAASettings.MODERN_TOUCH_CONTROLS:
 			radioButtonModernTouchControls.setChecked(true);
@@ -445,7 +438,6 @@ public class AAAALauncherActivity extends Activity {
 		checkBoxVibrationOnTouch = (CheckBox) findViewById(R.id.checkBoxVibroOnTouch);
 		checkBoxVibrationInGame = (CheckBox) findViewById(R.id.checkBoxVibtoInGame);
 		checkBoxDisableAiAttack = (CheckBox) findViewById(R.id.checkBoxDisableAiAttack);
-		checkBoxOpenAllLevels = (CheckBox) findViewById(R.id.checkBoxOpenAllLevels);
 		radioButtonModernTouchControls = (RadioButton) findViewById(R.id.radioButtonModern);
 		radioButtonSimpleTouchControls = (RadioButton) findViewById(R.id.radioButtonSimple);
 		radioButtonNoTouchControls = (RadioButton) findViewById(R.id.radioButtonOff);
@@ -462,7 +454,6 @@ public class AAAALauncherActivity extends Activity {
 		editor.putBoolean("frameLimit", AAAASettings.frameLimit);
 		editor.putBoolean("aiDisable", AAAASettings.aiDisable);
 		editor.putBoolean("showFps", AAAASettings.showFps);
-		editor.putBoolean("openAllLevels", AAAASettings.openAllLevels);
 		editor.putString("obbSavedPath", AAAASettings.obbSavedPath);
 		editor.commit();
 	}
@@ -476,7 +467,6 @@ public class AAAALauncherActivity extends Activity {
 		AAAASettings.frameLimit = mSharedPreferences.getBoolean("frameLimit", false);
 		AAAASettings.aiDisable = mSharedPreferences.getBoolean("aiDisable", false);
 		AAAASettings.showFps = mSharedPreferences.getBoolean("showFps", false);
-		AAAASettings.openAllLevels = mSharedPreferences.getBoolean("openAllLevels", false);
 		AAAASettings.obbSavedPath = mSharedPreferences.getString("obbSavedPath", "");
 	}
 
