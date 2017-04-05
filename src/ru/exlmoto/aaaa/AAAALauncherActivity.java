@@ -143,6 +143,10 @@ public class AAAALauncherActivity extends Activity {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				AAAASettings.configuration[11] = (isChecked) ? 1 : 0;
+				if (!isChecked) {
+					editTextGSensorScale.setText(String.valueOf(1000));
+				}
+				editTextGSensorScale.setEnabled(isChecked);
 			}
 		});
 
@@ -199,6 +203,12 @@ public class AAAALauncherActivity extends Activity {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				AAAASettings.touchVibration = isChecked;
+				if (!isChecked && !checkBoxVibrationInGame.isChecked()) {
+					editTextHaptics.setText(String.valueOf(30));
+					editTextHaptics.setEnabled(false);
+				} else {
+					editTextHaptics.setEnabled(true);
+				}
 			}
 		});
 
@@ -207,6 +217,12 @@ public class AAAALauncherActivity extends Activity {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				AAAASettings.configuration[10] = (isChecked) ? 1 : 0;
+				if (!isChecked && !checkBoxVibrationOnTouch.isChecked()) {
+					editTextHaptics.setText(String.valueOf(30));
+					editTextHaptics.setEnabled(false);
+				} else {
+					editTextHaptics.setEnabled(true);
+				}
 			}
 		});
 
@@ -612,6 +628,12 @@ public class AAAALauncherActivity extends Activity {
 			break;
 		default:
 			break;
+		}
+		if (!checkBoxGSensor.isChecked()) {
+			editTextGSensorScale.setEnabled(false);
+		}
+		if (!checkBoxVibrationInGame.isChecked() && !checkBoxVibrationOnTouch.isChecked()) {
+			editTextHaptics.setEnabled(false);
 		}
 	}
 
