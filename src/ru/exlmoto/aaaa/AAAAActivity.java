@@ -32,10 +32,12 @@ public class AAAAActivity extends Activity {
 		aaaaNativeGLSurface = new AAAANativeGLSurface(this);
 		setContentView(aaaaNativeGLSurface);
 
-		aaaaInputView = new AAAAInputView(this);
-		addContentView(aaaaInputView,
-				new LinearLayout.LayoutParams(
-						LayoutParams.MATCH_PARENT,
-						LayoutParams.MATCH_PARENT));
+		if (false) {
+			aaaaInputView = new AAAAInputView(this);
+			addContentView(aaaaInputView,
+					new LinearLayout.LayoutParams(
+							LayoutParams.MATCH_PARENT,
+							LayoutParams.MATCH_PARENT));
+		}
 	}
 }
