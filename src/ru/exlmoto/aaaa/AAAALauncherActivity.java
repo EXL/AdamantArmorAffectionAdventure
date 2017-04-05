@@ -333,6 +333,10 @@ public class AAAALauncherActivity extends Activity {
 		AAAASettings.obbSavedPath = "";
 
 		fillWidgetsBySettings();
+
+		Toast.makeText(aaaaLauncherActivity,
+				getResources().getString(R.string.reset_all_settings_toast),
+				Toast.LENGTH_SHORT).show();
 	}
 
 	private void runFilePicker() {

@@ -36,6 +36,7 @@
 	<string name="disable_ai_attack">Disable AI Attack</string>
 	<string name="open_all_levels">Open All Chapters</string>
 	<string name="open_all_levels_toast">All levels and chapters were open!</string>
+	<string name="reset_all_settings_toast">All settings have been reset to default values!</string>
 	<string name="reset_settings">Reset Settings</string>
 	<string name="touch_settings">Touchscreen Settings</string>
 	<string name="touchscreen_modern">Modern</string>
