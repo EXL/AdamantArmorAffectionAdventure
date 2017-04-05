@@ -43,4 +43,14 @@
 	<string name="touchscreen_off">Off</string>
 	<string name="scale_vibro_settings">Scales &amp; Vibration Settings</string>
 	<string name="cover_string">AAAA Cover</string>
+	<string name="wrong_haptic_title">Wrong Haptics Parameter!</string>
+	<string name="wrong_haptic_body">Please check the Haptics parameter.</string>
+	<string name="wrong_body_general">Excess values are unacceptable.</string>
+	<string name="wrong_frameskip_title">Wrong Frame Skip Parameter!</string>
+	<string name="wrong_frameskip_body">Please check the Frame Skip parameter.</string>
+	<string name="wrong_gsensor_title">Wrong G-Sensor Parameter!</string>
+	<string name="wrong_gsensor_body">Please check the G-Sensor parameter.</string>
+	<string name="question_title_general">Are you sure?</string>
+	<string name="question_open_body">Are you sure want to open all levels and chapters?</string>
+	<string name="question_reset_body">Are you sure want to reset all settings to default values?</string>
 </resources>

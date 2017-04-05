@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ObbInfo;
@@ -13,6 +16,7 @@ import android.os.storage.OnObbStateChangeListener;
 import android.os.storage.StorageManager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -24,6 +28,12 @@ import android.widget.Toast;
 public class AAAALauncherActivity extends Activity {
 
 	private static final int AC_FILE_PICKER_CODE = 1;
+
+	private static final int DIALOG_WRONG_HAPTIC = 0;
+	private static final int DIALOG_WRONG_FRAMESKIP = 1;
+	private static final int DIALOG_WRONG_GSENSOR = 2;
+	private static final int DIALOG_QUESTION_OPEN_LEVELS = 3;
+	private static final int DIALOG_QUESTION_RESET_SETTINGS = 4;
 
 	public static class AAAASettings {
 
@@ -213,9 +223,11 @@ public class AAAALauncherActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				writeAll();
+				if (testAllRanges()) {
+					writeAll();
 
-				checkObbMount();
+					checkObbMount();
+				}
 			}
 		});
 
@@ -231,19 +243,10 @@ public class AAAALauncherActivity extends Activity {
 		Button buttonOpenAllChaptters = (Button) findViewById(R.id.buttonOpenAllChapters);
 		buttonOpenAllChaptters.setOnClickListener(new OnClickListener() {
 
+			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(View v) {
-				int i;
-				for (i = 1; i <= 5; ++i) {
-					AAAASettings.configuration[i] = 1;
-				}
-				for (i = 0; i < 8; i++) {
-					AAAASettings.configuration[16 + i * 2] = 99;
-					AAAASettings.configuration[17 + i * 2] = 59;
-				}
-				Toast.makeText(aaaaLauncherActivity,
-						v.getResources().getString(R.string.open_all_levels_toast),
-						Toast.LENGTH_SHORT).show();;
+				showDialog(DIALOG_QUESTION_OPEN_LEVELS);
 			}
 		});
 	}
@@ -256,6 +259,43 @@ public class AAAALauncherActivity extends Activity {
 		}
 		fillWidgetsBySettings();
 		super.onResume();
+	}
+
+	@SuppressWarnings("deprecation")
+	private boolean testAllRanges() {
+		int haptics = Integer.parseInt(editTextHaptics.getEditableText().toString());
+		int frameskip = Integer.parseInt(editTextFrameSkip.getEditableText().toString());
+		int gsensor = Integer.parseInt(editTextGSensorScale.getEditableText().toString());
+		if (haptics < 5 || haptics > 200) {
+			showDialog(DIALOG_WRONG_HAPTIC);
+			return false;
+		}
+		if (frameskip < 0 || frameskip > 20) {
+			showDialog(DIALOG_WRONG_FRAMESKIP);
+			return false;
+		}
+		if (gsensor < 100 || gsensor > 9000) {
+			showDialog(DIALOG_WRONG_GSENSOR);
+			return false;
+		}
+		return true;
+	}
+
+	private void openAllLevelsCheat() {
+		for (int i = 1; i <= 5; ++i) {
+			AAAASettings.configuration[i] = 1;
+		}
+		for (int i = 0; i < 8; i++) {
+			AAAASettings.configuration[16 + i * 2] = 99;
+			AAAASettings.configuration[17 + i * 2] = 59;
+		}
+		Toast.makeText(aaaaLauncherActivity,
+				getResources().getString(R.string.open_all_levels_toast),
+				Toast.LENGTH_SHORT).show();
+	}
+
+	private void resetAllSettingsToDefaultValues() {
+
 	}
 
 	private void runFilePicker() {
@@ -353,6 +393,116 @@ public class AAAALauncherActivity extends Activity {
 		super.onDestroy();
 	}
 
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		switch (id) {
+		case DIALOG_WRONG_HAPTIC:
+			builder.setTitle(getString(R.string.wrong_haptic_title));
+			builder.setMessage(getString(R.string.wrong_haptic_body) +
+					"\nMin: " + 5 + "\nMax: " + 200 + "\n" +
+					getString(R.string.wrong_body_general));
+			builder.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int id) {
+					AAAASettings.vibroScale = 30;
+					editTextHaptics.setText(String.valueOf(AAAASettings.vibroScale));
+					dialog.cancel();
+				}
+			});
+			break;
+		case DIALOG_WRONG_FRAMESKIP:
+			builder.setTitle(getString(R.string.wrong_frameskip_title));
+			builder.setMessage(getString(R.string.wrong_frameskip_body) +
+					"\nMin: " + 0 + "\nMax: " + 20 + "\n" +
+					getString(R.string.wrong_body_general));
+			builder.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int id) {
+					AAAASettings.configuration[12] = 2;
+					editTextFrameSkip.setText(String.valueOf(AAAASettings.configuration[12]));
+					dialog.cancel();
+				}
+			});
+			break;
+		case DIALOG_WRONG_GSENSOR:
+			builder.setTitle(getString(R.string.wrong_gsensor_title));
+			builder.setMessage(getString(R.string.wrong_gsensor_body) +
+					"\nMin: " + 100 + "\nMax: " + 9000 + "\n" +
+					getString(R.string.wrong_body_general));
+			builder.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int id) {
+					AAAASettings.gSensorScale = 1000;
+					editTextGSensorScale.setText(String.valueOf(AAAASettings.gSensorScale));
+					dialog.cancel();
+				}
+			});
+			break;
+		case DIALOG_QUESTION_OPEN_LEVELS:
+			builder.setTitle(getString(R.string.question_title_general));
+			builder.setMessage(getString(R.string.question_open_body));
+			builder.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int id) {
+					openAllLevelsCheat();
+					dialog.cancel();
+				}
+			});
+			builder.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int id) {
+					dialog.cancel();
+				}
+			});
+			break;
+		case DIALOG_QUESTION_RESET_SETTINGS:
+			builder.setTitle(getString(R.string.question_title_general));
+			builder.setMessage(getString(R.string.question_reset_body));
+			builder.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int id) {
+					resetAllSettingsToDefaultValues();
+					dialog.cancel();
+				}
+			});
+			builder.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int id) {
+					dialog.cancel();
+				}
+			});
+			break;
+		default:
+			break;
+		}
+
+		return builder.create();
+	}
+
+	// Prevent dialog dismiss when orientation changes
+	// http://stackoverflow.com/a/27311231/2467443
+	private static void doKeepDialog(AlertDialog dialog) {
+		WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+		lp.copyFrom(dialog.getWindow().getAttributes());
+		lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+		lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+		dialog.getWindow().setAttributes(lp);
+	}
+
+	private void showMyDialog(AlertDialog dialog) {
+		dialog.show();
+		doKeepDialog(dialog);
+	}
+
+	/* CONFIGS AND SETTINGS */
 	public static void writeConfig() {
 		AAAAActivity.toDebugLog("Write Config!");
 		SharedPreferences.Editor editor = mSharedPreferences.edit();
