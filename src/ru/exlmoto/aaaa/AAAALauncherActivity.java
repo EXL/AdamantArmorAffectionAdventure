@@ -240,6 +240,16 @@ public class AAAALauncherActivity extends Activity {
 			}
 		});
 
+		Button buttonResetAllSettings = (Button) findViewById(R.id.buttonResetSettings);
+		buttonResetAllSettings.setOnClickListener(new OnClickListener() {
+
+			@SuppressWarnings("deprecation")
+			@Override
+			public void onClick(View v) {
+				showDialog(DIALOG_QUESTION_RESET_SETTINGS);
+			}
+		});
+
 		Button buttonOpenAllChaptters = (Button) findViewById(R.id.buttonOpenAllChapters);
 		buttonOpenAllChaptters.setOnClickListener(new OnClickListener() {
 
@@ -295,7 +305,34 @@ public class AAAALauncherActivity extends Activity {
 	}
 
 	private void resetAllSettingsToDefaultValues() {
+		AAAASettings.configuration[0] = 1;    AAAASettings.configuration[8] = 128;
+		AAAASettings.configuration[1] = 0;    AAAASettings.configuration[9] =  48;
+		AAAASettings.configuration[2] = 0;    AAAASettings.configuration[10] =  1;
+		AAAASettings.configuration[3] = 0;    AAAASettings.configuration[11] =  1;
+		AAAASettings.configuration[4] = 0;    AAAASettings.configuration[12] =  2;
+		AAAASettings.configuration[5] = 0;    AAAASettings.configuration[13] =  1;
+		AAAASettings.configuration[6] = 1;    AAAASettings.configuration[14] =  0;
+		AAAASettings.configuration[7] = 1;    AAAASettings.configuration[15] =  0;
 
+		AAAASettings.configuration[16] =  99; AAAASettings.configuration[24] = 199;
+		AAAASettings.configuration[17] =  59; AAAASettings.configuration[25] =  59;
+		AAAASettings.configuration[18] = 199; AAAASettings.configuration[26] = 199;
+		AAAASettings.configuration[19] =  59; AAAASettings.configuration[27] =  59;
+		AAAASettings.configuration[20] = 199; AAAASettings.configuration[28] = 199;
+		AAAASettings.configuration[21] =  59; AAAASettings.configuration[29] =  59;
+		AAAASettings.configuration[22] = 199; AAAASettings.configuration[30] = 199;
+		AAAASettings.configuration[23] =  59; AAAASettings.configuration[31] =  59;
+
+		AAAASettings.touchControls = AAAASettings.MODERN_TOUCH_CONTROLS;
+		AAAASettings.touchVibration = true;
+		AAAASettings.frameLimit = false;
+		AAAASettings.aiDisable = false;
+		AAAASettings.showFps = false;
+		AAAASettings.gSensorScale = 1000;
+		AAAASettings.vibroScale = 30;
+		AAAASettings.obbSavedPath = "";
+
+		fillWidgetsBySettings();
 	}
 
 	private void runFilePicker() {
