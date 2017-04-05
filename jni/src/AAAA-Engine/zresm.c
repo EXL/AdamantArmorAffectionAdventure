@@ -610,7 +610,7 @@ void zresminit(void)
     // playmode=ZPM_EDIT;
     // level=255;
     // premeshccc();
-    level = 2;
+    level = 9;
     // newgamemode=ZGM_SELECTOR;
     // level=0;
 
