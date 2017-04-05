@@ -14,8 +14,10 @@ import android.content.res.ObbScanner;
 import android.os.Bundle;
 import android.os.storage.OnObbStateChangeListener;
 import android.os.storage.StorageManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -85,6 +87,8 @@ public class AAAALauncherActivity extends Activity {
 	private RadioButton radioButtonSimpleTouchControls = null;
 	private RadioButton radioButtonNoTouchControls = null;
 
+	private AlertDialog aboutDialog = null;
+
 	// JNI-access
 	public static String obbMountedPath = "";
 
@@ -114,6 +118,8 @@ public class AAAALauncherActivity extends Activity {
 		}
 
 		mStorageManager = (StorageManager) getApplicationContext().getSystemService(STORAGE_SERVICE);
+
+		initAboutDialog();
 
 		setContentView(R.layout.aaaa_launcher);
 
@@ -273,6 +279,15 @@ public class AAAALauncherActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				showDialog(DIALOG_QUESTION_OPEN_LEVELS);
+			}
+		});
+
+		Button buttonAbout = (Button) findViewById(R.id.buttonAbout);
+		buttonAbout.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				showMyDialog(aboutDialog);
 			}
 		});
 	}
@@ -540,8 +555,19 @@ public class AAAALauncherActivity extends Activity {
 		default:
 			break;
 		}
-
 		return builder.create();
+	}
+
+	private void initAboutDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		// builder.setCancelable(false);
+		LayoutInflater inflater = this.getLayoutInflater();
+		final ViewGroup nullParentVG = null;
+		View dialogView = inflater.inflate(R.layout.aaaa_dialog_about, nullParentVG);
+		builder.setView(dialogView);
+		builder.setTitle(R.string.app_name_short);
+		builder.setPositiveButton(R.string.button_ok, null);
+		aboutDialog = builder.create();
 	}
 
 	// Prevent dialog dismiss when orientation changes
