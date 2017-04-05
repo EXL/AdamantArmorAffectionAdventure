@@ -39,7 +39,6 @@ public class AAAALauncherActivity extends Activity {
 
 	public static class AAAASettings {
 
-		// GLOBALS
 		public static final int CFG_CNT = 32;
 		public static final int MODERN_TOUCH_CONTROLS = 0;
 		public static final int OLD_TOUCH_CONTROLS = 1;
@@ -67,6 +66,7 @@ public class AAAALauncherActivity extends Activity {
 	private boolean firstRun = false;
 
 	private String obbFilePathName = "";
+	// Unfortunately, the crypted OBB files do not work
 	// private final String obbKey = "aaaa";
 	@SuppressWarnings("unused")
 	private ObbInfo mObbInfo = null;
@@ -563,7 +563,6 @@ public class AAAALauncherActivity extends Activity {
 
 	private void initAboutDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		// builder.setCancelable(false);
 		LayoutInflater inflater = this.getLayoutInflater();
 		final ViewGroup nullParentVG = null;
 		View dialogView = inflater.inflate(R.layout.aaaa_dialog_about, nullParentVG);
@@ -588,7 +587,6 @@ public class AAAALauncherActivity extends Activity {
 		doKeepDialog(dialog);
 	}
 
-	/* CONFIGS AND SETTINGS */
 	public static void writeConfig() {
 		AAAAActivity.toDebugLog("Write Config!");
 		SharedPreferences.Editor editor = mSharedPreferences.edit();

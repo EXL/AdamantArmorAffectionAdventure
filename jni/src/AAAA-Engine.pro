@@ -6,7 +6,6 @@ TEMPLATE = app
 TARGET = AAAA-Engine
 
 CONFIG -= qt
-
 CONFIG -= gles
 
 INCLUDEPATH += . AAAA-Engine/
