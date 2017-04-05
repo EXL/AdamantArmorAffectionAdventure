@@ -68,6 +68,7 @@ public class AAAALauncherActivity extends Activity {
 
 	private String obbFilePathName = "";
 	// private final String obbKey = "aaaa";
+	@SuppressWarnings("unused")
 	private ObbInfo mObbInfo = null;
 
 	private EditText editTextObbPath = null;
@@ -330,9 +331,7 @@ public class AAAALauncherActivity extends Activity {
 			AAAASettings.configuration[16 + i * 2] = 99;
 			AAAASettings.configuration[17 + i * 2] = 59;
 		}
-		Toast.makeText(aaaaLauncherActivity,
-				getResources().getString(R.string.open_all_levels_toast),
-				Toast.LENGTH_SHORT).show();
+		showToast(R.string.open_all_levels_toast, Toast.LENGTH_SHORT);
 	}
 
 	private void resetAllSettingsToDefaultValues() {
@@ -365,9 +364,13 @@ public class AAAALauncherActivity extends Activity {
 
 		fillWidgetsBySettings();
 
+		showToast(R.string.reset_all_settings_toast, Toast.LENGTH_SHORT);
+	}
+
+	private void showToast(int stringId, int length) {
 		Toast.makeText(aaaaLauncherActivity,
-				getResources().getString(R.string.reset_all_settings_toast),
-				Toast.LENGTH_SHORT).show();
+				getResources().getString(stringId),
+				length).show();
 	}
 
 	private void runFilePicker() {
@@ -377,7 +380,6 @@ public class AAAALauncherActivity extends Activity {
 
 	private void checkObbMount() {
 		obbFilePathName = editTextObbPath.getEditableText().toString();
-
 		File obbFile = new File(obbFilePathName);
 		if (obbFile.exists() && obbFile.isFile()) {
 			try {
@@ -385,24 +387,24 @@ public class AAAALauncherActivity extends Activity {
 					mObbInfo = ObbScanner.getObbInfo(obbFilePathName);
 				} catch (IllegalArgumentException e) {
 					e.printStackTrace();
-					AAAAActivity.toDebugLog("The OBB file could not be found!");
+					showToast(R.string.obb_file_not_found, Toast.LENGTH_LONG);
 				} catch (IOException e) {
 					e.printStackTrace();
-					AAAAActivity.toDebugLog("The OBB file could not be read!");
+					showToast(R.string.obb_file_not_read, Toast.LENGTH_LONG);
 				}
 				if (mStorageManager.mountObb(obbFilePathName, null, mObbEventListener)) {
 					AAAAActivity.toDebugLog("Mount OBB file...");
 				} else {
-					AAAAActivity.toDebugLog("Failed to start OBB mounting!");
+					showToast(R.string.obb_mount_start_fail, Toast.LENGTH_LONG);
 				}
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 				AAAAActivity.toDebugLog("The OBB file already mounted!");
 			}
 		} else {
-			AAAAActivity.toDebugLog("OBB file isn't exist or it's a directory!");
+			showToast(R.string.obb_fail, Toast.LENGTH_LONG);
 		}
-
+		mObbInfo = null;
 		obbFile = null;
 		System.gc();
 	}
@@ -427,7 +429,7 @@ public class AAAALauncherActivity extends Activity {
 					Intent intent = new Intent(aaaaLauncherActivity, AAAAActivity.class);
 					startActivity(intent);
 				} else {
-					AAAAActivity.toDebugLog("Error access to mounted files!");
+					showToast(R.string.obb_files_read_error, Toast.LENGTH_LONG);
 				}
 
 				break;
@@ -451,6 +453,7 @@ public class AAAALauncherActivity extends Activity {
 				AAAASettings.obbSavedPath = data.getStringExtra("ObbPath");
 				editTextObbPath.setText(AAAASettings.obbSavedPath);
 				writeAll();
+				showToast(R.string.obb_file_c, Toast.LENGTH_SHORT);
 			}
 			break;
 		default:

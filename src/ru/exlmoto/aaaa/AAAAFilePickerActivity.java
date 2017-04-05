@@ -61,8 +61,6 @@ public class AAAAFilePickerActivity extends Activity {
 	}
 
 	public void onObbClick() {
-		Toast.makeText(this, getResources().getString(R.string.obb_file_c),
-				Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent();
 		intent.putExtra("ObbPath", currentPath.toString());
 		setResult(RESULT_OK, intent);
