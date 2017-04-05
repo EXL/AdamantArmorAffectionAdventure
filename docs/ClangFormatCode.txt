@@ -1,0 +1,13 @@
+clang-tidy *.h *.c -fix -fix-errors -checks="readability-braces-around-statements" -- -I.
+clang-tidy *.h *.c -fix -fix-errors -checks="readability-braces-around-statements" -- -I. -DPC32
+clang-tidy *.h *.c -fix -fix-errors -checks="readability-braces-around-statements" -- -I. -DGP2XWIZ
+clang-tidy *.h *.c -fix -fix-errors -checks="readability-braces-around-statements" -- -I. -DANDROID_NDK
+clang-tidy *.h *.c -fix -fix-errors -checks="readability-braces-around-statements" -- -I. -DGP2XCAANOO
+clang-tidy *.h *.c -fix -fix-errors -checks="readability-braces-around-statements" -- -I. -DANDROID_NDK
+clang-tidy *.h *.c -fix -fix-errors -checks="readability-braces-around-statements" -- -I. -DGP2X
+clang-tidy *.h *.c -fix -fix-errors -checks="readability-braces-around-statements" -- -I. -DPC_GLES
+clang-tidy *.h *.c -fix -fix-errors -checks="readability-braces-around-statements" -- -I. -DSDL2_PORT
+
+clang-format -style=WebKit -i *.h *.c
+clang-format --dump-config --style=WebKit > .clang-format
+clang-format -i --style=file *.h *.c

@@ -1,0 +1,8 @@
+Since SDL2 version 2.0.5 D-Pad again connected as Joystick.
+
+D-Pad SDL KeyCodes:
+Up    - 19
+Down  - 20
+Left  - 21
+Right - 22
+OK    - 23
