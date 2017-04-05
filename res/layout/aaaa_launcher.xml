@@ -289,12 +289,14 @@
                     android:id="@+id/buttonResetSettings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/label_margin"
                     android:text="@string/reset_settings" />
 
                 <Button
                     android:id="@+id/buttonOpenAllChapters"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/label_margin"
                     android:text="@string/open_all_levels" />
             </TableRow>
         </TableLayout>
