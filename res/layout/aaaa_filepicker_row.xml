@@ -40,5 +40,4 @@
         android:layout_alignParentRight="true"
         android:layout_marginLeft="@dimen/label_margin" >
     </TextView>
-
 </RelativeLayout>

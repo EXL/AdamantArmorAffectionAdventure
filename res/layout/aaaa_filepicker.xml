@@ -20,5 +20,4 @@
         android:layout_marginTop="@dimen/layout_margin"
         android:text="@string/button_cancel" >
     </Button>
-
 </LinearLayout>

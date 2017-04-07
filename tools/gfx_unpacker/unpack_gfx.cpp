@@ -14,6 +14,8 @@
 **  $ montage unpacked/*.png -background none tex_collage.png
 **
 ** Get PNG-textures from "unpacked/" folder or collage in the pwd
+**
+** License: Public Domain
 ************************************************************************************/
 
 #include <experimental/filesystem>
