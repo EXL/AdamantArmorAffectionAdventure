@@ -1,10 +1,10 @@
 The MIT License (MIT)
 
-Copyright (c) 2016-2017 EXL <br>
-Copyright (c) 2016 munchluxe63 <br>
-Copyright (c) 2016 senquack <br>
-Copyright (c) 2012 sebt3 <br>
-Copyright (c) 2011 quasist <br>
+Copyright (c) 2016-2017 EXL
+Copyright (c) 2016 munchluxe63
+Copyright (c) 2016 senquack
+Copyright (c) 2012 sebt3
+Copyright (c) 2011 quasist
 Copyright (c) 2011 Don Miguel
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
