@@ -140,6 +140,11 @@ void writeJavaConfigurationFromJNI() {
 			body_array[i] = configdata[i];
 		}
 
+		// Set Region Array
+		// On Dalvik works without calling this function, but for ART it is necessary
+		// Otherwise, the array will be reset to zeros
+		(*javaEnviron)->SetIntArrayRegion(javaEnviron, cfg_array, 0, size, body_array);
+
 		// Call Java-method
 		(*javaEnviron)->CallStaticVoidMethod(javaEnviron, clazz, methodId, cfg_array);
 
