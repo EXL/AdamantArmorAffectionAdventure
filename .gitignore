@@ -86,10 +86,13 @@ lint.xml
 ### Android Patch ###
 gen-external-apklibs
 
+# Clion
+jni/src/.idea/
+jni/src/cmake-build-debug/
+
 # Other
 jni/build*
 tools/gfx_unpacker/lodepng/
 tools/gfx_unpacker/unpacked/
 tools/gfx_unpacker/unpack_gfx
 tools/gfx_unpacker/tex_collage.png
-
