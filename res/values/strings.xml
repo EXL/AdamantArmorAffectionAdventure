@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Adamant Armor\nAffection Adventure</string>
+	<string name="app_name">Adamant Armor Affection Adventure</string>
+	<string name="app_name_dialog">Adamant Armor\nAffection Adventure</string>
 	<string name="app_name_short">AAAA</string>
 	<string name="button_run">Run AAAA!</string>
 	<string name="button_about">About AAAA...</string>
