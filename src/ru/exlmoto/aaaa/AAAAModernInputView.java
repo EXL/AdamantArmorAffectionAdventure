@@ -269,7 +269,7 @@ public class AAAAModernInputView extends View {
 		int sector_move, sector_button_r;
 		for (MotionEvent e : copy) {
 			sector_move = 2 * width / 3;
-			sector_button_r = radius * 3;
+			sector_button_r = b_wh * 4;
 			switch(e.getActionMasked()) {
 			case MotionEvent.ACTION_MOVE:
 				int len = e.getPointerCount();
@@ -534,7 +534,7 @@ public class AAAAModernInputView extends View {
 		int b = -1;
 		if (x < radius * 3 && y < radius) {
 			b = KC_GAME_R;
-		} else if (x > (2 * width / 2.5)) {
+		} else if (x > width - b_wh * 1.8) {
 			if (y > (height / 3) * 2) { // Down
 				b = KC_GAME_X;
 			} else if (y < (height / 3)) { // Up
