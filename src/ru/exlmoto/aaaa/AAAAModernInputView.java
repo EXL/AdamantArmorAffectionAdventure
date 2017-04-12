@@ -268,8 +268,8 @@ public class AAAAModernInputView extends View {
 		int id, index, b, x, y;
 		int sector_move, sector_button_r;
 		for (MotionEvent e : copy) {
-			sector_move = 2 * width / 3;
-			sector_button_r = b_wh * 4;
+			sector_move = width - b_wh * 7 / 2; // 3.5
+			sector_button_r = radius * 3;
 			switch(e.getActionMasked()) {
 			case MotionEvent.ACTION_MOVE:
 				int len = e.getPointerCount();
