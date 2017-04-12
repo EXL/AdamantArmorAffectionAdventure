@@ -253,7 +253,7 @@ public class AAAAModernInputView extends View {
 		row3_h = height / 2 - b_wh / 2;
 		rad_d2 = radius / 3;
 
-		AAAAActivity.toDebugLog("Set Resolution of Input layer as: " + width + "x" + height);
+		AAAAActivity.toDebugLog("Set Resolution of Input layer as: " + width + "x" + height + ", radius: " + radius);
 	}
 
 	private int p0x, p0y, p1x, p1y, p1b, p0id = -1;
