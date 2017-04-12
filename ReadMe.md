@@ -13,7 +13,7 @@ This is my port of Adamant Armor Affection Adventure to Android OS with using SD
 
 ![Adamant Armor Affection Adventure Android Screen 3](https://raw.github.com/EXL/AdamantArmorAffectionAdventure/master/images/aaaa_android_screen3.jpg)
 
-[Adamant Armor Affection Adventure port on Motorola Photon Q video on YouTube](http://youtu.be/vnNax1uNLfo)
+[Adamant Armor Affection Adventure port on Motorola Photon Q video on YouTube](https://www.youtube.com/watch?v=8UfZP2pbrOg)
 
 ## Build instructions
 
