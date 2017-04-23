@@ -1,7 +1,7 @@
 # Create OBB file from assets_obb/ folder
 /opt/android/android-sdk/tools/jobb -d assets_obb/ -o main.1.ru.exlmoto.aaaa.obb -pn ru.exlmoto.aaaa -pv 1
 
-# Create encrypted OBB file form assets_obb/ folder (don't working)
+# Create encrypted OBB file form assets_obb/ folder (doesn't work for me)
 /opt/android/android-sdk/tools/jobb -d assets_obb/ -o main.1.ru.exlmoto.aaaa.obb -k aaaa -pn ru.exlmoto.aaaa -pv 1
 
 # Push OBB file to smartphone

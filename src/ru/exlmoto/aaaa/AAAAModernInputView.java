@@ -190,7 +190,7 @@ public class AAAAModernInputView extends View {
 			canvas.drawCircle(p1x, p1y, radius, paint);
 		}
 
-		// buttons
+		// Buttons
 		paint.setARGB(pid[KC_GAME_X] < 0 ? 64 : 160, 255, 255, 255);
 		canvas.drawBitmap(button_x, col1_w, row1_h, paint);
 		//canvas.drawCircle(width - radius - radius / 3, height - radius - radius / 3, radius, paint);
