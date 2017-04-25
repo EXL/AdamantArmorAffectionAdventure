@@ -44,7 +44,7 @@ cd ~/Deploy/AdamantArmorAffectionAdventureAndroid/
 /opt/android/apache-ant-1.9.4/bin/ant debug
 ```
 
-* Install AdamantArmorAffectionAdventure APK-package on your Android device via adb;
+* Install Adamant Armor Affection Adventure APK-package on your Android device via adb;
 
 ```sh
 cd ~/Deploy/AdamantArmorAffectionAdventureAndroid/
@@ -57,4 +57,4 @@ You can also import this project in your favorite IDE: Eclipse or Android Studio
 
 ## More information
 
-Please read [Porting Guide (In Russian)](http://exlmoto.ru/adamant-armor-affection-adventure-droid) for more info about porting AdamantArmorAffectionAdventure to Android OS.
+Please read [Porting Guide (In Russian)](http://exlmoto.ru/adamant-armor-affection-adventure-droid) for more info about porting Adamant Armor Affection Adventure to Android OS.
