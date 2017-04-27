@@ -43,12 +43,18 @@ cd ~/Deploy/AdamantArmorAffectionAdventureAndroid/
 /opt/android/android-ndk-r10d/ndk-build V=1
 /opt/android/apache-ant-1.9.4/bin/ant debug
 ```
+* Create OBB-cache file;
 
-* Install Adamant Armor Affection Adventure APK-package on your Android device via adb;
+```sh
+/opt/android/android-sdk/tools/jobb -d assets_obb/ -o main.1.ru.exlmoto.aaaa.obb -pn ru.exlmoto.aaaa -pv 1
+```
+
+* Install Adamant Armor Affection Adventure APK-package on your Android device via adb and put OBB-cache on sdcard;
 
 ```sh
 cd ~/Deploy/AdamantArmorAffectionAdventureAndroid/
 /opt/android/android-sdk-linux/platform-tools/adb install -r bin/AdamantArmorAffectionAdventure-debug.apk
+/opt/android/android-sdk-linux/platform-tools/adb push main.1.ru.exlmoto.aaaa.obb /storage/sdcard0
 ```
 
 * Run and enjoy!
