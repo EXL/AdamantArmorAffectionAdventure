@@ -117,6 +117,6 @@ endif()
 
 # Show final message when build done.
 add_custom_target(finalMessage ALL
-	${CMAKE_COMMAND} -E cmake_echo_color --green "Compilation is over! Please go to the ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE} direcory and execute ${TARGET_NAME} file!"
+	${CMAKE_COMMAND} -E cmake_echo_color --green "Output directory: ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}, executable: ${TARGET_NAME}."
 	COMMENT "Final Message")
 add_dependencies(finalMessage ${TARGET_NAME})
