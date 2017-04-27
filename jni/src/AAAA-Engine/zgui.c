@@ -293,8 +293,8 @@ void showexitdialog(void)
 
         zlColor4x(255, 255, 255, 255);
         zlPush();
-        zlTranslate(-53000, 2000, 0);
-        l_text = sprintf(s_text, "PRESS [Y] TO EXIT GAME");
+        zlTranslate(-58000, 2000, 0);
+        l_text = sprintf(s_text, "PRESS [SEL] TO EXIT GAME");
         zlScale(5000, 9000, 10000);
         zlRenderText();
         zlPop();
