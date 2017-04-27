@@ -34,6 +34,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -143,6 +144,31 @@ public class AAAAModernInputView extends View {
 			return true;
 		case DPAD_OK:
 			pressOrReleaseKey(KC_SDL_A, press);
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	public static boolean sonyXperiaPlayFilter(int keyCode, boolean press) {
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_BUTTON_X:
+			pressOrReleaseKey(KC_SDL_X, press);
+			return true;
+		case KeyEvent.KEYCODE_BUTTON_Y:
+			pressOrReleaseKey(KC_SDL_B, press);
+			return true;
+		case KeyEvent.KEYCODE_BUTTON_L1:
+			pressOrReleaseKey(KC_SDL_L, press);
+			return true;
+		case KeyEvent.KEYCODE_BUTTON_R1:
+			pressOrReleaseKey(KC_SDL_R, press);
+			return true;
+		case KeyEvent.KEYCODE_BUTTON_SELECT:
+			pressOrReleaseKey(KC_SDL_Y, press);
+			return true;
+		case KeyEvent.KEYCODE_BUTTON_START:
+			pressOrReleaseKey(KC_SDL_SELECT, press);
 			return true;
 		default:
 			return false;

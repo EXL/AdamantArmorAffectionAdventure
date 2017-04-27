@@ -1274,12 +1274,16 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         if ((event.getSource() & InputDevice.SOURCE_KEYBOARD) != 0) {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
                 //Log.v("SDL", "key down: " + keyCode);
-                SDLActivity.onNativeKeyDown(keyCode);
+                if (!AAAAModernInputView.sonyXperiaPlayFilter(keyCode, true)) {
+                    SDLActivity.onNativeKeyDown(keyCode);
+                }
                 return true;
             }
             else if (event.getAction() == KeyEvent.ACTION_UP) {
                 //Log.v("SDL", "key up: " + keyCode);
-                SDLActivity.onNativeKeyUp(keyCode);
+                if (!AAAAModernInputView.sonyXperiaPlayFilter(keyCode, false)) {
+                    SDLActivity.onNativeKeyUp(keyCode);
+                }
                 return true;
             }
         }
