@@ -143,8 +143,20 @@ public class AAAAModernInputView extends View {
 		case DPAD_RIGHT:
 			pressOrReleaseKey(KC_SDL_RIGHT, press);
 			return true;
-		case DPAD_OK: // CROSS?
+		case DPAD_OK: // CROSS
 			pressOrReleaseKey(KC_SDL_X, press);
+			return true;
+		case KeyEvent.KEYCODE_BUTTON_X: // SQUARE
+			pressOrReleaseKey(KC_SDL_B, press);
+			return true;
+		case KeyEvent.KEYCODE_BUTTON_Y: // TRIANGLE
+			pressOrReleaseKey(KC_SDL_SELECT, press);
+			return true;
+		case KeyEvent.KEYCODE_BUTTON_L1: // L
+			pressOrReleaseKey(KC_SDL_L, press);
+			return true;
+		case KeyEvent.KEYCODE_BUTTON_R1: // R
+			pressOrReleaseKey(KC_SDL_A, press);
 			return true;
 		default:
 			return false;
@@ -153,44 +165,31 @@ public class AAAAModernInputView extends View {
 
 	public static boolean sonyXperiaPlayFilter(int keyCode, boolean press) {
 		switch (keyCode) {
-		case KeyEvent.KEYCODE_BUTTON_X: // SQUARE?
-		case KeyEvent.KEYCODE_X:
-			AAAAActivity.toDebugLog("sxpf, x (square): " + keyCode + ", " + press);
+		case KeyEvent.KEYCODE_BUTTON_X: // SQUARE
 			pressOrReleaseKey(KC_SDL_B, press);
 			return true;
-		case KeyEvent.KEYCODE_BUTTON_Y: // TRIANGLE?
-		case KeyEvent.KEYCODE_Y:
-			AAAAActivity.toDebugLog("sxpf, y (triangle): " + keyCode + ", " + press);
+		case KeyEvent.KEYCODE_BUTTON_Y: // TRIANGLE
 			pressOrReleaseKey(KC_SDL_SELECT, press);
 			return true;
-		case KeyEvent.KEYCODE_BUTTON_L1:
-		case KeyEvent.KEYCODE_L:
-			AAAAActivity.toDebugLog("sxpf, l: " + keyCode + ", " + press);
+		case KeyEvent.KEYCODE_BUTTON_L1: // L
 			pressOrReleaseKey(KC_SDL_L, press);
 			return true;
-		case KeyEvent.KEYCODE_BUTTON_R1:
-		case KeyEvent.KEYCODE_R:
-			AAAAActivity.toDebugLog("sxpf, r: " + keyCode + ", " + press);
+		case KeyEvent.KEYCODE_BUTTON_R1: // R
 			pressOrReleaseKey(KC_SDL_A, press);
 			return true;
 		case KeyEvent.KEYCODE_BUTTON_SELECT:
-			AAAAActivity.toDebugLog("sxpf, select: " + keyCode + ", " + press);
 			pressOrReleaseKey(KC_SDL_Y, press);
 			return true;
 		case KeyEvent.KEYCODE_BUTTON_START:
-			AAAAActivity.toDebugLog("sxpf, start: " + keyCode + ", " + press);
 			pressOrReleaseKey(KC_SDL_ESCAPE, press);
 			return true;
-		case KeyEvent.KEYCODE_BACK: // CIRCLE?
-			AAAAActivity.toDebugLog("sxpf, back (circle): " + keyCode + ", " + press);
+		case KeyEvent.KEYCODE_BACK: // CIRCLE
 			pressOrReleaseKey(KC_SDL_R, press);
 			return true;
-		case KeyEvent.KEYCODE_MENU:
-			AAAAActivity.toDebugLog("sxpf, menu: " + keyCode + ", " + press);
+		case KeyEvent.KEYCODE_MENU: // GAME MENU
 			pressOrReleaseKey(KC_SDL_ESCAPE, press);
 			return true;
 		case KeyEvent.KEYCODE_SEARCH:
-			AAAAActivity.toDebugLog("sxpf, search: " + keyCode + ", " + press);
 			pressOrReleaseKey(KC_SDL_START, press);
 			return true;
 		default:
