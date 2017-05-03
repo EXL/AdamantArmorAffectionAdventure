@@ -10,12 +10,12 @@ android {
         targetSdkVersion 14
 
         ndk {
-            abiFilters "armeabi", "armeabi-v7a", "x86"
+            abiFilters "armeabi-v7a", "x86"
         }
 
         externalNativeBuild {
             cmake {
-                arguments "-DANDROID_PLATFORM_LEVEL=10 -DANDROID=ON"
+                arguments "-DANDROID_PLATFORM_LEVEL=10", "-DANDROID=ON"
                 cFlags "-O3", "-ffast-math", "-fomit-frame-pointer"
                 cppFlags "-O3", "-frtti", "-ffast-math", "-fomit-frame-pointer"
             }

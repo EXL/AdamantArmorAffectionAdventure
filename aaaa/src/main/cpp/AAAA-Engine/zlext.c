@@ -1,7 +1,7 @@
 #include "vars.h"
 
 #ifdef ANDROID_NDK
-#include "../../SDL2-2.0.5/src/core/android/SDL_android.h" // For G-Sensor
+#include "../SDL2/src/core/android/SDL_android.h" // For G-Sensor
 #include "zlext/android_extras.h" // For Vibration
 
 float accelValue[3];

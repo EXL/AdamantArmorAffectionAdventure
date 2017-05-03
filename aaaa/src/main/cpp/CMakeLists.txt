@@ -29,35 +29,6 @@ option(ANDROID "Enable Android Build instead Desktop" ON)
 
 include_directories(${PROJECT_NAME})
 
-set(HEADERS AAAA-Engine/bullets.h
-            AAAA-Engine/camera.h
-            AAAA-Engine/drawmob.h
-            AAAA-Engine/game.h
-            AAAA-Engine/gamemenu.h
-            AAAA-Engine/gamescene.h
-            AAAA-Engine/intro.h
-            AAAA-Engine/mobai.h
-            AAAA-Engine/mobs.h
-            AAAA-Engine/narrator.h
-            AAAA-Engine/particles.h
-            AAAA-Engine/playcontrol.h
-            AAAA-Engine/render.h
-            AAAA-Engine/sprites.h
-            AAAA-Engine/vars.h
-            AAAA-Engine/veryblend.h
-            AAAA-Engine/wlight.h
-            AAAA-Engine/wmapgen.h
-            AAAA-Engine/wmapload.h
-            AAAA-Engine/zcore.h
-            AAAA-Engine/zcsound.h
-            AAAA-Engine/zctables.h
-            AAAA-Engine/zeditmode.h
-            AAAA-Engine/zgui.h
-            AAAA-Engine/zlext.h
-            AAAA-Engine/zlmath.h
-            AAAA-Engine/zresm.h
-            AAAA-Engine/ztypes.h)
-
 set(SOURCES AAAA-Engine/bullets.c
             AAAA-Engine/camera.c
             AAAA-Engine/drawmob.c
@@ -88,159 +59,15 @@ set(SOURCES AAAA-Engine/bullets.c
             AAAA-Engine/zresm.c)
 
 if(ANDROID)
-    add_definitions(-DSDL2_PORT -DANDROID_NDK -DGL_GLEXT_PROTOTYPES -DWAV_MUSIC -DOGG_MUSIC -DOGG_USE_TREMOR -DOGG_HEADER="<ivorbisfile.h>" -D_ARM_ASSEM_)
+    add_definitions(-DSDL2_PORT -DANDROID_NDK -DGL_GLEXT_PROTOTYPES
+            -DWAV_MUSIC -DOGG_MUSIC -DOGG_USE_TREMOR -DOGG_HEADER=<ivorbisfile.h>)
+
+    if(ANDROID_ABI MATCHES "armeabi")
+        add_definitions(-D_ARM_ASSEM_)
+    endif()
 
     ## SDL2
     set(SDL2 "SDL2")
-    set(SDL2_HEADERS ${SDL2}/src/events/scancodes_linux.h
-                ${SDL2}/src/events/SDL_sysevents.h
-                ${SDL2}/src/events/SDL_clipboardevents_c.h
-                ${SDL2}/src/events/SDL_touch_c.h
-                ${SDL2}/src/events/SDL_events_c.h
-                ${SDL2}/src/events/blank_cursor.h
-                ${SDL2}/src/events/scancodes_darwin.h
-                ${SDL2}/src/events/SDL_dropevents_c.h
-                ${SDL2}/src/events/SDL_gesture_c.h
-                ${SDL2}/src/events/SDL_windowevents_c.h
-                ${SDL2}/src/events/default_cursor.h
-                ${SDL2}/src/events/scancodes_xfree86.h
-                ${SDL2}/src/events/SDL_keyboard_c.h
-                ${SDL2}/src/events/SDL_mouse_c.h
-                ${SDL2}/src/events/scancodes_windows.h
-                ${SDL2}/src/SDL_assert_c.h
-                ${SDL2}/src/thread/SDL_thread_c.h
-                ${SDL2}/src/thread/pthread/SDL_sysmutex_c.h
-                ${SDL2}/src/thread/pthread/SDL_systhread_c.h
-                ${SDL2}/src/thread/SDL_systhread.h
-                ${SDL2}/src/dynapi/SDL_dynapi_procs.h
-                ${SDL2}/src/dynapi/SDL_dynapi.h
-                ${SDL2}/src/dynapi/SDL_dynapi_overrides.h
-                ${SDL2}/src/SDL_internal.h
-                ${SDL2}/src/video/SDL_sysvideo.h
-                ${SDL2}/src/video/SDL_rect_c.h
-                ${SDL2}/src/video/SDL_RLEaccel_c.h
-                ${SDL2}/src/video/SDL_pixels_c.h
-                ${SDL2}/src/video/SDL_shape_internals.h
-                ${SDL2}/src/video/SDL_blit.h
-                ${SDL2}/src/video/SDL_blit_slow.h
-                ${SDL2}/src/video/SDL_blit_auto.h
-                ${SDL2}/src/video/android/SDL_androidmessagebox.h
-                ${SDL2}/src/video/android/SDL_androidwindow.h
-                ${SDL2}/src/video/android/SDL_androidclipboard.h
-                ${SDL2}/src/video/android/SDL_androidtouch.h
-                ${SDL2}/src/video/android/SDL_androidevents.h
-                ${SDL2}/src/video/android/SDL_androidvideo.h
-                ${SDL2}/src/video/android/SDL_androidmouse.h
-                ${SDL2}/src/video/android/SDL_androidkeyboard.h
-                ${SDL2}/src/video/SDL_egl_c.h
-                ${SDL2}/src/video/SDL_blit_copy.h
-                ${SDL2}/src/libm/math_private.h
-                ${SDL2}/src/libm/math_libm.h
-                ${SDL2}/src/audio/SDL_wave.h
-                ${SDL2}/src/audio/SDL_audio_c.h
-                ${SDL2}/src/audio/SDL_audiodev_c.h
-                ${SDL2}/src/audio/android/SDL_androidaudio.h
-                ${SDL2}/src/audio/SDL_sysaudio.h
-                ${SDL2}/src/core/android/SDL_android.h
-                ${SDL2}/src/timer/SDL_timer_c.h
-                ${SDL2}/src/haptic/SDL_syshaptic.h
-                ${SDL2}/src/haptic/SDL_haptic_c.h
-                ${SDL2}/src/joystick/SDL_joystick_c.h
-                ${SDL2}/src/joystick/SDL_sysjoystick.h
-                ${SDL2}/src/joystick/SDL_gamecontrollerdb.h
-                ${SDL2}/src/joystick/android/SDL_sysjoystick_c.h
-                ${SDL2}/src/SDL_error_c.h
-                ${SDL2}/src/render/SDL_sysrender.h
-                ${SDL2}/src/render/SDL_yuv_sw_c.h
-                ${SDL2}/src/render/software/SDL_blendpoint.h
-                ${SDL2}/src/render/software/SDL_drawline.h
-                ${SDL2}/src/render/software/SDL_blendfillrect.h
-                ${SDL2}/src/render/software/SDL_render_sw_c.h
-                ${SDL2}/src/render/software/SDL_rotate.h
-                ${SDL2}/src/render/software/SDL_draw.h
-                ${SDL2}/src/render/software/SDL_drawpoint.h
-                ${SDL2}/src/render/software/SDL_blendline.h
-                ${SDL2}/src/render/opengles/SDL_glesfuncs.h
-                ${SDL2}/include/SDL_platform.h
-                ${SDL2}/include/SDL_gesture.h
-                ${SDL2}/include/SDL_config_wiz.h
-                ${SDL2}/include/SDL_opengles2.h
-                ${SDL2}/include/close_code.h
-                ${SDL2}/include/SDL_keycode.h
-                ${SDL2}/include/SDL_config_iphoneos.h
-                ${SDL2}/include/SDL.h
-                ${SDL2}/include/SDL_error.h
-                ${SDL2}/include/SDL_revision.h
-                ${SDL2}/include/SDL_config_pandora.h
-                ${SDL2}/include/SDL_filesystem.h
-                ${SDL2}/include/SDL_surface.h
-                ${SDL2}/include/SDL_audio.h
-                ${SDL2}/include/SDL_types.h
-                ${SDL2}/include/SDL_assert.h
-                ${SDL2}/include/SDL_events.h
-                ${SDL2}/include/SDL_stdinc.h
-                ${SDL2}/include/SDL_test_log.h
-                ${SDL2}/include/SDL_messagebox.h
-                ${SDL2}/include/SDL_test_fuzzer.h
-                ${SDL2}/include/SDL_loadso.h
-                ${SDL2}/include/SDL_blendmode.h
-                ${SDL2}/include/SDL_atomic.h
-                ${SDL2}/include/SDL_opengles.h
-                ${SDL2}/include/SDL_opengles2_gl2.h
-                ${SDL2}/include/SDL_copying.h
-                ${SDL2}/include/SDL_name.h
-                ${SDL2}/include/SDL_config_psp.h
-                ${SDL2}/include/SDL_rect.h
-                ${SDL2}/include/begin_code.h
-                ${SDL2}/include/SDL_test_harness.h
-                ${SDL2}/include/SDL_cpuinfo.h
-                ${SDL2}/include/SDL_touch.h
-                ${SDL2}/include/SDL_mutex.h
-                ${SDL2}/include/SDL_test.h
-                ${SDL2}/include/SDL_power.h
-                ${SDL2}/include/SDL_pixels.h
-                ${SDL2}/include/SDL_config.h
-                ${SDL2}/include/SDL_opengles2_gl2ext.h
-                ${SDL2}/include/SDL_config_winrt.h
-                ${SDL2}/include/SDL_test_crc32.h
-                ${SDL2}/include/SDL_test_images.h
-                ${SDL2}/include/SDL_scancode.h
-                ${SDL2}/include/SDL_egl.h
-                ${SDL2}/include/SDL_version.h
-                ${SDL2}/include/SDL_config_android.h
-                ${SDL2}/include/SDL_test_font.h
-                ${SDL2}/include/SDL_bits.h
-                ${SDL2}/include/SDL_endian.h
-                ${SDL2}/include/SDL_quit.h
-                ${SDL2}/include/SDL_mouse.h
-                ${SDL2}/include/SDL_hints.h
-                ${SDL2}/include/SDL_log.h
-                ${SDL2}/include/SDL_haptic.h
-                ${SDL2}/include/SDL_main.h
-                ${SDL2}/include/SDL_system.h
-                ${SDL2}/include/SDL_test_assert.h
-                ${SDL2}/include/SDL_syswm.h
-                ${SDL2}/include/SDL_test_random.h
-                ${SDL2}/include/SDL_opengl_glext.h
-                ${SDL2}/include/SDL_joystick.h
-                ${SDL2}/include/SDL_render.h
-                ${SDL2}/include/SDL_clipboard.h
-                ${SDL2}/include/SDL_keyboard.h
-                ${SDL2}/include/SDL_thread.h
-                ${SDL2}/include/SDL_video.h
-                ${SDL2}/include/SDL_gamecontroller.h
-                ${SDL2}/include/SDL_config_windows.h
-                ${SDL2}/include/SDL_config_minimal.h
-                ${SDL2}/include/SDL_opengl.h
-                ${SDL2}/include/SDL_test_compare.h
-                ${SDL2}/include/SDL_opengles2_gl2platform.h
-                ${SDL2}/include/SDL_config_macosx.h
-                ${SDL2}/include/SDL_timer.h
-                ${SDL2}/include/SDL_opengles2_khrplatform.h
-                ${SDL2}/include/SDL_shape.h
-                ${SDL2}/include/SDL_test_common.h
-                ${SDL2}/include/SDL_rwops.h
-                ${SDL2}/include/SDL_test_md5.h)
     set(SDL2_SOURCES ${SDL2}/src/SDL_assert.c
                 ${SDL2}/src/events/SDL_gesture.c
                 ${SDL2}/src/events/SDL_keyboard.c
@@ -304,7 +131,6 @@ if(ANDROID)
                 ${SDL2}/src/timer/unix/SDL_systimer.c
                 ${SDL2}/src/timer/SDL_timer.c
                 ${SDL2}/src/SDL.c
-                ${SDL2}/src/haptic/SDL_haptic.c
                 ${SDL2}/src/stdlib/SDL_iconv.c
                 ${SDL2}/src/stdlib/SDL_malloc.c
                 ${SDL2}/src/stdlib/SDL_string.c
@@ -326,51 +152,11 @@ if(ANDROID)
                 ${SDL2}/src/render/opengles/SDL_render_gles.c
                 ${SDL2}/src/render/SDL_yuv_sw.c
                 ${SDL2}/src/file/SDL_rwops.c)
-    add_library(${SDL2} SHARED ${SDL2_SOURCES} ${SDL2_HEADERS})
+    add_library(${SDL2} SHARED ${SDL2_SOURCES})
     target_link_libraries(${SDL2} dl GLESv1_CM GLESv2 log android)
 
     ## SDL2_mixer
     set(SDL2_MIXER "SDL2_mixer")
-    set(SDL2_MIXER_HEADERS ${SDL2_MIXER}/dynamic_ogg.h
-                ${SDL2_MIXER}/SDL_mixer.h
-                ${SDL2_MIXER}/load_ogg.h
-                ${SDL2_MIXER}/music_ogg.h
-                ${SDL2_MIXER}/music_mod.h
-                ${SDL2_MIXER}/music_mad.h
-                ${SDL2_MIXER}/dynamic_mp3.h
-                ${SDL2_MIXER}/music_modplug.h
-                ${SDL2_MIXER}/fluidsynth.h
-                ${SDL2_MIXER}/load_voc.h
-                ${SDL2_MIXER}/external/libogg-1.3.1/include/ogg/os_types.h
-                ${SDL2_MIXER}/external/libogg-1.3.1/include/ogg/config_types.h
-                ${SDL2_MIXER}/external/libogg-1.3.1/include/ogg/ogg.h
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/codec_internal.h
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/ivorbisfile.h
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/ivorbiscodec.h
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/window_lookup.h
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/lsp_lookup.h
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/mdct.h
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/os.h
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/misc.h
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/mdct_lookup.h
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/block.h
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/codebook.h
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/registry.h
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/asm_arm.h
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/config_types.h
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/window.h
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/backends.h
-                ${SDL2_MIXER}/load_mp3.h
-                ${SDL2_MIXER}/wavestream.h
-                ${SDL2_MIXER}/music_cmd.h
-                ${SDL2_MIXER}/music_flac.h
-                ${SDL2_MIXER}/dynamic_modplug.h
-                ${SDL2_MIXER}/dynamic_flac.h
-                ${SDL2_MIXER}/dynamic_mod.h
-                ${SDL2_MIXER}/dynamic_fluidsynth.h
-                ${SDL2_MIXER}/effects_internal.h
-                ${SDL2_MIXER}/load_flac.h
-                ${SDL2_MIXER}/load_aiff.h)
     set(SDL2_MIXER_SOURCES ${SDL2_MIXER}/music_mad.c
                 ${SDL2_MIXER}/effects_internal.c
                 ${SDL2_MIXER}/dynamic_mod.c
@@ -396,9 +182,7 @@ if(ANDROID)
                 ${SDL2_MIXER}/external/libvorbisidec-1.2.1/vorbisfile.c
                 ${SDL2_MIXER}/external/libvorbisidec-1.2.1/res012.c
                 ${SDL2_MIXER}/external/libvorbisidec-1.2.1/registry.c
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/ivorbisfile_example.c
                 ${SDL2_MIXER}/external/libvorbisidec-1.2.1/synthesis.c
-                ${SDL2_MIXER}/external/libvorbisidec-1.2.1/iseeking_example.c
                 ${SDL2_MIXER}/external/libvorbisidec-1.2.1/floor0.c
                 ${SDL2_MIXER}/external/libvorbisidec-1.2.1/mdct.c
                 ${SDL2_MIXER}/external/libvorbisidec-1.2.1/floor1.c
@@ -412,19 +196,17 @@ if(ANDROID)
                 ${SDL2_MIXER}/load_aiff.c
                 ${SDL2_MIXER}/dynamic_flac.c
                 ${SDL2_MIXER}/dynamic_ogg.c
-                ${SDL2_MIXER}/dynamic_fluidsynth.c
-                ${SDL2_MIXER}/playwave.c)
-    add_library(${SDL2_MIXER} SHARED ${SDL2_MIXER_SOURCES} ${SDL2_MIXER_HEADERS})
+                ${SDL2_MIXER}/dynamic_fluidsynth.c)
+    add_library(${SDL2_MIXER} SHARED ${SDL2_MIXER_SOURCES})
     target_link_libraries(${SDL2_MIXER} ${SDL2})
 
     include_directories(${INCLUDE_DIRECTORIES}
                 ${SDL2}/include ${SDL2_MIXER}
-                ${SDL2_MIXER}/external/libogg-1.3.1 ${SDL2_MIXER}/external/libvorbisidec-1.2.1/)
-    set(HEADERS ${HEADERS} ru_exlmoto_aaaa_AAAANativeLibProxy.h
-                ${PROJECT_NAME}/zlext/android_extras.h)
-    set(SOURCES ${PROJECT_NAME}/zlext/android_extras.c
+                ${SDL2_MIXER}/external/libogg-1.3.1/include ${SDL2_MIXER}/external/libvorbisidec-1.2.1/)
+    set(SOURCES ${SOURCES} ${PROJECT_NAME}/zlext/android_extras.c
                 ${SDL2}/src/main/android/SDL_android_main.c)
-    add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS})
+
+    add_library(${PROJECT_NAME} SHARED ${SOURCES})
     target_link_libraries(${PROJECT_NAME} ${SDL2} ${SDL2_MIXER} log GLESv1_CM)
 else()
     option(GLES "Enable OpenGL ES instead OpenGL" OFF)
@@ -453,7 +235,7 @@ else()
         add_definitions(-DPC_GL -DSDL2_PORT)
     endif()
 
-    add_executable(${TARGET_NAME} ${SOURCES} ${HEADERS})
+    add_executable(${TARGET_NAME} ${SOURCES})
     target_link_libraries(${TARGET_NAME} ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARY} ${OPENGL_LIBRARIES} m)
     if(GLES)
         target_link_libraries(${TARGET_NAME} ${OPENGLES_LIBRARIES})
