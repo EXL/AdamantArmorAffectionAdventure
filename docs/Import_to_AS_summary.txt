@@ -1,0 +1,173 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .gitignore
+* License.txt
+* ReadMe.md
+* assets_obb/
+* assets_obb/AAAA-Data/
+* assets_obb/AAAA-Data/.nomedia
+* assets_obb/AAAA-Data/DONOTREAD.ME
+* assets_obb/AAAA-Data/bgm/
+* assets_obb/AAAA-Data/bgm/00.ogg
+* assets_obb/AAAA-Data/bgm/01.ogg
+* assets_obb/AAAA-Data/bgm/02.ogg
+* assets_obb/AAAA-Data/bgm/03.ogg
+* assets_obb/AAAA-Data/bgm/04.ogg
+* assets_obb/AAAA-Data/bgm/05.ogg
+* assets_obb/AAAA-Data/bgm/06.ogg
+* assets_obb/AAAA-Data/bgm/07.ogg
+* assets_obb/AAAA-Data/bgm/08.ogg
+* assets_obb/AAAA-Data/bgm/09.ogg
+* assets_obb/AAAA-Data/bgm/10.ogg
+* assets_obb/AAAA-Data/bgm/11.ogg
+* assets_obb/AAAA-Data/bgm/12.ogg
+* assets_obb/AAAA-Data/bgm/20.ogg
+* assets_obb/AAAA-Data/bgm/21.ogg
+* assets_obb/AAAA-Data/bgm/22.ogg
+* assets_obb/AAAA-Data/bgm/23.ogg
+* assets_obb/AAAA-Data/bgm/24.ogg
+* assets_obb/AAAA-Data/bgm/25.ogg
+* assets_obb/AAAA-Data/bgm/26.ogg
+* assets_obb/AAAA-Data/bgm/27.ogg
+* assets_obb/AAAA-Data/bgm/51.ogg
+* assets_obb/AAAA-Data/bgm/52.ogg
+* assets_obb/AAAA-Data/bgm/53.ogg
+* assets_obb/AAAA-Data/bgm/54.ogg
+* assets_obb/AAAA-Data/bgm/55.ogg
+* assets_obb/AAAA-Data/bgm/56.ogg
+* assets_obb/AAAA-Data/bgm/57.ogg
+* assets_obb/AAAA-Data/bgm/58.ogg
+* assets_obb/AAAA-Data/bgm/60.ogg
+* assets_obb/AAAA-Data/donothexedit.me
+* assets_obb/AAAA-Data/maps/
+* assets_obb/AAAA-Data/maps/00.aaa
+* assets_obb/AAAA-Data/maps/01.aaa
+* assets_obb/AAAA-Data/maps/02.aaa
+* assets_obb/AAAA-Data/maps/03.aaa
+* assets_obb/AAAA-Data/maps/04.aaa
+* assets_obb/AAAA-Data/maps/05.aaa
+* assets_obb/AAAA-Data/maps/06.aaa
+* assets_obb/AAAA-Data/maps/07.aaa
+* assets_obb/AAAA-Data/maps/08.aaa
+* assets_obb/AAAA-Data/maps/09.aaa
+* assets_obb/AAAA-Data/maps/10.aaa
+* assets_obb/AAAA-Data/maps/11.aaa
+* assets_obb/AAAA-Data/maps/14.aaa
+* assets_obb/AAAA-Data/maps/20.aaa
+* assets_obb/AAAA-Data/maps/23.aaa
+* assets_obb/AAAA-Data/maps/24.aaa
+* assets_obb/AAAA-Data/maps/25.aaa
+* assets_obb/AAAA-Data/maps/26.aaa
+* assets_obb/AAAA-Data/maps/27.aaa
+* assets_obb/AAAA-Data/maps/28.aaa
+* assets_obb/AAAA-Data/maps/29.aaa
+* assets_obb/AAAA-Data/maps/30.aaa
+* assets_obb/AAAA-Data/maps/31.aaa
+* assets_obb/AAAA-Data/maps/32.aaa
+* assets_obb/AAAA-Data/sfx/
+* assets_obb/AAAA-Data/sfx/00.wav
+* assets_obb/AAAA-Data/sfx/01.wav
+* assets_obb/AAAA-Data/sfx/02.wav
+* assets_obb/AAAA-Data/sfx/03.wav
+* assets_obb/AAAA-Data/sfx/04.wav
+* assets_obb/AAAA-Data/sfx/05.wav
+* assets_obb/AAAA-Data/sfx/06.wav
+* assets_obb/AAAA-Data/sfx/07.wav
+* assets_obb/AAAA-Data/sfx/08.wav
+* assets_obb/AAAA-Data/sfx/09.wav
+* assets_obb/AAAA-Data/sfx/10.wav
+* assets_obb/AAAA-Data/sfx/11.wav
+* assets_obb/AAAA-Data/sfx/12.wav
+* assets_obb/AAAA-Data/sfx/13.wav
+* assets_obb/AAAA-Data/sfx/14.wav
+* assets_obb/AAAA-Data/sfx/15.wav
+* assets_obb/AAAA-Data/sfx/16.wav
+* assets_obb/AAAA-Data/sfx/17.wav
+* assets_obb/AAAA-Data/sfx/18.wav
+* assets_obb/AAAA-Data/sfx/19.wav
+* assets_obb/AAAA-Data/sfx/20.wav
+* assets_obb/AAAA-Data/sfx/21.wav
+* assets_obb/AAAA-Data/sfx/22.wav
+* assets_obb/AAAA-Data/sfx/23.wav
+* assets_obb/AAAA-Data/sfx/24.wav
+* assets_obb/AAAA-Data/sfx/25.wav
+* assets_obb/AAAA-Data/sfx/26.wav
+* assets_obb/AAAA-Data/sfx/27.wav
+* assets_obb/AAAA-Data/sfx/28.wav
+* assets_obb/AAAA-Data/sfx/29.wav
+* assets_obb/AAAA-Data/sfx/30.wav
+* assets_obb/AAAA-Data/sfx/31.wav
+* assets_obb/AAAA-Data/sfx/32.wav
+* assets_obb/AAAA-Data/sfx/33.wav
+* assets_obb/AAAA-Data/sfx/34.wav
+* assets_obb/AAAA-Data/sfx/35.wav
+* assets_obb/AAAA-Data/sfx/36.wav
+* assets_obb/AAAA-Data/sfx/37.wav
+* assets_obb/AAAA-Data/sfx/38.wav
+* assets_obb/AAAA-Data/sfx/39.wav
+* assets_obb/AAAA-Data/sfx/40.wav
+* assets_obb/AAAA-Data/sfx/41.wav
+* assets_obb/AAAA-Data/sfx/42.wav
+* assets_obb/AAAA-Data/sfx/43.wav
+* assets_obb/AAAA-Data/sfx/44.wav
+* assets_obb/AAAA-Data/sfx/45.wav
+* assets_obb/AAAA-Data/textures.gfx
+* docs/
+* docs/Clang_Format_Code.txt
+* docs/Creating_OBB_File.txt
+* docs/GNOME_Adwaita_Icons.txt
+* docs/SDL2_D-Pad_Key_Codes.txt
+* ic_launcher-web.png
+* images/
+* images/aaaa_android_screen1.jpg
+* images/aaaa_android_screen2.jpg
+* images/aaaa_android_screen3.jpg
+* images/aaaa_motorola_droid_2.jpg
+* images/caanootitle.png
+* images/caanootitle2.png
+* images/cover_final.png
+* images/man_icon.png
+* images/scene_icon.png
+* images/src/
+* images/src/button_right.xcf
+* images/src/buttons.xcf
+* images/src/cover.xcf
+* images/src/icon_scene.xcf
+* images/src/overlay_controls_source.xcf
+* images/zombie_icon.png
+* proguard-project.txt
+* tools/
+* tools/gfx_unpacker/
+* tools/gfx_unpacker/unpack_gfx.cpp
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app/src/main/AndroidManifest.xml
+* jni/ => app/src/main/jni/
+* res/ => app/src/main/res/
+* src/ => app/src/main/java/
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)
