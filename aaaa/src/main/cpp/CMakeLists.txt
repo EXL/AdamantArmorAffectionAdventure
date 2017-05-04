@@ -66,7 +66,7 @@ if(ANDROID)
         add_definitions(-D_ARM_ASSEM_)
     endif()
 
-    ## SDL2
+    # SDL2
     set(SDL2 "SDL2")
     set(SDL2_SOURCES ${SDL2}/src/SDL_assert.c
                 ${SDL2}/src/events/SDL_gesture.c
@@ -155,7 +155,7 @@ if(ANDROID)
     add_library(${SDL2} SHARED ${SDL2_SOURCES})
     target_link_libraries(${SDL2} dl GLESv1_CM GLESv2 log android)
 
-    ## SDL2_mixer
+    # SDL2_mixer
     set(SDL2_MIXER "SDL2_mixer")
     set(SDL2_MIXER_SOURCES ${SDL2_MIXER}/music_mad.c
                 ${SDL2_MIXER}/effects_internal.c
@@ -225,12 +225,13 @@ else()
     include_directories(${PROJECT_NAME} ${OPENGL_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2_MIXER_INCLUDE_DIR})
 
     if(GLES)
-        message(STATUS "Build using OpenGLES libraries!")
+        message(STATUS "Build w/ using OpenGLES libraries!")
         set(TARGET_NAME "AAAA-Engine-gles")
         find_package(OpenGLES REQUIRED)
         add_definitions(-DPC_GLES -DSDL2_PORT)
         include_directories(${INCLUDE_DIRECTORIES} ${OPENGLES_INCLUDE_DIR})
     else()
+        message(STATUS "Build w/ using OpenGL libraries!")
         set(TARGET_NAME ${PROJECT_NAME})
         add_definitions(-DPC_GL -DSDL2_PORT)
     endif()
