@@ -21,7 +21,7 @@ android {
             }
 
             ndkBuild {
-                arguments "V=1" /* Verbose ndk-build */
+                // arguments "V=1" /* Verbose ndk-build */
                 arguments "NDK_TOOLCHAIN_VERSION=4.9", "APP_PLATFORM=android-10"
                 arguments "-j" + Runtime.runtime.availableProcessors()
             }
