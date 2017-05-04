@@ -10,7 +10,7 @@ android {
         targetSdkVersion 14
 
         ndk {
-            abiFilters "armeabi-v7a", "x86"
+            abiFilters "armeabi", "armeabi-v7a", "x86"
         }
 
         externalNativeBuild {
@@ -18,6 +18,12 @@ android {
                 arguments "-DANDROID_PLATFORM_LEVEL=10", "-DANDROID=ON"
                 cFlags "-O3", "-ffast-math", "-fomit-frame-pointer"
                 cppFlags "-O3", "-frtti", "-ffast-math", "-fomit-frame-pointer"
+            }
+
+            ndkBuild {
+                arguments "V=1" /* Verbose ndk-build */
+                arguments "NDK_TOOLCHAIN_VERSION=4.9", "APP_PLATFORM=android-10"
+                arguments "-j" + Runtime.runtime.availableProcessors()
             }
         }
     }
@@ -40,8 +46,12 @@ android {
     }
 
     externalNativeBuild {
-        cmake {
-            path 'src/main/cpp/CMakeLists.txt'
+        ndkBuild {
+            path 'src/main/cpp/Android.mk'
         }
+
+        // cmake {
+        //    path 'src/main/cpp/CMakeLists.txt'
+        // }
     }
 }
