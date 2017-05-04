@@ -28,23 +28,22 @@ LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
 		mobs.c \
 		narrator.c \
 		particles.c \
-		/playcontrol.c \
-		/render.c \
-		/sprites.c \
-		/vars.c \
-		/veryblend.c \
-		/wlight.c \
-		/wmapgen.c \
-		/wmapload.c \
-		/zcore.c \
-		/zcsound.c \
-		/zctables.c \
-		/zeditmode.c \
-		/zgui.c \
-		/zlext.c \
-		/zlmath.c \
-		/zresm.c
-
+		playcontrol.c \
+		render.c \
+		sprites.c \
+		vars.c \
+		veryblend.c \
+		wlight.c \
+		wmapgen.c \
+		wmapload.c \
+		zcore.c \
+		zcsound.c \
+		zctables.c \
+		zeditmode.c \
+		zgui.c \
+		zlext.c \
+		zlmath.c \
+		zresm.c
 
 LOCAL_SHARED_LIBRARIES := SDL2 SDL2_mixer
 
