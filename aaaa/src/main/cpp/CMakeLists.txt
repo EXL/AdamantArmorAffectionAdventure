@@ -212,7 +212,7 @@ else()
     option(GLES "Enable OpenGL ES instead OpenGL" OFF)
 
     # Deploy Game Files and Executable.
-    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../assets_obb/AAAA-Data/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
+    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../../../assets_obb/AAAA-Data/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 
     # Add Cmake path with additional modules.
