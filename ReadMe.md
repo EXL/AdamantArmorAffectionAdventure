@@ -37,7 +37,7 @@ ANDROID_HOME="/opt/android-sdk/" ./gradlew assembleDebug
 * Create OBB-cache file;
 
 ```sh
-/opt/android-sdk/tools/jobb -d assets_obb/ -o main.2.ru.exlmoto.aaaa.obb -pn ru.exlmoto.aaaa -pv 2
+/opt/android-sdk/tools/bin/jobb -d assets_obb/ -o main.2.ru.exlmoto.aaaa.obb -pn ru.exlmoto.aaaa -pv 2
 ```
 
 * Install Adamant Armor Affection Adventure APK-package on your Android device via adb and put OBB-cache on sdcard;
