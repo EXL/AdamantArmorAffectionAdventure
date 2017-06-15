@@ -15,6 +15,10 @@ This is my port of Adamant Armor Affection Adventure to Android OS with using SD
 
 [Adamant Armor Affection Adventure port on Motorola Photon Q video on YouTube](https://www.youtube.com/watch?v=8UfZP2pbrOg)
 
+## Download
+
+You can download APK-package for Android OS from the [releases](https://github.com/EXL/AdamantArmorAffectionAdventure/releases) section.
+
 ## Build instructions
 
 For example, GNU/Linux:
