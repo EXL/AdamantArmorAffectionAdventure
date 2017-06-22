@@ -3,15 +3,15 @@ Adamant Armor Affection Adventure
 
 Adamant Armor Affection Adventure by quasist and Don Miguel is a 3D stealth-action platform game participated in the [RIOT Tag-Team Coding Competition](http://www.riotdigital.com/ttcc2011/?page=Blog) event in 2011 and took the second place. It was originally released on the gaming console GP2X Caanoo and GP2X Wiz, and later ported to Pandora and GCW Zero.
 
-![Adamant Armor Affection Adventure running on Motorola Droid 2](https://raw.github.com/EXL/AdamantArmorAffectionAdventure/master/images/aaaa_motorola_droid_2.jpg)
+![Adamant Armor Affection Adventure running on Motorola Droid 2](images/aaaa_motorola_droid_2.jpg)
 
 This is my port of Adamant Armor Affection Adventure to Android OS with using SDL2 and SDL2_mixer libraries and rendering the videocontext of the game with using OpenGL ES. I added simple touch controls and some other improvements to the game engine.
 
-![Adamant Armor Affection Adventure Android Screen 1](https://raw.github.com/EXL/AdamantArmorAffectionAdventure/master/images/aaaa_android_screen1.jpg)
+![Adamant Armor Affection Adventure Android Screen 1](images/aaaa_android_screen1.jpg)
 
-![Adamant Armor Affection Adventure Android Screen 2](https://raw.github.com/EXL/AdamantArmorAffectionAdventure/master/images/aaaa_android_screen2.jpg)
+![Adamant Armor Affection Adventure Android Screen 2](images/aaaa_android_screen2.jpg)
 
-![Adamant Armor Affection Adventure Android Screen 3](https://raw.github.com/EXL/AdamantArmorAffectionAdventure/master/images/aaaa_android_screen3.jpg)
+![Adamant Armor Affection Adventure Android Screen 3](images/aaaa_android_screen3.jpg)
 
 [Adamant Armor Affection Adventure port on Motorola Photon Q video on YouTube](https://www.youtube.com/watch?v=8UfZP2pbrOg)
 
