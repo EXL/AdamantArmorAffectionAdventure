@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "25.0.3"
 
     defaultConfig {
         applicationId "ru.exlmoto.aaaa"
@@ -10,7 +9,7 @@ android {
         targetSdkVersion 14
 
         ndk {
-            abiFilters "armeabi", "armeabi-v7a", "x86"
+            abiFilters "armeabi-v7a", "x86"
         }
 
         externalNativeBuild {
@@ -22,7 +21,7 @@ android {
 
             ndkBuild {
                 // arguments "V=1" /* Verbose ndk-build */
-                arguments "NDK_TOOLCHAIN_VERSION=4.9", "APP_PLATFORM=android-10"
+                arguments "NDK_TOOLCHAIN_VERSION=4.9", "APP_PLATFORM=android-14"
                 arguments "-j" + Runtime.runtime.availableProcessors()
             }
         }
