@@ -1,0 +1,9 @@
+GNU/Linux:
+$ mkdir build; cd build
+$ cmake -DCMAKE_BUILD_TYPE=Release -DGLES=off -DANDROID=off ../aaaa/src/main/cpp
+$ cmake --build .
+
+Haiku OS, 64-bit:
+~> mkdir build; cd build
+~> cmake -DCMAKE_BUILD_TYPE=Release -DGLES=off -DANDROID=off -DCMAKE_C_FLAGS="-D__linux__" -DSDL2_INCLUDE_DIR=`finddir B_SYSTEM_HEADERS_DIRECTORY` -DSDL2_MIXER_INCLUDE_DIR=`finddir B_SYSTEM_HEADERS_DIRECTORY` ../aaaa/src/main/cpp
+~> cmake --build .
